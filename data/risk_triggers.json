@@ -1,0 +1,27 @@
+[
+  {
+    "trigger": "Float loss",
+    "rule": ">5d / period",
+    "status": "Active"
+  },
+  {
+    "trigger": "Rate gap",
+    "rule": ">20%",
+    "status": "Active"
+  },
+  {
+    "trigger": "IFC lag",
+    "rule": ">14d",
+    "status": "Watch"
+  },
+  {
+    "trigger": "PF drift",
+    "rule": ">1.15 / period",
+    "status": "Active"
+  },
+  {
+    "trigger": "CPI decline",
+    "rule": "3 consecutive drops",
+    "status": "Active"
+  }
+]

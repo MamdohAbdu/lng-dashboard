@@ -1,0 +1,57 @@
+[
+  {
+    "check": "Engineering Progress",
+    "score_pct": 95,
+    "status": "Pass"
+  },
+  {
+    "check": "Procurement Status",
+    "score_pct": 88,
+    "status": "Fail"
+  },
+  {
+    "check": "Physical % Progress",
+    "score_pct": 97,
+    "status": "Pass"
+  },
+  {
+    "check": "Cost Loading",
+    "score_pct": 92,
+    "status": "Pass"
+  },
+  {
+    "check": "Actual Labor Hours",
+    "score_pct": 96,
+    "status": "Pass"
+  },
+  {
+    "check": "Commodities And Quantities",
+    "score_pct": 91,
+    "status": "Pass"
+  },
+  {
+    "check": "Subcontractor Schedules",
+    "score_pct": 75,
+    "status": "Fail"
+  },
+  {
+    "check": "Third-Party Milestone Dates",
+    "score_pct": 83,
+    "status": "Partial"
+  },
+  {
+    "check": "Schedule Health Points (DCMA14) And Data Date",
+    "score_pct": 98,
+    "status": "Pass"
+  },
+  {
+    "check": "Critical Paths Logic Accuracy",
+    "score_pct": 94,
+    "status": "Pass"
+  },
+  {
+    "check": "Reviewed With PMs And CM Prior To Finalization",
+    "score_pct": 100,
+    "status": "Pass"
+  }
+]

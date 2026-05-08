@@ -1,0 +1,26 @@
+[
+  {
+    "conflict": "P6 says 72%  | field count shows 54%",
+    "system_a": "P6",
+    "system_b": "Field",
+    "severity": "High"
+  },
+  {
+    "conflict": "P6 shows 280 crew | only 215 on site",
+    "system_a": "P6",
+    "system_b": "Field",
+    "severity": "High"
+  },
+  {
+    "conflict": "ROS passed for cable trays | P6 not updated",
+    "system_a": "P6",
+    "system_b": "Procurement",
+    "severity": "Med"
+  },
+  {
+    "conflict": "EV at 38% but cost loaded at 45%",
+    "system_a": "P6",
+    "system_b": "Cost",
+    "severity": "Med"
+  }
+]

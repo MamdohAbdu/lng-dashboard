@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LNG Terminal — Integrated Decision Infrastructure</title>
+<meta name="description" content="4-page decision infrastructure dashboard for a CAD $1B LNG terminal program. Cross-system contradiction detection, float erosion trending, productivity drilldown, and data governance.">
+<meta property="og:title" content="LNG Terminal — Integrated Decision Infrastructure">
+<meta property="og:description" content="Decision infrastructure dashboard demonstrating cross-system integration for mega capital projects.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2307111f'/><text x='16' y='22' text-anchor='middle' fill='%23F59E0B' font-size='18' font-weight='700' font-family='sans-serif'>L</text></svg>">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07111f;--panel:#101b2b;--card:#121f31;--line:rgba(255,255,255,.1);--text:#e8edf5;--muted:#9aa6b8;--red:#ef4444;--amber:#f59e0b;--green:#22c55e;--blue:#3b82f6;--purple:#a855f7}*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#050b14,#07111f 45%,#030712);color:var(--text);font-family:'DM Sans',Inter,Segoe UI,Arial,sans-serif;padding:12px 12px 6px 12px;overflow:hidden;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}.app{max-width:1480px;height:calc(100vh - 48px);min-height:760px;margin:0 auto;border:1px solid var(--line);border-radius:20px;overflow:hidden;display:grid;grid-template-columns:210px 1fr;background:var(--panel);box-shadow:0 28px 90px rgba(0,0,0,.48)}.side{background:#081525;border-right:1px solid var(--line);padding:22px 16px;position:relative;display:flex;flex-direction:column}.brand{font-weight:750;font-size:21px;color:#F2E1CE;line-height:1.2;margin-bottom:76px;text-align:center}.brand small{display:block;color:#9aa6b8;font-weight:400;margin-top:8px;font-size:12px;line-height:1.45}.nav button{display:block;width:100%;background:transparent;color:var(--muted);border:0;text-align:left;padding:12px 10px;border-left:3px solid transparent;cursor:pointer;font-weight:650;font-size:13px;font-family:'DM Sans',sans-serif;letter-spacing:.8px}.nav button.active{color:#F2E1CE;background:rgba(242,225,206,.08);border-left-color:#F2E1CE}.main{padding:0 14px 10px 14px;min-width:0}.top{height:68px;display:flex;justify-content:space-between;align-items:center;margin-bottom:0;padding:0;background:rgba(255,255,255,.012)}.top h1{margin:0;font-size:22px;font-weight:750;letter-spacing:-.25px}.top p{margin:5px 0 0;color:var(--muted);font-size:14px;font-weight:400}.refresh{font-size:14px;color:var(--muted);text-align:right;margin-right:10px}.page{display:none}.page.active{display:block}.grid{display:grid;gap:12px}.kpis{grid-template-columns:repeat(5,1fr);align-items:stretch}.cols2{grid-template-columns:1fr 1fr}.cols3{grid-template-columns:repeat(3,1fr)}.card{background:linear-gradient(180deg,rgba(255,255,255,.048),rgba(255,255,255,.024));border:1px solid var(--line);border-radius:10px;padding:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 10px 28px rgba(0,0,0,.10)}.card h3{margin:0 0 8px;font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);font-weight:650}.value{font-size:27px;font-weight:750;letter-spacing:-.6px}.sub{font-size:14px;color:var(--muted);margin-top:12px;font-weight:400}.red{color:var(--red)}.amber{color:var(--amber)}.green{color:var(--green)}.blue{color:var(--blue)}.decision{border-color:var(--line);background:linear-gradient(180deg,rgba(255,255,255,.048),rgba(255,255,255,.024))}.decision-title{font-size:16px;font-weight:400;margin:4px 0 8px;letter-spacing:-.2px}.decision-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.mini{background:rgba(0,0,0,.18);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:14px}.rlv-table td,.rlv-table th{padding-top:5px !important;padding-bottom:5px !important}.scored-card{position:relative;border-left:3px solid var(--muted);}.scored-card .card-score{position:absolute;top:10px;right:12px;font-size:12px;font-weight:700;letter-spacing:-.3px;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid currentColor;background:rgba(0,0,0,.25)}.contra-table td,.contra-table th{padding-top:8px !important;padding-bottom:8px !important}
+.dl-table td,.dl-table th{padding-top:7px !important;padding-bottom:7px !important;white-space:nowrap}
+.cm-table td,.cm-table th{padding-top:6px !important;padding-bottom:6px !important}
+.bl-table td,.bl-table th{padding-top:7px !important;padding-bottom:7px !important}
+.mini b{display:inline;font-size:11px;text-transform:uppercase;color:var(--muted);margin-right:8px;font-weight:650}.insight{margin-bottom:4px;padding:0;font-size:14px;font-weight:400;font-style:italic;line-height:1.35;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.insight.red{color:var(--muted)}.insight.amber{color:var(--muted)}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.07);text-align:left}th{color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.7px;font-weight:650;background:rgba(255,255,255,.08)}
+td{color:rgba(255,255,255,.65)}.badge{font-size:14px;font-weight:400}.badgebad{color:var(--red)}.badgewarn{color:var(--amber)}.badgegood{color:var(--green)}.card-alert{font-size:12px;color:var(--amber);margin-bottom:6px;line-height:1.3}.note{font-size:14px;color:var(--muted);margin-top:8px;line-height:1.4}.span2{grid-column:span 2}@media(max-width:1000px){.app{grid-template-columns:1fr}.side{display:none}.kpis,.cols2,.cols3{grid-template-columns:1fr}.span2{grid-column:span 1}}
+
+/* ---- Page/size match original dashboard + readable typography ---- */
+html { height:100%; }
+body { height:100%; overflow:hidden; box-sizing:border-box; }
+.app { height:100%; }
+.main { height:100%; min-height:0; overflow:hidden; display:flex; flex-direction:column; }
+.top { flex:0 0 68px; }
+.page { flex:1 1 auto; min-height:0; max-height:none; overflow:hidden; padding:4px 0 8px; }
+.page-scroll.active { display:flex !important; flex-direction:column; overflow-y:auto !important; scrollbar-width:none; -ms-overflow-style:none; } .page-scroll.active::-webkit-scrollbar{display:none;}
+.page.active { display:block; }
+.grid { align-items:start; gap:12px; }
+.cols2, .cols3, .kpis { align-items:start; }
+.card { align-self:start; min-height:0; overflow:visible; }.kpis .card{align-self:stretch;}
+.decision { margin-top:12px !important; }
+.page .grid[style] { margin-top:12px !important; }
+.kpis .card { padding:5px 14px; min-height:60px; }
+.kpis .value { font-size:26px; }
+th, td { padding:5px 8px; }
+@media (min-height:900px){ .kpis .card{min-height:106px;} }
+@media (max-height:820px){ body{padding:12px 12px 6px 12px}.app{height:calc(100vh - 24px);} .top{flex-basis:58px} .kpis .card{min-height:82px}.kpis .value{font-size:23px;} }
+@media (min-width:1001px){
+  .cols3{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .cols2{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .kpis{grid-template-columns:repeat(5,minmax(0,1fr));}
+}
+/* Fit to viewport on smaller screens */
+@media (max-height:1400px){ body{zoom:0.98;} }
+@media (max-height:900px){ body{zoom:0.87;} }
+/* ---- Chart anti-crop fix: keep all bars, labels, legends visible ---- */
+.card { overflow: visible !important; }
+.chart, .chart-sm {
+  display:block !important;
+  width:100% !important;
+  height:220px !important;
+  max-height:220px !important;
+}
+.card:has(canvas) { padding-bottom:10px; }
+@media (min-height:900px){
+  .chart,.chart-sm{height:245px !important;max-height:245px !important;}
+}
+@media (max-height:820px){
+  .chart,.chart-sm{height:190px !important;max-height:190px !important;}
+}
+
+/* ---- Messaging pass: readable visual headers + warning strips ---- */
+.card h3{font-size:14px !important;color:#ffffff !important;font-weight:650 !important;letter-spacing:.5px !important;text-transform:uppercase !important;padding-bottom:4px !important;margin-bottom:4px !important;border-bottom:none !important;}
+.top p{font-size:14px;color:var(--muted);font-weight:500;}
+.warning-strip{background:rgba(239,68,68,.12);border-left:4px solid #ef4444;color:#fecaca;font-size:14px;font-weight:600;line-height:1.35;padding:11px 14px;margin-bottom:10px;}
+.warning-strip strong{color:#ffffff;font-weight:750;}
+.breach-card .value{font-size:30px;}
+.p2-row .card{min-height:316px;}
+.p2-top .card{min-height:326px;}.p2-top .card canvas{height:260px !important;max-height:260px !important;}
+#floatChart{height:250px !important;max-height:250px !important;}.p2-top .card:has(#floatChart){min-height:auto !important;padding-bottom:2px !important;}
+.p2-bottom .card{min-height:326px;}.p2-bottom .card canvas{height:260px !important;max-height:260px !important;}
+.p2-row .card canvas{height:250px !important;max-height:250px !important;}
+.p3-top{align-items:stretch !important;}
+.p3-top .card{align-self:stretch !important;min-height:326px;display:flex;flex-direction:column;}
+.p3-top .card canvas,.p3-bottom .card canvas{height:260px !important;max-height:260px !important;}
+.p3-bottom{align-items:stretch !important;}
+.p3-bottom .card{display:flex;flex-direction:column;align-self:stretch !important;min-height:326px;}
+.p3-bottom table{flex:1;}
+.p3-bottom table th,.p3-bottom table td{padding:13px 8px;}.card canvas.chart{margin-top:12px;}.p2-row .card-alert{color:var(--muted) !important;}
+.forecast-row{margin-bottom:12px;}
+.forecast-row{display:flex;gap:12px;}
+.forecast-strip{font-size:16px;color:var(--muted);padding:11px 14px;border-radius:8px;background:rgba(255,255,255,.03);border:1px solid var(--line);display:flex;align-items:center;flex-wrap:nowrap;white-space:nowrap;gap:2px;overflow:hidden;min-width:0;}
+.forecast-strip.schedule{flex:1;}
+.forecast-strip.financial{flex:1;}
+.forecast-strip strong{color:#e8edf5;font-weight:600;}
+.fdiv{color:rgba(255,255,255,.15);margin:0 3px;}
+
+
+/* ---- FINAL TOP PADDING / CENTERING FIX ----
+   This override wins over the earlier duplicated body/.app rules. */
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  padding: 40px 20px 6px !important;
+}
+
+.app {
+  height: calc(100vh - 46px) !important;
+  margin: 0 auto !important;
+}
+
+.main {
+  padding: 0 14px 10px !important;
+}
+
+.top {
+  padding-top: 14px !important;
+  margin-bottom: 8px !important;
+}
+
+.page {
+  padding-top: 12px !important;
+}
+
+@media (max-height:820px){
+  body { padding: 28px 12px 6px !important; }
+  .app { height: calc(100vh - 40px) !important; }
+}
+
+.kpi-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;position:relative}
+.sparkline{width:70px;height:36px;flex-shrink:0;display:block;overflow:visible;margin-bottom:-6px}.cm-spark{width:46px;height:10px;margin-bottom:0;vertical-align:middle;overflow:hidden}
+.spark-dot{opacity:1}
+.cm-spark{width:50px;height:16px;margin-bottom:-4px}
+.spark-tooltip{position:absolute;font-size:11px;color:rgba(255,255,255,.8);font-family:'DM Sans',sans-serif;background:rgba(0,0,0,.85);padding:2px 6px;border-radius:4px;white-space:nowrap;display:none;pointer-events:none;z-index:10}
+
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side"><div class="brand"><img src="Logo.png" alt="LNG" style="width:52px;height:52px;border-radius:50%;object-fit:cover;margin:0 auto 10px;display:block">LNG Terminal<span style="display:block;font-size:13px;font-weight:500;color:#9aa6b8;margin-top:4px">CAD $1B Program</span></div><nav class="nav"><button class="active" onclick="showPage(0)">01 &nbsp; Verdict</button><button onclick="showPage(1)">02 &nbsp; Early Warning</button><button onclick="showPage(2)">03 &nbsp; Recovery Reality</button><button onclick="showPage(3)">04 &nbsp; Control Integrity</button></nav><div style="flex:1;display:flex;align-items:flex-end;justify-content:center;font-size:11px;color:rgba(255,255,255,.25);font-weight:500;letter-spacing:.3px;white-space:nowrap;text-align:center">Integrated Controls System</div></aside>
+<main class="main">
+<div class="top"><div style="display:flex;align-items:baseline;gap:10px"><h1 id="pageTitle">VERDICT</h1><p id="pageSubtitle">What decision is required this month?</p></div><div class="refresh">Monthly Report | <b id="reportPeriod" style="color:#e8edf5">—</b></div></div>
+
+<section class="page active">
+ <div class="forecast-row">
+  <div class="forecast-strip schedule" id="scheduleStrip"></div>
+  <div class="forecast-strip financial" id="financialStrip"></div>
+ </div>
+ <div class="grid kpis" style="grid-template-columns:repeat(5,1fr)" id="kpiRow"></div>
+ <div class="card" style="margin-top:12px;padding:11px 14px;font-size:16px;line-height:1.5;color:rgba(255,255,255,.65)"><h3>Top Required Decision</h3><span id="topDecisionText"></span></div>
+ <div class="grid cols2" style="margin-top:12px">
+  <div class="card"><h3>Required Actions</h3><table><thead><tr><th>Action</th><th>CP?</th><th>Impact</th><th>Exposure</th></tr></thead><tbody id="actionsBody"></tbody></table></div>
+  <div class="card"><h3>Why Rate Is Failing</h3><table class="rlv-table"><thead><tr><th>Discipline</th><th>Root Cause</th><th>Impact</th><th>Owner</th></tr></thead><tbody id="whyFailingBody"></tbody></table></div>
+ </div>
+ <div class="card" style="margin-top:12px"><h3>Critical Milestones</h3><table class="cm-table"><thead><tr><th>Milestone</th><th>Forecast</th><th>Drift</th><th>Confidence</th><th>$ Impact</th><th>Root Cause</th><th>Recovery Action</th><th style="width:70px">Trend</th></tr></thead><tbody id="milestonesBody"></tbody></table></div>
+</section>
+
+<section class="page">
+ <div class="grid cols3 p2-row p2-top"><div class="card" style="min-height:316px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1px"><h3 style="margin-bottom:0">Float Burn Rate</h3><div class="float-toggles" style="display:flex;gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden"><button class="float-tog active" data-view="area" style="padding:5px 12px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:600;background:transparent;color:#ffffff;border:none;cursor:pointer;border-right:1px solid var(--line);border-bottom:2px solid #ffffff">Area</button><button class="float-tog" data-view="discipline" style="padding:5px 12px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:600;background:transparent;color:var(--muted);border:none;cursor:pointer">Discipline</button></div></div><div class="card-alert" id="floatAlert" style="margin-bottom:4px">A1 float breached, 2 days negative</div><canvas id="floatChart" class="chart" style="height:250px !important;max-height:250px !important"></canvas></div><div class="card"><h3>EVM Quadrant by Area</h3><div class="card-alert" id="evmAlert">A3-Marine in double-red zone — CPI &amp; SPI below 0.90</div><canvas id="evmQuadChart" class="chart"></canvas></div><div class="card"><h3>Look-Ahead Reliability (PPC)</h3><div class="card-alert" id="ppcAlert">PPC trending below 80% target — 4-week look-ahead unreliable</div><canvas id="ppcChart" class="chart"></canvas></div></div>
+ <div class="grid cols3 p2-row p2-bottom" style="margin-top:12px"><div class="card" style="padding-bottom:7px"><h3>Progress S-Curve</h3><div class="card-alert" id="sCurveAlert">Earned trailing plan by 12% — gap widening since June</div><canvas id="sCurveChart" class="chart"></canvas></div><div class="card" style="padding-bottom:7px"><h3>Manpower — Plan vs Actual</h3><div class="card-alert" id="manpowerAlert">Piping crew 35% under-resourced vs recovery plan</div><canvas id="manpowerChart" class="chart"></canvas></div><div class="card" style="padding-bottom:7px"><h3>Productivity Factor Trend</h3><div class="card-alert" id="pfAlert">PF = 1.36 in piping — 2nd crew mobilization = 18d recovery</div><canvas id="pfTrendChart" class="chart"></canvas></div></div>
+</section>
+
+<section class="page">
+ <div class="grid cols3 p3-top"><div class="card" style="padding-bottom:6px"><h3>Recovery Rate vs Proven Capacity</h3><canvas id="velocityChart" class="chart"></canvas></div><div class="card" style="padding-bottom:6px"><h3>Contractor Performance</h3><canvas id="contPerfChart" class="chart"></canvas></div><div class="card" style="padding-bottom:6px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><div><h3 style="margin-bottom:2px">Delay Breakdown</h3></div><div class="delay-toggles" style="display:flex;gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden"><button class="delay-tog active" data-view="area" style="padding:5px 12px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:600;background:transparent;color:#ffffff;border:none;cursor:pointer;border-right:1px solid var(--line);border-bottom:2px solid #ffffff">Area</button><button class="delay-tog" data-view="discipline" style="padding:5px 12px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:600;background:transparent;color:var(--muted);border:none;cursor:pointer">Discipline</button></div></div><canvas id="delayAreaChart" class="chart"></canvas></div></div>
+ <div class="grid cols3 p3-bottom" style="margin-top:12px;margin-bottom:10px"><div class="card" id="hiddenDelayCard"></div><div class="card" id="recoveryValCard"></div><div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><div><h3 style="margin-bottom:0">Physical Progress</h3></div><div class="epc-toggles" style="display:flex;gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden"><button class="epc-tog" data-phase="engineering" style="padding:5px 12px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:600;background:transparent;color:var(--muted);border:none;cursor:pointer;border-right:1px solid var(--line)">E</button><button class="epc-tog" data-phase="procurement" style="padding:5px 12px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:600;background:transparent;color:var(--muted);border:none;cursor:pointer;border-right:1px solid var(--line)">P</button><button class="epc-tog active" data-phase="construction" style="padding:5px 12px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:600;background:transparent;color:#ffffff;border:none;cursor:pointer;border-bottom:2px solid #ffffff">C</button></div></div><canvas id="epcProgressChart" class="chart"></canvas></div></div>
+
+</section>
+
+<section class="page">
+ <div class="grid cols2">
+  <div class="card scored-card" style="margin-top:0px" id="sdiCard"><span class="card-score" id="sdiScore"></span><span id="sdiScoreLabel" style="position:absolute;top:52px;right:6px;font-size:9px;font-weight:600;letter-spacing:.3px;text-transform:uppercase">Data Confidence</span><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div><h3 style="margin-bottom:2px">Schedule Data Completeness</h3><div id="sdiSummary" style="font-size:14px;font-weight:650"></div><div id="sdiFailures" style="font-size:14px;color:var(--red);margin-top:2px"></div></div></div><table><thead><tr><th>Check</th><th>Status</th></tr></thead><tbody id="completenessBody"></tbody></table></div>
+  <div class="card" style="padding-bottom:12px"><h3>Decision Log — Closure Loop</h3><table class="dl-table"><thead><tr><th>Decision</th><th>Owner</th><th>Expected</th><th>Actual</th><th>Status</th><th>Age</th></tr></thead><tbody id="decisionLogBody"></tbody></table></div>
+ </div>
+ <div class="grid cols2" style="margin-top:8px"><div class="card scored-card" id="srcCard"><span class="card-score" id="srcScore"></span><span id="srcScoreLabel" style="position:absolute;top:52px;right:6px;font-size:9px;font-weight:600;letter-spacing:.3px;text-transform:uppercase">Data Confidence</span><h3>Source System Freshness</h3><div id="srcSummary" style="font-size:14px;font-weight:650"></div><div id="srcFailures" style="font-size:14px;color:var(--red);margin-top:2px;margin-bottom:8px"></div><table id="sourceSystemsTable"></table></div><div class="card" style="min-width:0;overflow:hidden;padding:10px 12px 13px"><h3>Baseline Change History</h3><table class="bl-table"><thead><tr><th>Version</th><th>MC Date</th><th>Driver</th><th>Day+</th><th>Cum.</th></tr></thead><tbody id="baselineBody"></tbody></table></div></div>
+ <div class="grid cols2" style="margin-top:8px"><div class="card" style="padding-bottom:20px"><h3>Cross-System Contradictions</h3><table class="contra-table"><thead><tr><th>Conflict</th><th>Systems</th><th>Severity</th></tr></thead><tbody id="contradictionsBody"></tbody></table></div><div style="display:flex;flex-direction:column;gap:12px"><div style="display:flex;gap:12px"><div class="card" style="flex:1"><h3>Forecast Credibility</h3><div style="font-size:12px;color:var(--muted);margin:0 0 4px;font-weight:500">Decision confidence: <span style="color:var(--red);font-weight:600">LOW</span> (±5d forecast error)</div><canvas id="forecastChart" style="height:165px !important;max-height:165px !important"></canvas></div><div class="card" style="flex:1;padding-bottom:15px"><h3>Contingency Depletion</h3><canvas id="contChart" style="height:180px !important;max-height:180px !important"></canvas></div></div></div></div>
+</section>
+</main></div>
+<script>
+/* ---- Navigation ---- */
+const titles=['VERDICT','EARLY WARNING','RECOVERY REALITY','CONTROL INTEGRITY'];
+const subtitles=['What decision is required this month?',"What's breaking before it shows in reports?",'Is the recovery plan actually executable?','Who owns the gap and can we trust the numbers?'];
+function showPage(i){document.querySelectorAll('.page').forEach((p,n)=>p.classList.toggle('active',n===i));document.querySelectorAll('.nav button').forEach((b,n)=>b.classList.toggle('active',n===i));document.getElementById('pageTitle').textContent=titles[i];document.getElementById('pageSubtitle').textContent=subtitles[i]}
+
+/* ---- Chart defaults ---- */
+Chart.defaults.font.family="'DM Sans',sans-serif";
+Chart.defaults.font.size=12;
+Chart.defaults.color='#9aa6b8';
+const baseScales={
+  x:{offset:true,ticks:{color:'#9aa6b8',padding:8,autoSkip:false,maxRotation:0},grid:{color:'rgba(255,255,255,.06)'}},
+  y:{beginAtZero:true,grace:'5%',ticks:{color:'#9aa6b8',padding:4},grid:{color:'rgba(255,255,255,.06)'}}
+};
+const opt={responsive:true,maintainAspectRatio:false,layout:{padding:{top:4,right:24,bottom:51,left:10}},plugins:{legend:{position:'bottom',align:'center',labels:{color:'#9aa6b8',boxWidth:10,boxHeight:10,padding:12,font:{size:12,weight:'400'},usePointStyle:true,pointStyle:'rectRounded'}}},scales:baseScales};
+
+/* ---- Helpers ---- */
+function fmtDate(d){if(!d)return'—';const dt=new Date(d);const m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return String(dt.getDate()).padStart(2,'0')+'-'+m[dt.getMonth()]+'-'+String(dt.getFullYear()).slice(2);}
+function badge(severity){const s=severity.toLowerCase();return s==='high'||s==='active'||s==='missed'||s==='fail'||s==='incomplete'?'badgebad':s==='medium'||s==='med'||s==='watch'||s==='partial'||s==='open'?'badgewarn':'badgegood';}
+const lineColors=['#ef4444','#f59e0b','#3b82f6','#22c55e','#a855f7','#06b6d4'];
+
+/* ---- Chart builders ---- */
+const floatLabelPlugin={id:'floatLabels',afterDraw(chart){const ctx=chart.ctx;ctx.save();ctx.font='600 11px DM Sans';const labels=[];chart.data.datasets.forEach((ds,i)=>{if(ds.borderDash)return;const meta=chart.getDatasetMeta(i);const last=meta.data[meta.data.length-1];if(last)labels.push({text:ds.label,x:last.x+6,y:last.y+4,color:ds.borderColor})});labels.sort((a,b)=>a.y-b.y);for(let i=1;i<labels.length;i++){if(labels[i].y-labels[i-1].y<14){labels[i].y=labels[i-1].y+14}}labels.forEach(l=>{ctx.fillStyle=l.color;ctx.fillText(l.text,l.x,l.y)});ctx.restore()}};
+const floatZonePlugin={id:'floatZone',beforeDraw(chart){const ctx=chart.ctx;const yAxis=chart.scales.y;const xAxis=chart.scales.x;const zero=yAxis.getPixelForValue(0);const bottom=yAxis.getPixelForValue(yAxis.min);if(zero<bottom){ctx.save();ctx.fillStyle='rgba(239,68,68,.12)';ctx.fillRect(xAxis.left,zero,xAxis.width,bottom-zero);ctx.fillStyle='rgba(255,255,255,.2)';ctx.font='600 11px DM Sans';ctx.fillText('CRITICAL PATH',xAxis.left+6,zero+14);ctx.restore()}}};
+const evmLabelPlugin={id:'evmLabels',afterDraw(chart){const ctx=chart.ctx;ctx.save();ctx.font='600 10px DM Sans';ctx.textAlign='center';ctx.textBaseline='middle';chart.data.datasets.forEach(ds=>{const meta=chart.getDatasetMeta(chart.data.datasets.indexOf(ds));meta.data.forEach(pt=>{ctx.fillStyle='#ffffff';ctx.fillText(ds.label,pt.x,pt.y)})});ctx.restore()}};
+
+let floatChart=null,evmChart=null,delayChart=null,epcChart=null,sCurveChart=null,ppcChart=null,manpowerChart=null,velocityChart=null,contPerfChart=null,contChart=null,forecastChart=null,pfChart=null;
+let DATA={};
+
+/* ---- Sparkline renderer ---- */
+function renderSparklines(){
+document.querySelectorAll('.sparkline').forEach(svg=>{
+ svg.innerHTML='';
+ const vals=svg.dataset.values.split(',').map(Number);
+ const labels=svg.dataset.labels.split(',');
+ const prefix=svg.dataset.prefix||'';
+ const suffix=svg.dataset.suffix||'';
+ const w=140,h=36,pad=2;
+ svg.setAttribute('viewBox',`0 0 ${w} ${h}`);
+ svg.setAttribute('preserveAspectRatio','none');
+ const baseline=document.createElementNS('http://www.w3.org/2000/svg','line');
+ baseline.setAttribute('x1','0');baseline.setAttribute('y1',h-2);
+ baseline.setAttribute('x2',w);baseline.setAttribute('y2',h-2);
+ baseline.setAttribute('stroke','rgba(255,255,255,.15)');baseline.setAttribute('stroke-width','1');
+ svg.appendChild(baseline);
+ const maxVal=Math.max(...vals)||1;
+ const barW=w/vals.length-7;
+ vals.forEach((v,i)=>{
+  const x=i*(w/vals.length)+2;
+  const barH=Math.max((v/maxVal)*(h-pad*2),3);
+  const y=h-pad-barH;
+  const color='rgba(255,255,255,.20)';
+  const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+  g.setAttribute('class','spark-dot');
+  const rect=document.createElementNS('http://www.w3.org/2000/svg','rect');
+  rect.setAttribute('x',x);rect.setAttribute('y',y);
+  rect.setAttribute('width',barW);rect.setAttribute('height',barH);
+  rect.setAttribute('rx','2');rect.setAttribute('fill',color);
+  const hit=document.createElementNS('http://www.w3.org/2000/svg','rect');
+  hit.setAttribute('x',x);hit.setAttribute('y','0');
+  hit.setAttribute('width',barW);hit.setAttribute('height',h);
+  hit.setAttribute('fill','transparent');
+  if(svg.classList.contains('cm-spark')){g.appendChild(rect);g.appendChild(hit);svg.appendChild(g);return;}
+  hit.setAttribute('style','cursor:pointer');
+  hit.addEventListener('mouseenter',()=>{
+   let tt=svg.parentElement.querySelector('.spark-tooltip');
+   if(!tt){tt=document.createElement('div');tt.className='spark-tooltip';svg.parentElement.style.position='relative';svg.parentElement.appendChild(tt);}
+   tt.textContent=(labels[i]||'')+': '+prefix+Math.round(v)+suffix;
+   const svgRect=svg.getBoundingClientRect();
+   const parentRect=svg.parentElement.getBoundingClientRect();
+   const barCenterX=svgRect.left+((x+barW/2)/w)*svgRect.width-parentRect.left;
+   const barTopY=svgRect.top+(y/h)*svgRect.height-parentRect.top;
+   tt.style.left=barCenterX+'px';
+   tt.style.top=(barTopY-18)+'px';
+   tt.style.transform='translateX(-50%)';
+   tt.style.display='block';
+  });
+  hit.addEventListener('mouseleave',()=>{const tt=svg.parentElement.querySelector('.spark-tooltip');if(tt)tt.style.display='none';});
+  g.appendChild(rect);g.appendChild(hit);svg.appendChild(g);
+ });
+});
+}
+
+/* ---- DATA LOADER ---- */
+async function loadData(){
+ const files=['meta','contradictions','cost_performance','actions_log','float_erosion','production_validation','productivity_factor','subcontractors','source_systems','completeness','evm_quadrant','critical_milestones','delay_breakdown','decision_log','why_rate_failing','manpower','hidden_delay','recovery_validation','ppc_trend','baseline_history'];
+ try{
+  const results=await Promise.all(files.map(f=>fetch('data/'+f+'.json').then(r=>{if(!r.ok)throw new Error(f+'.json: '+r.status);return r.json()})));
+  files.forEach((f,i)=>DATA[f]=results[i]);
+  renderAll();
+ }catch(e){
+  document.querySelector('.main').innerHTML='<div style="padding:40px;color:#ef4444;font-size:16px"><strong>Data load failed</strong><br><span style="color:#9aa6b8;font-size:14px">'+e.message+'</span></div>';
+  console.error('Dashboard load error:',e);
+ }
+}
+
+function renderAll(){
+ const M=DATA.meta;
+
+ /* ---- P1: Header strip ---- */
+ document.getElementById('reportPeriod').textContent=M.report_period||'—';
+ const breachCls=M.time_to_breach_days<=21?'red':M.time_to_breach_days<=42?'amber':'green';
+ document.getElementById('scheduleStrip').innerHTML=`MC: <strong>${fmtDate(M.contract_mc)}</strong> <span class="fdiv">|</span> Forecast: <strong class="red">${fmtDate(M.forecast_mc)}</strong> <span class="fdiv">|</span> Var: <strong style="color:var(--red)">+${M.mc_variance_days}d</strong> <span class="fdiv">|</span> SPI: <strong class="amber">${M.spi}</strong> <span class="fdiv">|</span> CP Breach: <strong class="${breachCls}">${M.time_to_breach_days}d</strong>`;
+ document.getElementById('financialStrip').innerHTML=`Budget: <strong>$${M.budget.toLocaleString()}M</strong> <span class="fdiv">|</span> Forecast: <strong>$${M.forecast_cost.toLocaleString()}M</strong> <span class="fdiv">|</span> Var: <strong style="color:var(--red)">-$${Math.abs(M.cost_variance).toLocaleString()}M</strong> <span class="fdiv">|</span> Contg: <strong class="amber">$${M.contingency_remaining.toLocaleString()}M</strong> <span class="fdiv">|</span> CPI: <strong class="amber">${M.cpi}</strong>`;
+
+ /* ---- P1: KPI cards ---- */
+ const kpis=[
+  {title:'Forecast Slip',value:`${M.forecast_slip_days} Days`,cls:'red',sub:'Behind baseline',trend:M.kpi_slip_trend,suffix:'d'},
+  {title:'If No Action',value:`+${M.if_no_action_days} Days`,cls:'red',sub:'Next 4 weeks',trend:M.kpi_no_action_trend,suffix:'d'},
+  {title:'Cost Exposure',value:`$${Math.round(M.cost_exposure_per_day/1000)}K/d`,cls:'red',sub:'Delay burn rate',trend:M.kpi_cost_trend,prefix:'$',suffix:'K'},
+  {title:'Forecast Bias',value:`+${Math.round(M.forecast_bias_days)} Days`,cls:'amber',sub:'Avg optimism bias',trend:M.kpi_bias_trend,suffix:'d'}
+ ];
+
+ /* ---- P1: Data Confidence Card (5th KPI slot) ---- */
+ const srcFresh=DATA.source_systems.filter(s=>s.staleness_flag!=='Stale').length;
+ const srcTotal=DATA.source_systems.length;
+ const intPass=DATA.completeness.filter(c=>c.status==='Pass').length;
+ const intTotal=DATA.completeness.length;
+ const srcPctP1=Math.round(srcFresh/srcTotal*100);
+ const intPctP1=Math.round(intPass/intTotal*100);
+ const confPct=Math.round((srcPctP1+intPctP1)/2);
+ const confTrend='78,72,68,65,'+confPct;
+ const confCls=confPct>=80?'green':confPct>=60?'amber':'red';
+ const srcCls=srcPctP1>=80?'green':srcPctP1>=60?'amber':'red';
+ const intCls=intPctP1>=80?'green':intPctP1>=60?'amber':'red';
+
+ const periodLabels=['Mar','Apr','May','Jun','Jul','Aug'];
+ document.getElementById('kpiRow').innerHTML=kpis.map(k=>{const n=k.trend?k.trend.split(',').length:6;const labels=periodLabels.slice(periodLabels.length-n).join(',');return`<div class="card"><h3>${k.title}</h3><div class="kpi-row"><div><div class="value ${k.cls}">${k.value}</div><div class="sub">${k.sub}</div></div><svg class="sparkline" data-values="${k.trend}" data-labels="${labels}" ${k.prefix?'data-prefix="'+k.prefix+'"':''} data-suffix="${k.suffix}" ${k.invert?'data-invert="true"':''} ${k.extra||''}></svg></div></div>`}).join('')+`<div class="card" style="border-left:3px solid var(--${confCls});"><h3>Data Confidence</h3><div class="kpi-row"><div><div class="value ${confCls}">${confPct}%</div><div class="sub" style="white-space:nowrap">Fresh ${srcPctP1}% <span class="fdiv">|</span> Com. ${intPctP1}%</div></div><svg class="sparkline" data-values="${confTrend}" data-labels="${periodLabels.join(',')}" data-suffix="%" data-invert="true"></svg></div></div>`;
+
+ /* ---- P1: Top Decision ---- */
+ document.getElementById('topDecisionText').innerHTML=`<strong style="color:#e8edf5">Add:</strong> ${M.top_action_text} — critical path float reaches zero in ${M.time_to_breach_days} days at current burn rate. <strong style="color:#e8edf5">Owner:</strong> ${M.top_action_owner}. <strong style="color:#e8edf5">Deadline:</strong> ${fmtDate(M.top_action_deadline)}.<br><span class="red"><strong>If not approved:</strong> +${M.top_action_no_action_impact_days}d additional slip, $${M.top_action_no_action_impact_cost}M exposure.</span>`;
+
+ /* ---- P1: Actions table ---- */
+ const actions=DATA.actions_log.filter(a=>!a.action.includes('(closure)'));
+ document.getElementById('actionsBody').innerHTML=actions.map(a=>`<tr><td>${a.action}</td><td>${a.critical_path}</td><td class="green">${a.impact_days}d</td><td class="green">$${a.cost_exposure_m}M</td></tr>`).join('');
+
+ /* ---- P1: Contradictions ---- */
+ 
+ /* ---- P4 Confidence Scores ---- */
+ const srcFreshP4=DATA.source_systems.filter(s=>s.staleness_flag!=='Stale').length;
+ const srcTotalP4=DATA.source_systems.length;
+ const srcPct=Math.round(srcFreshP4/srcTotalP4*100);
+ const srcClsP4=srcPct>=80?'green':srcPct>=60?'amber':'red';
+ document.getElementById('srcScore').innerHTML=srcPct+'%';
+ document.getElementById('srcScore').className='card-score '+srcClsP4;
+ document.getElementById('srcCard').style.borderLeftColor='var(--'+srcClsP4+')';document.getElementById('srcScoreLabel').className=srcClsP4;
+
+ const intPassP4=DATA.completeness.filter(c=>c.status==='Pass').length;
+ const intTotalP4=DATA.completeness.length;
+ const intPct=Math.round(intPassP4/intTotalP4*100);
+ const intClsP4=intPct>=80?'green':intPct>=60?'amber':'red';
+ document.getElementById('sdiScore').innerHTML=intPct+'%';
+ document.getElementById('sdiScore').className='card-score '+intClsP4;
+ document.getElementById('sdiCard').style.borderLeftColor='var(--'+intClsP4+')';document.getElementById('sdiScoreLabel').className=intClsP4;
+
+
+ document.getElementById('contradictionsBody').innerHTML=DATA.contradictions.map(c=>`<tr><td>${c.conflict}</td><td>${c.system_a} / ${c.system_b}</td><td><span class="badge ${badge(c.severity)}" style="font-weight:400">${c.severity}</span></td></tr>`).join('');
+
+ /* ---- P1: Critical Milestones ---- */
+ document.getElementById('milestonesBody').innerHTML=DATA.critical_milestones.map(m=>{
+  const dcls=m.drift_days>=30?'red':m.drift_days>=20?'amber':'green';
+  const ccls=m.confidence==='Low'?'red':m.confidence==='Medium'?'amber':'green';
+  const tn=m.trend_values?m.trend_values.split(',').length:6;const tl=periodLabels.slice(periodLabels.length-tn).join(',');
+  return `<tr><td>${m.milestone}</td><td>${fmtDate(m.forecast_date)}</td><td>+${m.drift_days}d</td><td class="${ccls}">${m.confidence}</td><td>$${m.cost_impact_m}M</td><td>${m.root_cause}</td><td>${m.recovery_action}</td><td><svg class="sparkline cm-spark" data-values="${m.trend_values}" data-labels="${tl}" data-suffix="d"></svg></td></tr>`;
+ }).join('');
+
+ /* ---- P2: PPC Trend ---- */
+ buildPpcTrend();
+
+ /* ---- P3: Hidden Delay Card ---- */
+ const hd=document.getElementById('hiddenDelayCard');
+ const hdD=DATA.hidden_delay;
+ const hdRemaining=hdD.remaining_qty.toLocaleString()+' '+hdD.remaining_unit;
+ const hdRate=hdD.actual_rate+' '+hdD.rate_unit;
+ hd.innerHTML=`<h3>Hidden Delay Inside "Green" Data</h3><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0"><span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.65);border:1px solid var(--line);padding:4px 10px;border-radius:6px;text-align:center">SCHEDULE:<br>${hdD.schedule_status}</span><span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.65);border:1px solid var(--line);padding:4px 10px;border-radius:6px;text-align:center">COST:<br>${hdD.cost_status}</span><span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.65);border:1px solid var(--line);padding:4px 10px;border-radius:6px;text-align:center">PROD. MATH:<br>+${hdD.hidden_delay_days}d Hidden</span></div><p style="font-size:14px;line-height:1.5;color:var(--text);margin:14px 0 24px">${hdD.discipline} ${hdD.commodity.toLowerCase()} — ${hdRemaining} remaining ÷ ${hdRate} = <strong class="amber">${hdD.days_needed}d needed</strong> vs <strong style="color:#e8edf5">${hdD.days_left}d left</strong></p><div style="background:rgba(239,68,68,.08);border-left:3px solid var(--red);padding:10px 12px;border-radius:0 6px 6px 0;font-size:13px;color:#fca5a5;line-height:1.4">${hdD.hidden_delay_days}-day delay invisible to schedule & cost reports. $${hdD.exposure_m}M exposure caught while recovery was still possible.</div><div style="margin-top:24px;font-size:13px;color:rgba(255,255,255,.65);font-weight:400"><strong style="color:#e8edf5">Action:</strong> Escalate to project director — mandate rate validation before next period close.</div>`;
+
+ /* ---- P3: Recovery Plan Validation Card ---- */
+ const rpv=document.getElementById('recoveryValCard');
+ const rpD=DATA.recovery_validation;
+ rpv.innerHTML=`<h3>Recovery Plan Validation</h3><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0"><span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.65);border:1px solid var(--line);padding:4px 10px;border-radius:6px;text-align:center">CLAIMED:<br>${rpD.claimed_rate} ${rpD.rate_unit}</span><span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.65);border:1px solid var(--line);padding:4px 10px;border-radius:6px;text-align:center">PEAK ACTUAL:<br>${rpD.peak_actual_rate} ${rpD.rate_unit}</span><span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.65);border:1px solid var(--line);padding:4px 10px;border-radius:6px;text-align:center">PREMIUM:<br>$${rpD.premium_k}k</span></div><p style="font-size:14px;line-height:1.5;color:var(--text);margin:14px 0 24px">Contractor promises <strong class="amber">${rpD.claimed_rate} ${rpD.rate_unit}</strong> for ${rpD.duration_days} days — but ${rpD.peak_window} peak was only <strong class="red">${rpD.peak_actual_rate} ${rpD.rate_unit}</strong> (${rpD.shortfall_pct}% short)</p><div style="background:rgba(239,68,68,.08);border-left:3px solid var(--red);padding:10px 12px;border-radius:0 6px 6px 0;font-size:13px;color:#fca5a5;line-height:1.4">Recovery plan is mathematically impossible. $${rpD.premium_k}K premium rejected before approval — negotiated from data.</div><div style="margin-top:24px;font-size:13px;color:rgba(255,255,255,.65);font-weight:400"><strong style="color:#e8edf5">Action:</strong> Reject contractor plan — request revised recovery based on proven capacity.</div>`;
+
+ /* ---- P4: Decision Log ---- */
+ const dataDate=new Date(M.data_date);
+ document.getElementById('decisionLogBody').innerHTML=DATA.decision_log.map(d=>{
+  const age=d.date_raised?Math.round((dataDate-new Date(d.date_raised))/(86400000)):0;
+  const acls=d.status==='Closed'?'green':age>60?'red':age>21?'amber':'green';
+  return `<tr><td>${d.decision}</td><td>${d.owner}</td><td>${d.expected_impact}</td><td>${d.actual_impact||'—'}</td><td><span class="badge ${badge(d.status)}">${d.status}</span></td><td class="${acls}">${age}d</td></tr>`;
+ }).join('');
+
+ /* ---- P4: Why Rate Is Failing ---- */
+ const whyFailing=DATA.why_rate_failing||[];
+ if(whyFailing.length){
+  document.getElementById('whyFailingBody').innerHTML=whyFailing.map(w=>`<tr><td>${w.discipline}</td><td>${w.root_cause}</td><td class="${Math.abs(w.impact_pct)>=20?'red':'amber'}">${w.impact_pct}%</td><td>${w.owner}</td></tr>`).join('');
+ }
+
+ /* ---- P4: Schedule Data Completeness ---- */
+ const checks=DATA.completeness;
+ const passed=checks.filter(c=>c.status==='Pass').length;
+ const failCount=checks.filter(c=>c.status==='Fail').length;
+ const partialCount=checks.filter(c=>c.status==='Partial').length;
+ const failedChecks=checks.filter(c=>c.status!=='Pass');
+ const avgScore=Math.round(checks.reduce((s,c)=>s+c.score_pct,0)/checks.length);
+ const parts=[];if(failCount)parts.push(failCount+' fail');if(partialCount)parts.push(partialCount+' partial');
+ document.getElementById('sdiSummary').innerHTML=`<span style="color:var(--muted);font-weight:650">${passed} of ${checks.length} checks passed, ${parts.join(', ')}</span>`;
+ if(failCount>=2){document.getElementById('sdiFailures').innerHTML='<span style="color:var(--red);font-weight:700;text-transform:uppercase;letter-spacing:.5px">Forecast Confidence Blocked</span>';}else if(failCount===1||partialCount>=2){document.getElementById('sdiFailures').innerHTML='<span style="color:var(--amber);font-weight:700;text-transform:uppercase;letter-spacing:.5px">Data Quality Degraded</span>';}else{document.getElementById('sdiFailures').innerHTML='';}
+ document.getElementById('completenessBody').innerHTML=failedChecks.map(c=>`<tr><td>${c.check}</td><td><span class="badge ${badge(c.status)}">${c.status}</span></td></tr>`).join('');
+
+ /* ---- P4: Baseline History ---- */
+ const bh=DATA.baseline_history||[];
+ document.getElementById('baselineBody').innerHTML=bh.map(b=>{
+  const cls=b.days_added>30?'red':b.days_added>0?'amber':'green';
+  const ccls=b.cumulative>60?'red':b.cumulative>0?'amber':'green';
+  return `<tr><td>${b.version}</td><td>${fmtDate(b.mc_date)}</td><td>${b.driver}</td><td class="${cls}">${b.days_added>0?'+':''}${b.days_added}d</td><td class="${ccls}">${b.cumulative>0?'+':''}${b.cumulative}d</td></tr>`;
+ }).join('');
+
+ /* ---- P4: Source System Freshness ---- */
+ const ss=DATA.source_systems||[];
+ const sNameMap={'Primavera P6':'P6','InEight Cost':'COST','Smartsheet IFC':'ENG','Field Progress (Excel)':'FIELD','Procurement Tracker':'PROC'};
+ const sNames=ss.map(s=>sNameMap[s.system]||s.system);
+ const sDays=ss.map(s=>{const h=s.refresh_hours||Math.round((dataDate-new Date(s.last_refresh))/3600000);return h+' hr'});
+ const sStatus=ss.map(s=>{const cls=s.staleness_flag==='Stale'?'badgebad':'badgegood';return `<span class="badge ${cls}">${s.staleness_flag}</span>`});
+ const hdr='<thead><tr><th></th>'+sNames.map(n=>'<th>'+n+'</th>').join('')+'</tr></thead>';
+ const body='<tbody><tr><td>Refreshed</td>'+sDays.map(d=>'<td>'+d+'</td>').join('')+'</tr><tr><td>Status</td>'+sStatus.map(s=>'<td>'+s+'</td>').join('')+'</tr></tbody>';
+ document.getElementById('sourceSystemsTable').innerHTML=hdr+body;
+ const stale=ss.filter(s=>s.staleness_flag==='Stale');
+ const fresh=ss.filter(s=>s.staleness_flag!=='Stale');
+ const srcParts=[];
+ if(stale.length)srcParts.push(stale.length+' stale');
+ if(fresh.length)srcParts.push(fresh.length+' fresh');
+ document.getElementById('srcSummary').innerHTML='<span style="color:var(--muted);font-weight:650">'+fresh.length+' of '+ss.length+' systems updated less than 24 hr, '+stale.length+' stale</span>';
+ if(stale.length>=2){
+  document.getElementById('srcFailures').innerHTML='<span style="color:var(--red);font-weight:700;text-transform:uppercase;letter-spacing:.5px">Forecast Confidence Blocked</span>';
+ }else if(stale.length===1){
+  document.getElementById('srcFailures').innerHTML='<span style="color:var(--amber);font-weight:700;text-transform:uppercase;letter-spacing:.5px">'+stale[0].system+' overdue</span>';
+ }else{
+  document.getElementById('srcFailures').innerHTML='';
+ }
+
+ /* ---- CHARTS ---- */
+ buildFloatFromData();
+ buildEvmFromData();
+ buildSCurve();
+ buildManpower();
+ buildPfTrend();
+ buildVelocity();
+ buildContPerf();
+ buildDelayFromData();
+ buildEpcFromData();
+ buildContingency();
+ buildForecast();
+
+ /* ---- Data-driven alerts ---- */
+ (function computeAlerts(){
+  // Float (area view default)
+  const floatArea=DATA.float_erosion.filter(r=>r.view==='Area');
+  const worstFloat=floatArea.filter(r=>r.period==='Aug').sort((a,b)=>a.float_days-b.float_days)[0];
+  if(worstFloat&&worstFloat.float_days<0){document.getElementById('floatAlert').textContent=worstFloat.item.replace(/^A\d+-/,'')+' float breached, '+Math.abs(worstFloat.float_days)+' days negative';}
+  // EVM — find worst area with both CPI & SPI < 0.90
+  const evmAug=DATA.evm_quadrant.filter(r=>r.period==='Aug');
+  const doubleRed=evmAug.filter(r=>r.cpi<0.90&&r.spi<0.90).sort((a,b)=>(a.cpi+a.spi)-(b.cpi+b.spi))[0];
+  if(doubleRed){document.getElementById('evmAlert').textContent=doubleRed.area+' in double-red zone — CPI & SPI below 0.90';}
+  // PPC
+  const ppcData=DATA.ppc_trend;const lastPpc=ppcData[ppcData.length-1];
+  if(lastPpc&&lastPpc.ppc<lastPpc.target){document.getElementById('ppcAlert').textContent='PPC trending below '+lastPpc.target+'% target — 4-week look-ahead unreliable';}
+  // S-Curve gap
+  const overall=DATA.cost_performance.filter(r=>r.area==='All'&&r.discipline==='All');const lastOv=overall[overall.length-1];
+  if(lastOv){const gap=Math.round(lastOv.plan_pct-lastOv.earned_pct);document.getElementById('sCurveAlert').textContent='Earned trailing plan by '+gap+'% — gap widening since June';}
+  // PF — find worst discipline
+  const pfAug=DATA.productivity_factor.filter(r=>r.period==='Aug').sort((a,b)=>b.pf_value-a.pf_value)[0];
+  if(pfAug){document.getElementById('pfAlert').textContent='PF = '+pfAug.pf_value.toFixed(2)+' in '+pfAug.discipline.toLowerCase()+' — 2nd crew mobilization = 18d recovery';}
+ })();
+
+ /* ---- Sparklines (after DOM is populated) ---- */
+ renderSparklines();
+
+ /* ---- Toggle wiring ---- */
+ document.querySelectorAll('.float-tog').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.float-tog').forEach(t=>{t.style.color='var(--muted)';t.style.borderBottom='none'});b.style.color='#ffffff';b.style.borderBottom='2px solid #ffffff';buildFloatFromData(b.dataset.view);const vw=b.dataset.view==='area'?'Area':'Discipline';const vd=DATA.float_erosion.filter(r=>r.view===vw&&r.period==='Aug').sort((a,c)=>a.float_days-c.float_days)[0];if(vd&&vd.float_days<0){document.getElementById('floatAlert').textContent=vd.item+' float breached, '+Math.abs(vd.float_days)+' days negative'}}));
+ document.querySelectorAll('.delay-tog').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.delay-tog').forEach(b=>{b.classList.remove('active');b.style.color='var(--muted)';b.style.borderBottom='none'});btn.classList.add('active');btn.style.color='#ffffff';btn.style.borderBottom='2px solid #ffffff';buildDelayFromData(btn.dataset.view)})});
+ document.querySelectorAll('.epc-tog').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.epc-tog').forEach(b=>{b.classList.remove('active');b.style.color='var(--muted)';b.style.borderBottom='none'});btn.classList.add('active');btn.style.color='#ffffff';btn.style.borderBottom='2px solid #ffffff';buildEpcFromData(btn.dataset.phase)})});
+}
+
+/* ---- Float Burn Rate ---- */
+function buildFloatFromData(view='area'){
+ const raw=DATA.float_erosion.filter(r=>r.view==='Area'||r.view==='Discipline');
+ const viewData={area:{},discipline:{}};
+ raw.forEach(r=>{const v=r.view.toLowerCase();if(!viewData[v][r.item])viewData[v][r.item]=[];viewData[v][r.item].push({period:r.period,float:r.float_days})});
+ const d=viewData[view];
+ const items=Object.keys(d);
+ const periods=[...new Set(raw.filter(r=>r.view.toLowerCase()===view).map(r=>r.period))];
+ const floatColorMap={'A2-Process':'#3b82f6','A4-Utilities':'#f59e0b','A1-Tank Farm':'#ef4444','Structural':'#22c55e','E&I':'#f59e0b','Mechanical':'#3b82f6','Piping':'#ef4444'};
+ const floatColorsFallback=['#a855f7','#06b6d4','#3b82f6','#f59e0b','#22c55e','#ef4444'];
+ const sets=items.map((item,i)=>{const vals=periods.map(p=>{const f=d[item].find(r=>r.period===p);return f?f.float:null});const last=vals[vals.length-1];const color=last!==null&&last<=0?'#ef4444':(floatColorMap[item]||floatColorsFallback[i%floatColorsFallback.length]);return{label:item,data:vals,borderColor:color,backgroundColor:color,pointRadius:2.5,pointHoverRadius:4,borderWidth:2,tension:.3}});
+ if(floatChart)floatChart.destroy();
+ floatChart=new Chart(document.getElementById('floatChart'),{type:'line',data:{labels:periods,datasets:sets},plugins:[floatLabelPlugin,floatZonePlugin],options:{...opt,layout:{padding:{top:4,right:80,bottom:16,left:10}},plugins:{legend:{display:false}},scales:{x:baseScales.x,y:{min:-10,max:30,ticks:{color:'#9aa6b8',padding:8,stepSize:10,callback:v=>v+'d'},grid:{color:'rgba(255,255,255,.06)'}}}}});
+}
+
+/* ---- EVM Quadrant with Arrows ---- */
+const evmArrowPlugin={id:'evmArrows',afterDraw(chart){
+ const ctx=chart.ctx;ctx.save();
+ const arrows=chart._evmArrows||[];
+ arrows.forEach(a=>{
+  const xS=chart.scales.x,yS=chart.scales.y;
+  const x1=xS.getPixelForValue(a.prevCpi),y1=yS.getPixelForValue(a.prevSpi);
+  const x2=xS.getPixelForValue(a.cpi),y2=yS.getPixelForValue(a.spi);
+  // Draw line
+  ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);
+  ctx.strokeStyle='rgba(255,255,255,.3)';ctx.lineWidth=1.5;ctx.stroke();
+  // Draw arrowhead
+  const angle=Math.atan2(y2-y1,x2-x1);const hl=8;
+  ctx.beginPath();ctx.moveTo(x2,y2);
+  ctx.lineTo(x2-hl*Math.cos(angle-Math.PI/6),y2-hl*Math.sin(angle-Math.PI/6));
+  ctx.moveTo(x2,y2);
+  ctx.lineTo(x2-hl*Math.cos(angle+Math.PI/6),y2-hl*Math.sin(angle+Math.PI/6));
+  ctx.strokeStyle='rgba(255,255,255,.5)';ctx.lineWidth=1.5;ctx.stroke();
+  // Draw ghost dot for previous position
+  ctx.beginPath();ctx.arc(x1,y1,4,0,Math.PI*2);
+  ctx.fillStyle='rgba(255,255,255,.15)';ctx.fill();
+  ctx.strokeStyle='rgba(255,255,255,.25)';ctx.lineWidth=1;ctx.stroke();
+ });
+ ctx.restore();
+}};
+function buildEvmFromData(){
+ const raw=DATA.evm_quadrant;
+ const periods=[...new Set(raw.map(r=>r.period))];
+ const latest=periods[periods.length-1];
+ const prev=periods.length>=2?periods[periods.length-2]:null;
+ const curr=raw.filter(r=>r.period===latest);
+ const prevData=prev?raw.filter(r=>r.period===prev):[];
+ const arrows=[];
+ const budgets=curr.map(v=>v.budget_m||100);
+ const maxB=Math.max(...budgets);
+ const ds=curr.map(v=>{
+  const pd=prevData.find(p=>p.area===v.area);
+  if(pd)arrows.push({area:v.area,prevCpi:pd.cpi,prevSpi:pd.spi,cpi:v.cpi,spi:v.spi});
+  const r=(4+((v.budget_m||100)/maxB)*8)*1.8;
+  const baseColor=v.spi>=.9&&v.cpi>=.9?'rgba(34,197,94,.5)':v.spi<.9&&v.cpi<.9?'rgba(239,68,68,.5)':'rgba(245,158,11,.5)';
+  return{label:v.area,data:[{x:v.cpi,y:v.spi}],backgroundColor:baseColor,pointRadius:r,pointHoverRadius:r,pointHitRadius:r,_r:r,_budget_m:v.budget_m||100};
+ });
+ if(evmChart)evmChart.destroy();
+ evmChart=new Chart(document.getElementById('evmQuadChart'),{type:'scatter',data:{datasets:ds},plugins:[evmLabelPlugin],options:{...opt,layout:{padding:{top:8,right:12,bottom:6,left:8}},plugins:{tooltip:{enabled:true,displayColors:false,position:'nearest',yAlign:'bottom',xAlign:'center',mode:'nearest',intersect:true,callbacks:{title:()=>'',label:function(ctx){return'$'+ctx.dataset._budget_m+'M'}}},legend:{display:false},annotation:{annotations:{hLine:{type:'line',yMin:.9,yMax:.9,borderColor:'rgba(255,255,255,.2)',borderWidth:1,borderDash:[4,4]},vLine:{type:'line',xMin:.9,xMax:.9,borderColor:'rgba(255,255,255,.2)',borderWidth:1,borderDash:[4,4]},qTL:{type:'label',xValue:.80,yValue:.98,content:'BEHIND SCHEDULE',color:'rgba(255,255,255,.25)',font:{size:9,weight:'600'},position:{x:'start'}},qTR:{type:'label',xValue:1.0,yValue:.98,content:'HEALTHY',color:'rgba(255,255,255,.25)',font:{size:9,weight:'600'},position:{x:'end'}},qBL:{type:'label',xValue:.80,yValue:.82,content:'COST & SCHEDULE',color:'rgba(255,255,255,.25)',font:{size:9,weight:'600'},position:{x:'start'}},qBR:{type:'label',xValue:1.0,yValue:.82,content:'OVER BUDGET',color:'rgba(255,255,255,.25)',font:{size:9,weight:'600'},position:{x:'end'}}}}},scales:{x:{title:{display:true,text:'CPI',color:'#ffffff',font:{size:13,weight:'bold'}},min:.8,max:1.0,ticks:{color:'#9aa6b8',padding:6,stepSize:.1,callback:v=>v.toFixed(1)},grid:{color:'rgba(255,255,255,.06)'}},y:{title:{display:true,text:'SPI',color:'#ffffff',font:{size:13,weight:'bold'}},min:.8,max:1.0,ticks:{color:'#9aa6b8',padding:6,stepSize:.1,callback:v=>v.toFixed(1)},grid:{color:'rgba(255,255,255,.06)'}}}}});
+ evmChart._evmArrows=arrows;
+}
+
+/* ---- Progress S-Curve ---- */
+function buildSCurve(){
+ const raw=DATA.cost_performance.filter(r=>r.area==='All'&&r.discipline==='All'&&r.plan_pct!==null&&r.period!=='Mar');
+ if(!raw.length)return;
+ const periods=raw.map(r=>r.period);
+ const plan=raw.map(r=>r.plan_pct);
+ const actual=raw.map(r=>r.actual_pct);
+ const earned=raw.map(r=>r.earned_pct);
+ if(sCurveChart)sCurveChart.destroy();
+ const sCurveLabelPlugin={id:'sCurveLabel',afterDraw(chart){const{ctx}=chart;chart.data.datasets.forEach((ds,i)=>{const meta=chart.getDatasetMeta(i);const last=meta.data[meta.data.length-1];if(!last)return;const x=last.x+6;const y=last.y;ctx.save();ctx.font='600 11px DM Sans';ctx.fillStyle=ds.borderColor;ctx.textBaseline='middle';ctx.fillText(ds.label,x,y);ctx.restore();})}};
+ sCurveChart=new Chart(document.getElementById('sCurveChart'),{type:'line',data:{labels:periods,datasets:[{label:'Plan',data:plan,borderColor:'#3b82f6',borderWidth:2,pointRadius:0,tension:.4},{label:'Actual',data:actual,borderColor:'#ef4444',borderWidth:2,pointRadius:0,tension:.4},{label:'Earned',data:earned,borderColor:'#22c55e',borderWidth:2,pointRadius:0,tension:.4}]},plugins:[sCurveLabelPlugin],options:{...opt,layout:{padding:{right:50}},plugins:{legend:{display:false}},scales:{x:baseScales.x,y:{beginAtZero:true,max:50,ticks:{color:'#9aa6b8',padding:8,stepSize:10,callback:v=>v+'%'},grid:{color:'rgba(255,255,255,.06)'}}}}});
+}
+
+/* ---- PPC Trend ---- */
+function buildPpcTrend(){
+ const raw=DATA.ppc_trend||[];
+ if(!raw.length)return;
+ const periods=raw.map(r=>r.period);
+ const ppc=raw.map(r=>r.ppc);
+ const target=raw.map(r=>r.target);
+ if(ppcChart)ppcChart.destroy();
+ const ppcLabelPlugin={id:'ppcLabel',afterDraw(chart){const{ctx}=chart;chart.data.datasets.forEach((ds,i)=>{const meta=chart.getDatasetMeta(i);const last=meta.data[meta.data.length-1];if(!last)return;ctx.save();ctx.font='600 11px DM Sans';ctx.fillStyle=ds.borderColor;ctx.textBaseline='middle';ctx.fillText(ds.label,last.x+6,last.y);ctx.restore();})}};
+ ppcChart=new Chart(document.getElementById('ppcChart'),{type:'line',data:{labels:periods,datasets:[{label:'PPC',data:ppc,borderColor:'#ef4444',segment:{borderColor:function(ctx){return ctx.p0.parsed.y>=80&&ctx.p1.parsed.y>=80?'#22c55e':'#ef4444'}},backgroundColor:function(ctx){const chart=ctx.chart;const{ctx:c,chartArea}=chart;if(!chartArea)return'rgba(239,68,68,.08)';const g=c.createLinearGradient(chartArea.left,0,chartArea.right,0);const len=ppc.length;ppc.forEach((v,i)=>{const stop=i/(len-1);g.addColorStop(stop,v>=80?'rgba(34,197,94,.08)':'rgba(239,68,68,.08)')});return g},borderWidth:2,pointRadius:3,pointBackgroundColor:ppc.map(v=>v>=80?'#22c55e':'#ef4444'),tension:.3,fill:true},{label:'Target',data:target,borderColor:'rgba(255,255,255,.3)',borderWidth:1,borderDash:[4,4],pointRadius:0}]},plugins:[ppcLabelPlugin],options:{...opt,layout:{padding:{right:50}},plugins:{legend:{display:false}},scales:{x:baseScales.x,y:{min:60,max:90,ticks:{color:'#9aa6b8',padding:8,stepSize:10,callback:v=>v+'%'},grid:{color:'rgba(255,255,255,.06)'}}}}});
+}
+
+/* ---- Manpower Histogram ---- */
+function buildManpower(){
+ const mp=(DATA.manpower||[]).filter(r=>r.period!=='Mar'&&r.period!=='Apr');
+ if(!mp.length)return;
+ const labels=mp.map(r=>r.period);
+ const planned=mp.map(r=>r.planned);
+ const actual=mp.map(r=>r.actual);
+ const forecast=mp.map(r=>r.forecast);
+ if(manpowerChart)manpowerChart.destroy();
+ manpowerChart=new Chart(document.getElementById('manpowerChart'),{type:'bar',data:{labels,datasets:[
+  {label:'Planned',data:planned,backgroundColor:'rgba(59,130,246,.55)',barPercentage:.86,categoryPercentage:.84,maxBarThickness:43,order:2},
+  {label:'Actual',data:actual,backgroundColor:'rgba(34,197,94,.65)',barPercentage:.86,categoryPercentage:.84,maxBarThickness:43,order:3},
+  {label:'Forecast',data:forecast,backgroundColor:'rgba(170,158,144,.45)',borderColor:'rgba(170,158,144,.8)',borderWidth:1,borderDash:[4,4],barPercentage:.86,categoryPercentage:.84,maxBarThickness:43,order:4}
+ ]},options:{...opt,layout:{padding:{top:12,right:18,bottom:4,left:8}},scales:{x:baseScales.x,y:{min:0,max:1800,ticks:{color:'#9aa6b8',padding:8,stepSize:600,callback:v=>v.toLocaleString()},grid:{color:'rgba(255,255,255,.06)'},title:{display:true,text:'Headcount',color:'#9aa6b8',font:{size:10,family:'DM Sans'}}}}}});
+}
+
+/* ---- PF Trend ---- */
+const pfLabelPlugin={id:'pfLabels',afterDraw(chart){const ctx=chart.ctx;ctx.save();ctx.font='600 11px DM Sans';chart.data.datasets.forEach((ds,i)=>{const meta=chart.getDatasetMeta(i);const last=meta.data[meta.data.length-1];if(!last)return;const x=last.x+6;const y=last.y;ctx.fillStyle=ds.borderColor||'#9aa6b8';ctx.textBaseline='middle';ctx.fillText(ds.label,x,y)});ctx.restore()}};
+function buildPfTrend(){
+ const pf=DATA.productivity_factor.filter(r=>r.pf_value!==undefined&&r.pf_value!==null&&r.period);
+ const discs=[...new Set(pf.map(r=>r.discipline))];
+ const periods=[...new Set(pf.map(r=>r.period))];
+ const sets=discs.map((d,i)=>({label:d,data:periods.map(p=>{const f=pf.find(r=>r.discipline===d&&r.period===p);return f?f.pf_value:null}),borderColor:lineColors[i%lineColors.length],backgroundColor:lineColors[i%lineColors.length],pointRadius:2.5,pointHoverRadius:4,borderWidth:2,tension:.3}));
+ if(pfChart)pfChart.destroy();
+ pfChart=new Chart(document.getElementById('pfTrendChart'),{type:'line',data:{labels:periods,datasets:sets},plugins:[pfLabelPlugin],options:{...opt,layout:{padding:{top:6,right:40,bottom:6,left:8}},plugins:{legend:{display:false}},scales:{x:baseScales.x,y:{min:0.8,max:1.4,ticks:{color:'#9aa6b8',padding:8,stepSize:0.2,callback:v=>v.toFixed(1)},grid:{color:'rgba(255,255,255,.06)'}}}}});
+}
+
+/* ---- Velocity (Recovery Rate) ---- */
+function buildVelocity(){
+ const pv=DATA.production_validation.filter(r=>r.historical_max);
+ if(velocityChart)velocityChart.destroy();
+ const velScales={x:baseScales.x,y:{beginAtZero:true,min:0,max:120,ticks:{color:'#9aa6b8',padding:8,stepSize:40},grid:{color:'rgba(255,255,255,.06)'},title:{display:true,text:'Units / day',color:'#9aa6b8',font:{size:13,family:'DM Sans'}}}};
+ if(!pv.length){const pv2=DATA.production_validation.filter(r=>r.required_rate);velocityChart=new Chart(document.getElementById('velocityChart'),{type:'bar',data:{labels:pv2.map(r=>r.discipline),datasets:[{label:'Required',data:pv2.map(r=>r.required_rate),backgroundColor:'rgba(59,130,246,.40)',barPercentage:.68,categoryPercentage:.62,maxBarThickness:44},{label:'Actual',data:pv2.map(r=>r.actual_rate),backgroundColor:'rgba(34,197,94,.40)',barPercentage:.68,categoryPercentage:.62,maxBarThickness:44}]},options:{...opt,layout:{padding:{top:12,right:28,bottom:2,left:12}},scales:velScales}});return;}
+ velocityChart=new Chart(document.getElementById('velocityChart'),{type:'bar',data:{labels:pv.map(r=>r.discipline),datasets:[{label:'Required',data:pv.map(r=>r.required_rate),backgroundColor:'rgba(59,130,246,.40)',barPercentage:.85,categoryPercentage:.8,maxBarThickness:44},{label:'Actual',data:pv.map(r=>r.actual_rate),backgroundColor:'rgba(34,197,94,.40)',barPercentage:.85,categoryPercentage:.8,maxBarThickness:44},{label:'Historical Max',data:pv.map(r=>r.historical_max),backgroundColor:'rgba(255,255,255,.18)',borderColor:'rgba(255,255,255,.30)',borderWidth:1,borderDash:[4,4],barPercentage:.85,categoryPercentage:.8,maxBarThickness:44}]},options:{...opt,layout:{padding:{top:12,right:28,bottom:2,left:12}},scales:velScales}});
+}
+
+/* ---- Contractor Performance (CPI/SPI) ---- */
+function buildContPerf(){
+ const sc=DATA.subcontractors;
+ const threshold=sc.map(()=>0.9);
+ if(contPerfChart)contPerfChart.destroy();
+ const contYLabelPlugin={id:'contYLabels',afterDraw(chart){const ctx=chart.ctx;const meta=chart.getDatasetMeta(0);meta.data.forEach((bar,i)=>{const label=chart.data.labels[i];const y=bar.y;const x=chart.chartArea.left-8;ctx.save();ctx.textAlign='right';ctx.textBaseline='middle';if(Array.isArray(label)){ctx.font='600 12px DM Sans';ctx.fillStyle='#e8edf5';ctx.fillText(label[0],x,y-1);ctx.font='400 12px DM Sans';ctx.fillStyle='#9aa6b8';ctx.fillText(label[1],x,y+13)}else{ctx.font='600 12px DM Sans';ctx.fillStyle='#e8edf5';ctx.fillText(label,x,y+2)}ctx.restore()})}};
+ contPerfChart=new Chart(document.getElementById('contPerfChart'),{type:'bar',data:{labels:sc.map(r=>r.commercial_impact?[r.contractor,r.commercial_impact]:r.contractor),datasets:[
+  {label:'CPI',data:sc.map(r=>r.cpi),backgroundColor:sc.map(r=>r.cpi>=.9?'rgba(34,197,94,.55)':'rgba(239,68,68,.55)'),barPercentage:.7,categoryPercentage:.7,maxBarThickness:28},
+  {label:'SPI',data:sc.map(r=>r.spi),backgroundColor:'transparent',borderColor:sc.map(r=>r.spi>=.9?'rgba(34,197,94,.7)':'rgba(239,68,68,.7)'),borderWidth:1,barPercentage:.7,categoryPercentage:.7,maxBarThickness:28},
+  {label:'Target (0.90)',data:threshold,type:'line',borderColor:'rgba(255,255,255,.25)',borderDash:[5,5],pointRadius:0,borderWidth:1.5}
+ ]},plugins:[contYLabelPlugin],options:{...opt,indexAxis:'y',layout:{padding:{top:8,right:8,bottom:2,left:200}},plugins:{legend:{position:'bottom',labels:{filter:item=>item.text!=='Target (0.90)',color:'#9aa6b8',boxWidth:10,boxHeight:10,padding:12,font:{size:12,weight:'400'},usePointStyle:true,pointStyle:'rectRounded'}},annotation:{annotations:{}}},scales:{x:{min:.7,max:1.0,ticks:{color:'#9aa6b8',padding:8,stepSize:.1,callback:v=>{const r=Math.round(v*10)/10;return r<=0.9?r.toFixed(1):''}},grid:{color:function(ctx){return ctx.tick&&ctx.tick.value>0.9?'transparent':'rgba(255,255,255,.06)'}},border:{display:false}},y:{ticks:{display:false},grid:{display:false}}}}});
+}
+
+/* ---- Delay Breakdown ---- */
+function buildDelayFromData(view='area'){
+ const raw=DATA.delay_breakdown.filter(r=>r.view.toLowerCase()===view);
+ const labels=raw.map(r=>r.driver&&r.driver!=='\u2014'?[r.item,r.driver]:r.item);
+ const colors=raw.map(r=>r.delay_days>=8?'rgba(239,68,68,.65)':r.delay_days<0?'rgba(34,197,94,.65)':'rgba(245,158,11,.65)');
+ if(delayChart)delayChart.destroy();
+ const delayLabelPlugin={id:'delayLabels',afterDraw(chart){const ctx=chart.ctx;ctx.save();ctx.font='600 11px DM Sans';ctx.textBaseline='middle';chart.getDatasetMeta(0).data.forEach((bar,i)=>{const v=chart.data.datasets[0].data[i];ctx.fillStyle='#e8edf5';ctx.textAlign='left';ctx.fillText(v+'d',bar.x+6,bar.y)});ctx.restore()}};
+ const delayYLabelPlugin={id:'delayYLabels',afterDraw(chart){const ctx=chart.ctx;const meta=chart.getDatasetMeta(0);meta.data.forEach((bar,i)=>{const label=chart.data.labels[i];const y=bar.y;const x=chart.chartArea.left-8;ctx.save();ctx.textAlign='right';ctx.textBaseline='middle';if(Array.isArray(label)){ctx.font='600 12px DM Sans';ctx.fillStyle='#e8edf5';ctx.fillText(label[0],x,y-6);ctx.font='400 12px DM Sans';ctx.fillStyle='#9aa6b8';ctx.fillText(label[1],x,y+8)}else{ctx.font='600 12px DM Sans';ctx.fillStyle='#e8edf5';ctx.fillText(label,x,y)}ctx.restore()})}};
+ delayChart=new Chart(document.getElementById('delayAreaChart'),{type:'bar',data:{labels,datasets:[{label:'Delay (days)',data:raw.map(r=>r.delay_days),backgroundColor:colors,barPercentage:.6,categoryPercentage:.65,maxBarThickness:22,borderRadius:11,borderSkipped:false}]},plugins:[delayLabelPlugin,delayYLabelPlugin],options:{...opt,indexAxis:'y',layout:{padding:{top:12,bottom:12,right:40,left:140}},plugins:{legend:{display:false}},scales:{x:{ticks:{display:false},grid:{display:false},border:{display:false}},y:{ticks:{display:false},grid:{color:'rgba(255,255,255,.06)',drawTicks:false}}}}});
+}
+
+/* ---- Physical Progress (EPC) ---- */
+function buildEpcFromData(phase='construction'){
+ const raw=DATA.cost_performance.filter(r=>r.discipline&&r.discipline.toLowerCase()===phase&&r.plan_pct!==null).slice(-4);
+ if(!raw.length)return;
+ const periods=raw.map(r=>r.period);
+ const plan=raw.map(r=>r.plan_pct);
+ const actual=raw.map(r=>r.actual_pct);
+ const earned=raw.map(r=>r.earned_pct);
+ const cum=a=>{let s=0;return a.map(v=>(s+=v,+s.toFixed(1)))};
+ if(epcChart)epcChart.destroy();
+ epcChart=new Chart(document.getElementById('epcProgressChart'),{type:'bar',data:{labels:periods,datasets:[{label:'Plan',data:plan,backgroundColor:'rgba(59,130,246,.40)',order:3},{label:'Actual',data:actual,backgroundColor:'rgba(34,197,94,.40)',order:4},{label:'Earned',data:earned,backgroundColor:'rgba(255,255,255,.18)',order:5},{label:'Plan (cum)',data:cum(plan),type:'line',borderColor:'#2563eb',pointRadius:0,borderWidth:2,tension:.35,yAxisID:'y1',order:1},{label:'Actual (cum)',data:cum(actual),type:'line',borderColor:'#16a34a',pointRadius:0,borderWidth:2,tension:.35,yAxisID:'y1',order:2}]},options:{...opt,layout:{padding:{top:2,right:8,bottom:2,left:4}},plugins:{legend:{position:'bottom',labels:{filter:item=>!item.text.includes('cum'),color:'#9aa6b8',boxWidth:10,boxHeight:10,padding:12,font:{size:12,weight:'400'},usePointStyle:true,pointStyle:'rectRounded'}}},scales:{x:baseScales.x,y:{beginAtZero:true,min:0,max:12,ticks:{color:'#9aa6b8',padding:4,stepSize:4},grid:{color:'rgba(255,255,255,.06)'}},y1:{position:'right',beginAtZero:true,min:0,max:40,ticks:{color:'#9aa6b8',padding:8,stepSize:10,callback:v=>v+'%'},grid:{display:false}}}}});
+}
+
+/* ---- Contingency Depletion ---- */
+function buildContingency(){
+ const raw=DATA.cost_performance.filter(r=>r.area==='All'&&r.discipline==='All'&&r.budget!==null);
+ const periods=raw.map(r=>r.period);
+ const actual=raw.map(r=>r.budget);
+ const planned=raw.map(r=>r.budget_plan||r.budget);
+ const contLabelPlugin={id:'contLabels',afterDraw(chart){const ctx=chart.ctx;ctx.save();ctx.font='600 11px DM Sans';chart.data.datasets.forEach((ds,i)=>{const meta=chart.getDatasetMeta(i);const last=meta.data[meta.data.length-1];if(last){ctx.fillStyle=ds.borderColor;ctx.fillText(ds.label,last.x+8,last.y+4)}});ctx.restore()}};
+ if(contChart)contChart.destroy();
+ contChart=new Chart(document.getElementById('contChart'),{type:'line',data:{labels:periods,datasets:[
+  {label:'Planned',data:planned,borderColor:'#3b82f6',backgroundColor:'#3b82f6',pointRadius:2.5,pointHoverRadius:4,borderWidth:2,tension:.35},
+  {label:'Actual',data:actual,borderColor:'#22c55e',backgroundColor:'#22c55e',pointRadius:2.5,pointHoverRadius:4,borderWidth:2,tension:.35}
+ ]},plugins:[contLabelPlugin],options:{...opt,plugins:{legend:{display:false}},layout:{padding:{top:6,right:60,bottom:6,left:8}},scales:{x:baseScales.x,y:{beginAtZero:true,min:0,max:120,ticks:{color:'#9aa6b8',padding:8,stepSize:40,callback:v=>'$'+v+'M'},grid:{color:'rgba(255,255,255,.06)'}}}}}); 
+}
+
+/* ---- Forecast Credibility ---- */
+function buildForecast(){
+ const raw=DATA.cost_performance.filter(r=>r.discipline==='Forecast_Error'&&r.earned_pct!==null);
+ if(!raw.length)return;
+ const periods=raw.map(r=>r.period);
+ const values=raw.map(r=>r.earned_pct);
+ if(forecastChart)forecastChart.destroy();
+ forecastChart=new Chart(document.getElementById('forecastChart'),{type:'line',data:{labels:periods,datasets:[{label:'Forecast Error (days)',data:values,borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,.08)',pointRadius:3,pointBackgroundColor:values.map(v=>Math.abs(v)>3?'#ef4444':'#22c55e'),pointHoverRadius:4,borderWidth:2,tension:.35,fill:true}]},options:{...opt,plugins:{legend:{display:false}},layout:{padding:{top:6,right:18,bottom:6,left:8}},scales:{x:baseScales.x,y:{ticks:{color:'#9aa6b8',padding:8,callback:v=>v+'d'},grid:{color:'rgba(255,255,255,.06)'}}}}});
+}
+
+/* ---- Boot ---- */
+loadData();
+</script>
+</body>
+</html>

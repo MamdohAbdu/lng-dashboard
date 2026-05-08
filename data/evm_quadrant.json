@@ -1,0 +1,254 @@
+[
+  {
+    "period": "Mar",
+    "area": "A1",
+    "cpi": 0.98,
+    "spi": 0.97,
+    "budget_m": 280
+  },
+  {
+    "period": "Mar",
+    "area": "A2",
+    "cpi": 0.96,
+    "spi": 0.95,
+    "budget_m": 220
+  },
+  {
+    "period": "Mar",
+    "area": "A3",
+    "cpi": 0.94,
+    "spi": 0.88,
+    "budget_m": 150
+  },
+  {
+    "period": "Mar",
+    "area": "A4",
+    "cpi": 0.99,
+    "spi": 0.96,
+    "budget_m": 180
+  },
+  {
+    "period": "Mar",
+    "area": "A5",
+    "cpi": 0.91,
+    "spi": 0.89,
+    "budget_m": 80
+  },
+  {
+    "period": "Mar",
+    "area": "A6",
+    "cpi": 0.95,
+    "spi": 0.92,
+    "budget_m": 60
+  },
+  {
+    "period": "Apr",
+    "area": "A1",
+    "cpi": 0.97,
+    "spi": 0.96,
+    "budget_m": 280
+  },
+  {
+    "period": "Apr",
+    "area": "A2",
+    "cpi": 0.95,
+    "spi": 0.94,
+    "budget_m": 220
+  },
+  {
+    "period": "Apr",
+    "area": "A3",
+    "cpi": 0.93,
+    "spi": 0.86,
+    "budget_m": 150
+  },
+  {
+    "period": "Apr",
+    "area": "A4",
+    "cpi": 0.98,
+    "spi": 0.94,
+    "budget_m": 180
+  },
+  {
+    "period": "Apr",
+    "area": "A5",
+    "cpi": 0.9,
+    "spi": 0.87,
+    "budget_m": 80
+  },
+  {
+    "period": "Apr",
+    "area": "A6",
+    "cpi": 0.93,
+    "spi": 0.91,
+    "budget_m": 60
+  },
+  {
+    "period": "May",
+    "area": "A1",
+    "cpi": 0.96,
+    "spi": 0.94,
+    "budget_m": 280
+  },
+  {
+    "period": "May",
+    "area": "A2",
+    "cpi": 0.94,
+    "spi": 0.93,
+    "budget_m": 220
+  },
+  {
+    "period": "May",
+    "area": "A3",
+    "cpi": 0.92,
+    "spi": 0.84,
+    "budget_m": 150
+  },
+  {
+    "period": "May",
+    "area": "A4",
+    "cpi": 0.97,
+    "spi": 0.93,
+    "budget_m": 180
+  },
+  {
+    "period": "May",
+    "area": "A5",
+    "cpi": 0.89,
+    "spi": 0.85,
+    "budget_m": 80
+  },
+  {
+    "period": "May",
+    "area": "A6",
+    "cpi": 0.92,
+    "spi": 0.9,
+    "budget_m": 60
+  },
+  {
+    "period": "Jun",
+    "area": "A1",
+    "cpi": 0.95,
+    "spi": 0.93,
+    "budget_m": 280
+  },
+  {
+    "period": "Jun",
+    "area": "A2",
+    "cpi": 0.93,
+    "spi": 0.92,
+    "budget_m": 220
+  },
+  {
+    "period": "Jun",
+    "area": "A3",
+    "cpi": 0.91,
+    "spi": 0.82,
+    "budget_m": 150
+  },
+  {
+    "period": "Jun",
+    "area": "A4",
+    "cpi": 0.96,
+    "spi": 0.91,
+    "budget_m": 180
+  },
+  {
+    "period": "Jun",
+    "area": "A5",
+    "cpi": 0.88,
+    "spi": 0.83,
+    "budget_m": 80
+  },
+  {
+    "period": "Jun",
+    "area": "A6",
+    "cpi": 0.91,
+    "spi": 0.89,
+    "budget_m": 60
+  },
+  {
+    "period": "Jul",
+    "area": "A1",
+    "cpi": 0.97,
+    "spi": 0.91,
+    "budget_m": 280
+  },
+  {
+    "period": "Jul",
+    "area": "A2",
+    "cpi": 0.92,
+    "spi": 0.93,
+    "budget_m": 220
+  },
+  {
+    "period": "Jul",
+    "area": "A3",
+    "cpi": 0.89,
+    "spi": 0.8,
+    "budget_m": 150
+  },
+  {
+    "period": "Jul",
+    "area": "A4",
+    "cpi": 0.95,
+    "spi": 0.9,
+    "budget_m": 180
+  },
+  {
+    "period": "Jul",
+    "area": "A5",
+    "cpi": 0.87,
+    "spi": 0.86,
+    "budget_m": 80
+  },
+  {
+    "period": "Jul",
+    "area": "A6",
+    "cpi": 0.92,
+    "spi": 0.91,
+    "budget_m": 60
+  },
+  {
+    "period": "Aug",
+    "area": "A1",
+    "cpi": 0.99,
+    "spi": 0.86,
+    "budget_m": 280
+  },
+  {
+    "period": "Aug",
+    "area": "A2",
+    "cpi": 0.93,
+    "spi": 0.95,
+    "budget_m": 220
+  },
+  {
+    "period": "Aug",
+    "area": "A3",
+    "cpi": 0.87,
+    "spi": 0.85,
+    "budget_m": 150
+  },
+  {
+    "period": "Aug",
+    "area": "A4",
+    "cpi": 0.96,
+    "spi": 0.88,
+    "budget_m": 180
+  },
+  {
+    "period": "Aug",
+    "area": "A5",
+    "cpi": 0.9,
+    "spi": 0.84,
+    "budget_m": 80
+  },
+  {
+    "period": "Aug",
+    "area": "A6",
+    "cpi": 0.92,
+    "spi": 0.9,
+    "budget_m": 60
+  }
+]

@@ -1,0 +1,30 @@
+[
+  {
+    "decision": "Add crew",
+    "owner": "Construction",
+    "expected_impact": "-8d",
+    "actual_impact": "-5d",
+    "status": "Open"
+  },
+  {
+    "decision": "Release IFC",
+    "owner": "Engineering",
+    "expected_impact": "-5d",
+    "actual_impact": "-5d",
+    "status": "Closed"
+  },
+  {
+    "decision": "Expedite valves",
+    "owner": "Procurement",
+    "expected_impact": "-3d",
+    "actual_impact": "0d",
+    "status": "Missed"
+  },
+  {
+    "decision": "Re-sequence civil",
+    "owner": "Planning",
+    "expected_impact": "-6d",
+    "actual_impact": null,
+    "status": "Open"
+  }
+]

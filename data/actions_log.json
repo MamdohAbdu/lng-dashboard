@@ -1,0 +1,44 @@
+[
+  {
+    "action": "Add 2nd piping crew, float at 0d",
+    "owner": "Construction",
+    "impact_days": -8,
+    "critical_path": "Yes",
+    "cost_exposure_m": 12.4
+  },
+  {
+    "action": "Expedite valves, ROS missed by 14d",
+    "owner": "Procurement",
+    "impact_days": -3,
+    "critical_path": "Yes",
+    "cost_exposure_m": 5.6
+  },
+  {
+    "action": "Resequence hydrotest, pred, lag 6d",
+    "owner": "Planning",
+    "impact_days": -4,
+    "critical_path": "Yes",
+    "cost_exposure_m": 3.2
+  },
+  {
+    "action": "Add crew (closure)",
+    "owner": "Construction",
+    "impact_days": -5,
+    "critical_path": "Yes",
+    "cost_exposure_m": null
+  },
+  {
+    "action": "Release IFC (closure)",
+    "owner": "Engineering",
+    "impact_days": -5,
+    "critical_path": "No",
+    "cost_exposure_m": null
+  },
+  {
+    "action": "Expedite valves (closure)",
+    "owner": "Procurement",
+    "impact_days": 0,
+    "critical_path": "Yes",
+    "cost_exposure_m": null
+  }
+]

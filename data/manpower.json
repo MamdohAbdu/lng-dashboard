@@ -1,0 +1,50 @@
+[
+  {
+    "period": "Mar",
+    "planned": 820,
+    "actual": 790,
+    "forecast": null
+  },
+  {
+    "period": "Apr",
+    "planned": 940,
+    "actual": 880,
+    "forecast": null
+  },
+  {
+    "period": "May",
+    "planned": 1100,
+    "actual": 1020,
+    "forecast": null
+  },
+  {
+    "period": "Jun",
+    "planned": 1280,
+    "actual": 1140,
+    "forecast": null
+  },
+  {
+    "period": "Jul",
+    "planned": 1400,
+    "actual": 1180,
+    "forecast": null
+  },
+  {
+    "period": "Aug",
+    "planned": 1500,
+    "actual": 1210,
+    "forecast": null
+  },
+  {
+    "period": "Sep",
+    "planned": 1580,
+    "actual": null,
+    "forecast": 1300
+  },
+  {
+    "period": "Oct",
+    "planned": 1620,
+    "actual": null,
+    "forecast": 1380
+  }
+]

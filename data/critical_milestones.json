@@ -1,0 +1,46 @@
+[
+  {
+    "milestone": "Structural Steel Complete",
+    "baseline_date": "2026-03-14",
+    "forecast_date": "2026-04-01",
+    "drift_days": 18,
+    "confidence": "High",
+    "root_cause": "Minor sequencing",
+    "recovery_action": "Weekend shifts",
+    "trend_values": "8,10,14,16,18",
+    "cost_impact_m": 3.2
+  },
+  {
+    "milestone": "Piping Hydrotest",
+    "baseline_date": "2026-07-09",
+    "forecast_date": "2026-08-20",
+    "drift_days": 42,
+    "confidence": "Low",
+    "root_cause": "Piping labour shortage",
+    "recovery_action": "Add 2nd crew",
+    "trend_values": "14,22,30,36,42",
+    "cost_impact_m": 12.5
+  },
+  {
+    "milestone": "Mechanical Completion",
+    "baseline_date": "2026-09-29",
+    "forecast_date": "2026-11-02",
+    "drift_days": 34,
+    "confidence": "Low",
+    "root_cause": "Piping + vendor delays",
+    "recovery_action": "Recovery plan under review",
+    "trend_values": "10,16,22,28,34",
+    "cost_impact_m": 8.8
+  },
+  {
+    "milestone": "Pre-Commissioning",
+    "baseline_date": "2026-12-14",
+    "forecast_date": "2027-01-11",
+    "drift_days": 28,
+    "confidence": "Medium",
+    "root_cause": "MC delay cascade",
+    "recovery_action": "Parallel commissioning",
+    "trend_values": "8,12,18,22,28",
+    "cost_impact_m": 6.4
+  }
+]

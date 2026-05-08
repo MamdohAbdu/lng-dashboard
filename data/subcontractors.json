@@ -1,0 +1,38 @@
+[
+  {
+    "contractor": "Pacific Marine",
+    "earned_value_m": 48,
+    "actual_cost_m": 59,
+    "delay_impact_days": 38,
+    "cpi": 0.78,
+    "spi": 0.82,
+    "commercial_impact": "exposure $4.2M \u2014 notice issued"
+  },
+  {
+    "contractor": "Modular Systems",
+    "earned_value_m": 35,
+    "actual_cost_m": 38,
+    "delay_impact_days": 22,
+    "cpi": 0.95,
+    "spi": 0.88,
+    "commercial_impact": "Back-charge pending $1.1M"
+  },
+  {
+    "contractor": "Coastal Concrete",
+    "earned_value_m": 28,
+    "actual_cost_m": 30,
+    "delay_impact_days": 14,
+    "cpi": 0.94,
+    "spi": 0.91,
+    "commercial_impact": "Retention hold \u2014 awaiting cure"
+  },
+  {
+    "contractor": "NorthSteel",
+    "earned_value_m": 18,
+    "actual_cost_m": 19,
+    "delay_impact_days": 8,
+    "cpi": 0.82,
+    "spi": 0.88,
+    "commercial_impact": "Variation claim $0.8M under review"
+  }
+]

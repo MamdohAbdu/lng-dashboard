@@ -1,0 +1,27 @@
+[
+  {
+    "period": "Apr",
+    "ppc": 88,
+    "target": 80
+  },
+  {
+    "period": "May",
+    "ppc": 82,
+    "target": 80
+  },
+  {
+    "period": "Jun",
+    "ppc": 75,
+    "target": 80
+  },
+  {
+    "period": "Jul",
+    "ppc": 68,
+    "target": 80
+  },
+  {
+    "period": "Aug",
+    "ppc": 62,
+    "target": 80
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "area_code": "A1",
+    "area_name": "A1-Tank Farm"
+  },
+  {
+    "area_code": "A2",
+    "area_name": "A2-Process"
+  },
+  {
+    "area_code": "A3",
+    "area_name": "A3-Marine"
+  },
+  {
+    "area_code": "A4",
+    "area_name": "A4-Utilities"
+  },
+  {
+    "area_code": "A5",
+    "area_name": "A5-Modular"
+  },
+  {
+    "area_code": "A6",
+    "area_name": "A6-OSBL"
+  }
+]

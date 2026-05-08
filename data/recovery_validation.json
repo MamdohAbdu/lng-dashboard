@@ -1,0 +1,11 @@
+{
+  "contractor": "Pacific Marine",
+  "claimed_rate": 150,
+  "rate_unit": "units/day",
+  "peak_actual_rate": 93,
+  "peak_window": "8-week",
+  "shortfall_pct": 38,
+  "duration_days": 20,
+  "premium_k": 600,
+  "executable": false
+}

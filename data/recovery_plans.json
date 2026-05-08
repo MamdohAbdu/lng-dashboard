@@ -1,0 +1,32 @@
+[
+  {
+    "recovery_lever": "2nd piping crew",
+    "gain_days": 8,
+    "feasibility": "Medium",
+    "constraint": "Labour availability"
+  },
+  {
+    "recovery_lever": "Weekend shifts",
+    "gain_days": 4,
+    "feasibility": "High",
+    "constraint": "Union agreement"
+  },
+  {
+    "recovery_lever": "Resequence hydrotest",
+    "gain_days": 3,
+    "feasibility": "Low",
+    "constraint": "Predecessor logic"
+  },
+  {
+    "recovery_lever": "Expedite valve delivery",
+    "gain_days": 3,
+    "feasibility": "Medium",
+    "constraint": "Vendor lead time"
+  },
+  {
+    "recovery_lever": "Fast-track prefab modules",
+    "gain_days": 3,
+    "feasibility": "Medium",
+    "constraint": "Fabrication yard capacity"
+  }
+]

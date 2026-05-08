@@ -1,0 +1,15 @@
+{
+  "area": "A2-Process",
+  "discipline": "Concrete",
+  "commodity": "Foundations",
+  "schedule_status": "Green",
+  "cost_status": "Green",
+  "remaining_qty": 18000,
+  "remaining_unit": "m\u00b3",
+  "actual_rate": 600,
+  "rate_unit": "m\u00b3/day",
+  "days_needed": 30,
+  "days_left": 18,
+  "hidden_delay_days": 12,
+  "exposure_m": 5
+}

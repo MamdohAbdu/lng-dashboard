@@ -1,0 +1,20 @@
+[
+  {
+    "discipline": "Piping",
+    "root_cause": "Labour shortage \u2014 2nd crew not mobilized",
+    "impact_pct": -35,
+    "owner": "Construction"
+  },
+  {
+    "discipline": "E&I",
+    "root_cause": "Cable tray rework from design change",
+    "impact_pct": -9,
+    "owner": "Engineering"
+  },
+  {
+    "discipline": "Mechanical",
+    "root_cause": "Vendor late delivery \u2014 compressors",
+    "impact_pct": -8,
+    "owner": "Procurement"
+  }
+]

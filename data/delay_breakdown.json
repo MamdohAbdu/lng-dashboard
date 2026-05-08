@@ -1,0 +1,74 @@
+[
+  {
+    "view": "Area",
+    "item": "A5-Modular",
+    "delay_days": 15,
+    "driver": "Labour"
+  },
+  {
+    "view": "Area",
+    "item": "A6-OSBL",
+    "delay_days": 8,
+    "driver": "IFC"
+  },
+  {
+    "view": "Area",
+    "item": "A3-Marine",
+    "delay_days": 6,
+    "driver": "Vendor"
+  },
+  {
+    "view": "Area",
+    "item": "A2-Process",
+    "delay_days": 3,
+    "driver": "IFC"
+  },
+  {
+    "view": "Area",
+    "item": "A4-Utilities",
+    "delay_days": 2,
+    "driver": "Labour"
+  },
+  {
+    "view": "Area",
+    "item": "A1-Tank Farm",
+    "delay_days": -3,
+    "driver": "\u2014"
+  },
+  {
+    "view": "Discipline",
+    "item": "Piping",
+    "delay_days": 14,
+    "driver": "Labour"
+  },
+  {
+    "view": "Discipline",
+    "item": "E&I",
+    "delay_days": 11,
+    "driver": "Vendor"
+  },
+  {
+    "view": "Discipline",
+    "item": "Mechanical",
+    "delay_days": 5,
+    "driver": "Labour"
+  },
+  {
+    "view": "Discipline",
+    "item": "Structural",
+    "delay_days": 3,
+    "driver": "\u2014"
+  },
+  {
+    "view": "Discipline",
+    "item": "Concrete",
+    "delay_days": 1,
+    "driver": "\u2014"
+  },
+  {
+    "view": "Discipline",
+    "item": "Civil",
+    "delay_days": -3,
+    "driver": "\u2014"
+  }
+]

@@ -1,0 +1,236 @@
+[
+  {
+    "period": "BL",
+    "view": "Area",
+    "item": "A2-Process",
+    "float_days": 18
+  },
+  {
+    "period": "May",
+    "view": "Area",
+    "item": "A2-Process",
+    "float_days": 20
+  },
+  {
+    "period": "Jun",
+    "view": "Area",
+    "item": "A2-Process",
+    "float_days": 19
+  },
+  {
+    "period": "Jul",
+    "view": "Area",
+    "item": "A2-Process",
+    "float_days": 14
+  },
+  {
+    "period": "Aug",
+    "view": "Area",
+    "item": "A2-Process",
+    "float_days": 10
+  },
+  {
+    "period": "BL",
+    "view": "Area",
+    "item": "A4-Utilities",
+    "float_days": 25
+  },
+  {
+    "period": "May",
+    "view": "Area",
+    "item": "A4-Utilities",
+    "float_days": 22
+  },
+  {
+    "period": "Jun",
+    "view": "Area",
+    "item": "A4-Utilities",
+    "float_days": 20
+  },
+  {
+    "period": "Jul",
+    "view": "Area",
+    "item": "A4-Utilities",
+    "float_days": 15
+  },
+  {
+    "period": "Aug",
+    "view": "Area",
+    "item": "A4-Utilities",
+    "float_days": 8
+  },
+  {
+    "period": "BL",
+    "view": "Area",
+    "item": "A1-Tank Farm",
+    "float_days": 21
+  },
+  {
+    "period": "May",
+    "view": "Area",
+    "item": "A1-Tank Farm",
+    "float_days": 16
+  },
+  {
+    "period": "Jun",
+    "view": "Area",
+    "item": "A1-Tank Farm",
+    "float_days": 12
+  },
+  {
+    "period": "Jul",
+    "view": "Area",
+    "item": "A1-Tank Farm",
+    "float_days": 6
+  },
+  {
+    "period": "Aug",
+    "view": "Area",
+    "item": "A1-Tank Farm",
+    "float_days": -3
+  },
+  {
+    "period": "BL",
+    "view": "Discipline",
+    "item": "Piping",
+    "float_days": 20
+  },
+  {
+    "period": "May",
+    "view": "Discipline",
+    "item": "Piping",
+    "float_days": 16
+  },
+  {
+    "period": "Jun",
+    "view": "Discipline",
+    "item": "Piping",
+    "float_days": 11
+  },
+  {
+    "period": "Jul",
+    "view": "Discipline",
+    "item": "Piping",
+    "float_days": 5
+  },
+  {
+    "period": "Aug",
+    "view": "Discipline",
+    "item": "Piping",
+    "float_days": -3
+  },
+  {
+    "period": "BL",
+    "view": "Discipline",
+    "item": "E&I",
+    "float_days": 22
+  },
+  {
+    "period": "May",
+    "view": "Discipline",
+    "item": "E&I",
+    "float_days": 20
+  },
+  {
+    "period": "Jun",
+    "view": "Discipline",
+    "item": "E&I",
+    "float_days": 18
+  },
+  {
+    "period": "Jul",
+    "view": "Discipline",
+    "item": "E&I",
+    "float_days": 14
+  },
+  {
+    "period": "Aug",
+    "view": "Discipline",
+    "item": "E&I",
+    "float_days": 8
+  },
+  {
+    "period": "BL",
+    "view": "Discipline",
+    "item": "Mechanical",
+    "float_days": 18
+  },
+  {
+    "period": "May",
+    "view": "Discipline",
+    "item": "Mechanical",
+    "float_days": 17
+  },
+  {
+    "period": "Jun",
+    "view": "Discipline",
+    "item": "Mechanical",
+    "float_days": 15
+  },
+  {
+    "period": "Jul",
+    "view": "Discipline",
+    "item": "Mechanical",
+    "float_days": 12
+  },
+  {
+    "period": "Aug",
+    "view": "Discipline",
+    "item": "Mechanical",
+    "float_days": 6
+  },
+  {
+    "period": "BL",
+    "view": "Discipline",
+    "item": "Structural",
+    "float_days": 25
+  },
+  {
+    "period": "May",
+    "view": "Discipline",
+    "item": "Structural",
+    "float_days": 23
+  },
+  {
+    "period": "Jun",
+    "view": "Discipline",
+    "item": "Structural",
+    "float_days": 21
+  },
+  {
+    "period": "Jul",
+    "view": "Discipline",
+    "item": "Structural",
+    "float_days": 19
+  },
+  {
+    "period": "Aug",
+    "view": "Discipline",
+    "item": "Structural",
+    "float_days": 15
+  },
+  {
+    "period": "Previous",
+    "view": "Worsening",
+    "item": "A3-Marine",
+    "float_days": -2
+  },
+  {
+    "period": "Previous",
+    "view": "Worsening",
+    "item": "A1-Tank Farm",
+    "float_days": -1
+  },
+  {
+    "period": "Current",
+    "view": "Worsening",
+    "item": "A3-Marine",
+    "float_days": -6
+  },
+  {
+    "period": "Current",
+    "view": "Worsening",
+    "item": "A1-Tank Farm",
+    "float_days": -5
+  }
+]

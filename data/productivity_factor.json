@@ -1,0 +1,102 @@
+[
+  {
+    "period": "Apr",
+    "discipline": "Piping",
+    "pf_value": 1.07
+  },
+  {
+    "period": "May",
+    "discipline": "Piping",
+    "pf_value": 1.1
+  },
+  {
+    "period": "Jun",
+    "discipline": "Piping",
+    "pf_value": 1.12
+  },
+  {
+    "period": "Jul",
+    "discipline": "Piping",
+    "pf_value": 1.21
+  },
+  {
+    "period": "Aug",
+    "discipline": "Piping",
+    "pf_value": 1.35
+  },
+  {
+    "period": "Apr",
+    "discipline": "E&I",
+    "pf_value": 1.02
+  },
+  {
+    "period": "May",
+    "discipline": "E&I",
+    "pf_value": 1.05
+  },
+  {
+    "period": "Jun",
+    "discipline": "E&I",
+    "pf_value": 1.07
+  },
+  {
+    "period": "Jul",
+    "discipline": "E&I",
+    "pf_value": 1.1
+  },
+  {
+    "period": "Aug",
+    "discipline": "E&I",
+    "pf_value": 1.12
+  },
+  {
+    "period": "Apr",
+    "discipline": "Steel",
+    "pf_value": 0.98
+  },
+  {
+    "period": "May",
+    "discipline": "Steel",
+    "pf_value": 1.01
+  },
+  {
+    "period": "Jun",
+    "discipline": "Steel",
+    "pf_value": 1.03
+  },
+  {
+    "period": "Jul",
+    "discipline": "Steel",
+    "pf_value": 1.05
+  },
+  {
+    "period": "Aug",
+    "discipline": "Steel",
+    "pf_value": 1.06
+  },
+  {
+    "period": "Apr",
+    "discipline": "Civil",
+    "pf_value": 0.95
+  },
+  {
+    "period": "May",
+    "discipline": "Civil",
+    "pf_value": 0.96
+  },
+  {
+    "period": "Jun",
+    "discipline": "Civil",
+    "pf_value": 0.97
+  },
+  {
+    "period": "Jul",
+    "discipline": "Civil",
+    "pf_value": 0.98
+  },
+  {
+    "period": "Aug",
+    "discipline": "Civil",
+    "pf_value": 0.99
+  }
+]

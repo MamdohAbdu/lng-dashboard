@@ -1,0 +1,26 @@
+[
+  {
+    "discipline_code": "CIV",
+    "discipline_name": "Civil"
+  },
+  {
+    "discipline_code": "CON",
+    "discipline_name": "Concrete"
+  },
+  {
+    "discipline_code": "STR",
+    "discipline_name": "Structural"
+  },
+  {
+    "discipline_code": "MEC",
+    "discipline_name": "Mechanical"
+  },
+  {
+    "discipline_code": "PIP",
+    "discipline_name": "Piping"
+  },
+  {
+    "discipline_code": "EI",
+    "discipline_name": "E&I"
+  }
+]

@@ -1,0 +1,30 @@
+[
+  {
+    "discipline": "Civil",
+    "required_rate": 100,
+    "actual_rate": 92,
+    "gap_pct": -8,
+    "historical_max": 105
+  },
+  {
+    "discipline": "Steel",
+    "required_rate": 85,
+    "actual_rate": 78,
+    "gap_pct": -8,
+    "historical_max": 90
+  },
+  {
+    "discipline": "Piping",
+    "required_rate": 120,
+    "actual_rate": 78,
+    "gap_pct": -35,
+    "historical_max": 92
+  },
+  {
+    "discipline": "E&I",
+    "required_rate": 70,
+    "actual_rate": 64,
+    "gap_pct": -9,
+    "historical_max": 72
+  }
+]

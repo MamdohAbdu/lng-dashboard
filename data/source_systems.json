@@ -1,0 +1,42 @@
+[
+  {
+    "system": "Primavera P6",
+    "last_refresh": "2025-08-28",
+    "refresh_frequency": "Weekly",
+    "staleness_flag": "Updated",
+    "owner": "Planning",
+    "refresh_hours": 3
+  },
+  {
+    "system": "InEight Cost",
+    "last_refresh": "2025-08-25",
+    "refresh_frequency": "Weekly",
+    "staleness_flag": "Updated",
+    "owner": "Cost Control",
+    "refresh_hours": 6
+  },
+  {
+    "system": "Smartsheet IFC",
+    "last_refresh": "2025-08-15",
+    "refresh_frequency": "Bi-weekly",
+    "staleness_flag": "Stale",
+    "owner": "Engineering",
+    "refresh_hours": 36
+  },
+  {
+    "system": "Field Progress (Excel)",
+    "last_refresh": "2025-08-20",
+    "refresh_frequency": "Weekly",
+    "staleness_flag": "Updated",
+    "owner": "Construction",
+    "refresh_hours": 9
+  },
+  {
+    "system": "Procurement Tracker",
+    "last_refresh": "2025-08-27",
+    "refresh_frequency": "Weekly",
+    "staleness_flag": "Updated",
+    "owner": "Procurement",
+    "refresh_hours": 4
+  }
+]
