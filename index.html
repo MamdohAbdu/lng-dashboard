@@ -389,12 +389,14 @@ function renderAll(){
 
  /* ---- P4: Source System Freshness ---- */
  const ss=DATA.source_systems||[];
- const sNameMap={'Primavera P6':'P6','InEight Cost':'COST','Smartsheet IFC':'ENG','Field Progress (Excel)':'FIELD','Procurement Tracker':'PROC'};
- const sNames=ss.map(s=>sNameMap[s.system]||s.system);
+ const sColMap={'Primavera P6':'SCHEDULE','InEight Cost':'COST','Smartsheet IFC':"ENG'G",'Field Progress (Excel)':'FIELD','Procurement Tracker':'PROC'};
+ const sSysMap={'Primavera P6':'P6','InEight Cost':'InEight','Smartsheet IFC':'SharePoint','Field Progress (Excel)':'Excel Files','Procurement Tracker':'SAP'};
+ const sCols=ss.map(s=>sColMap[s.system]||s.system);
+ const sSys=ss.map(s=>sSysMap[s.system]||s.system);
  const sDays=ss.map(s=>{const h=s.refresh_hours||Math.round((dataDate-new Date(s.last_refresh))/3600000);return h+' hr'});
  const sStatus=ss.map(s=>{const cls=s.staleness_flag==='Stale'?'badgebad':'badgegood';return `<span class="badge ${cls}">${s.staleness_flag}</span>`});
- const hdr='<thead><tr><th></th>'+sNames.map(n=>'<th>'+n+'</th>').join('')+'</tr></thead>';
- const body='<tbody><tr><td>Refreshed</td>'+sDays.map(d=>'<td>'+d+'</td>').join('')+'</tr><tr><td>Status</td>'+sStatus.map(s=>'<td>'+s+'</td>').join('')+'</tr></tbody>';
+ const hdr='<thead><tr><th>CHECK</th>'+sCols.map(n=>'<th>'+n+'</th>').join('')+'</tr></thead>';
+ const body='<tbody><tr><td>System</td>'+sSys.map(s=>'<td>'+s+'</td>').join('')+'</tr><tr><td>Refreshed</td>'+sDays.map(d=>'<td>'+d+'</td>').join('')+'</tr><tr><td>Status</td>'+sStatus.map(s=>'<td>'+s+'</td>').join('')+'</tr></tbody>';
  document.getElementById('sourceSystemsTable').innerHTML=hdr+body;
  const stale=ss.filter(s=>s.staleness_flag==='Stale');
  const fresh=ss.filter(s=>s.staleness_flag!=='Stale');
