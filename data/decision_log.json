@@ -2,33 +2,33 @@
   {
     "decision": "Add crew",
     "owner": "Construction",
-    "schedule_impact": "-5d",
-    "cost_impact": "+$120K",
+    "schedule_impact": "-25d",
+    "cost_impact": "+$23M",
     "status": "Open",
-    "date_raised": "2025-01-15"
+    "date_raised": "2025-07-22"
   },
   {
     "decision": "Release IFC",
     "owner": "Engineering",
-    "schedule_impact": "-5d",
+    "schedule_impact": "-45d",
     "cost_impact": "$0",
     "status": "Closed",
-    "date_raised": "2025-01-08"
+    "date_raised": "2025-08-08"
   },
   {
     "decision": "Expedite valves",
     "owner": "Procurement",
-    "schedule_impact": "0d",
-    "cost_impact": "+$85K",
+    "schedule_impact": "-",
+    "cost_impact": "+$11M",
     "status": "Missed",
-    "date_raised": "2024-12-20"
+    "date_raised": "2025-05-03"
   },
   {
     "decision": "Re-sequence civil",
     "owner": "Planning",
-    "schedule_impact": "—",
-    "cost_impact": "TBD",
+    "schedule_impact": "-35d",
+    "cost_impact": "+$3.5M",
     "status": "Open",
-    "date_raised": "2025-02-01"
+    "date_raised": "2025-07-02"
   }
 ]

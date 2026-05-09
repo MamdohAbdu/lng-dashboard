@@ -16,7 +16,8 @@
 :root{--bg:#07111f;--panel:#101b2b;--card:#121f31;--line:rgba(255,255,255,.1);--text:#e8edf5;--muted:#9aa6b8;--red:#ef4444;--amber:#f59e0b;--green:#22c55e;--blue:#3b82f6;--purple:#a855f7}*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#050b14,#07111f 45%,#030712);color:var(--text);font-family:'DM Sans',Inter,Segoe UI,Arial,sans-serif;padding:12px 12px 6px 12px;overflow:hidden;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}.app{max-width:1480px;height:calc(100vh - 48px);min-height:760px;margin:0 auto;border:1px solid var(--line);border-radius:20px;overflow:hidden;display:grid;grid-template-columns:210px 1fr;background:var(--panel);box-shadow:0 28px 90px rgba(0,0,0,.48)}.side{background:#081525;border-right:1px solid var(--line);padding:22px 16px;position:relative;display:flex;flex-direction:column}.brand{font-weight:750;font-size:21px;color:#F2E1CE;line-height:1.2;margin-bottom:76px;text-align:center}.brand small{display:block;color:#9aa6b8;font-weight:400;margin-top:8px;font-size:12px;line-height:1.45}.nav button{display:block;width:100%;background:transparent;color:var(--muted);border:0;text-align:left;padding:12px 10px;border-left:3px solid transparent;cursor:pointer;font-weight:650;font-size:13px;font-family:'DM Sans',sans-serif;letter-spacing:.8px}.nav button.active{color:#F2E1CE;background:rgba(242,225,206,.08);border-left-color:#F2E1CE}.main{padding:0 14px 10px 14px;min-width:0}.top{height:68px;display:flex;justify-content:space-between;align-items:center;margin-bottom:0;padding:0;background:rgba(255,255,255,.012)}.top h1{margin:0;font-size:22px;font-weight:750;letter-spacing:-.25px}.top p{margin:5px 0 0;color:var(--muted);font-size:14px;font-weight:400}.refresh{font-size:14px;color:var(--muted);text-align:right;margin-right:10px}.page{display:none}.page.active{display:block}.grid{display:grid;gap:12px}.kpis{grid-template-columns:repeat(5,1fr);align-items:stretch}.cols2{grid-template-columns:1fr 1fr}.cols3{grid-template-columns:repeat(3,1fr)}.card{background:linear-gradient(180deg,rgba(255,255,255,.048),rgba(255,255,255,.024));border:1px solid var(--line);border-radius:10px;padding:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 10px 28px rgba(0,0,0,.10)}.card h3{margin:0 0 8px;font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);font-weight:650}.value{font-size:27px;font-weight:750;letter-spacing:-.6px}.sub{font-size:14px;color:var(--muted);margin-top:12px;font-weight:400}.red{color:var(--red)}.amber{color:var(--amber)}.green{color:var(--green)}.blue{color:var(--blue)}.decision{border-color:var(--line);background:linear-gradient(180deg,rgba(255,255,255,.048),rgba(255,255,255,.024))}.decision-title{font-size:16px;font-weight:400;margin:4px 0 8px;letter-spacing:-.2px}.decision-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.mini{background:rgba(0,0,0,.18);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:14px}.rlv-table td,.rlv-table th{padding-top:5px !important;padding-bottom:5px !important}.scored-card{position:relative;border-left:3px solid var(--muted);}.scored-card .card-score{position:absolute;top:10px;right:12px;font-size:12px;font-weight:700;letter-spacing:-.3px;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid currentColor;background:rgba(0,0,0,.25)}.contra-table td,.contra-table th{padding-top:8px !important;padding-bottom:8px !important}
 .dl-table td,.dl-table th{padding-top:7px !important;padding-bottom:7px !important;white-space:nowrap}
 .cm-table td,.cm-table th{padding-top:6px !important;padding-bottom:6px !important}
-.bl-table td,.bl-table th{padding-top:7px !important;padding-bottom:7px !important}
+.bl-table td,.bl-table th{padding-top:8px !important;padding-bottom:8px !important}
+.ss-table td,.ss-table th{padding-top:6px !important;padding-bottom:6px !important}
 .mini b{display:inline;font-size:11px;text-transform:uppercase;color:var(--muted);margin-right:8px;font-weight:650}.insight{margin-bottom:4px;padding:0;font-size:14px;font-weight:400;font-style:italic;line-height:1.35;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.insight.red{color:var(--muted)}.insight.amber{color:var(--muted)}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.07);text-align:left}th{color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.7px;font-weight:650;background:rgba(255,255,255,.08)}
 td{color:rgba(255,255,255,.65)}.badge{font-size:14px;font-weight:400}.badgebad{color:var(--red)}.badgewarn{color:var(--amber)}.badgegood{color:var(--green)}.card-alert{font-size:12px;color:var(--amber);margin-bottom:6px;line-height:1.3}.note{font-size:14px;color:var(--muted);margin-top:8px;line-height:1.4}.span2{grid-column:span 2}@media(max-width:1000px){.app{grid-template-columns:1fr}.side{display:none}.kpis,.cols2,.cols3{grid-template-columns:1fr}.span2{grid-column:span 1}}
 
@@ -134,7 +135,7 @@ body {
 </head>
 <body>
 <div class="app">
-<aside class="side"><div class="brand"><img src="Logo.png" alt="LNG" style="width:52px;height:52px;border-radius:50%;object-fit:cover;margin:0 auto 10px;display:block">LNG Terminal<span style="display:block;font-size:13px;font-weight:500;color:#9aa6b8;margin-top:4px">CAD $1B Program</span></div><nav class="nav"><button class="active" onclick="showPage(0)">01 &nbsp; Verdict</button><button onclick="showPage(1)">02 &nbsp; Early Warning</button><button onclick="showPage(2)">03 &nbsp; Recovery Reality</button><button onclick="showPage(3)">04 &nbsp; Control Integrity</button></nav><div style="flex:1;display:flex;align-items:flex-end;justify-content:center;font-size:11px;color:rgba(255,255,255,.25);font-weight:500;letter-spacing:.3px;white-space:nowrap;text-align:center">Integrated Controls System</div></aside>
+<aside class="side"><div class="brand"><img src="Logo.png" alt="LNG" style="width:52px;height:52px;border-radius:50%;object-fit:cover;margin:0 auto 10px;display:block">LNG Terminal<span style="display:block;font-size:13px;font-weight:500;color:#9aa6b8;margin-top:4px">CAD $1B Program</span></div><nav class="nav"><button class="active" onclick="showPage(0)">01 &nbsp; Verdict</button><button onclick="showPage(1)">02 &nbsp; Early Warning</button><button onclick="showPage(2)">03 &nbsp; Recovery Reality</button><button onclick="showPage(3)">04 &nbsp; Control Integrity</button></nav><div style="flex:1;display:flex;align-items:flex-end;justify-content:center;font-size:12px;color:rgba(255,255,255,.25);font-weight:500;letter-spacing:.3px;white-space:nowrap;text-align:center">Integrated Controls System</div></aside>
 <main class="main">
 <div class="top"><div style="display:flex;align-items:baseline;gap:10px"><h1 id="pageTitle">VERDICT</h1><p id="pageSubtitle">What decision is required this month?</p></div><div class="refresh">Monthly Report | <b id="reportPeriod" style="color:#e8edf5">—</b></div></div>
 
@@ -168,8 +169,9 @@ body {
   <div class="card scored-card" style="margin-top:0px" id="sdiCard"><span class="card-score" id="sdiScore"></span><span id="sdiScoreLabel" style="position:absolute;top:52px;right:6px;font-size:9px;font-weight:600;letter-spacing:.3px;text-transform:uppercase">Data Confidence</span><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div><h3 style="margin-bottom:2px">Schedule Data Completeness</h3><div id="sdiSummary" style="font-size:14px;font-weight:650"></div><div id="sdiFailures" style="font-size:14px;color:var(--red);margin-top:2px"></div></div></div><table><thead><tr><th>Check</th><th>Status</th></tr></thead><tbody id="completenessBody"></tbody></table></div>
   <div class="card" style="padding-bottom:12px"><h3>Decision Log — Closure Loop</h3><table class="dl-table"><thead><tr><th>Decision</th><th>Owner</th><th>Schedule</th><th>Cost</th><th>Status</th><th style="width:50px">Age</th></tr></thead><tbody id="decisionLogBody"></tbody></table></div>
  </div>
- <div class="grid cols2" style="margin-top:8px"><div class="card scored-card" id="srcCard"><span class="card-score" id="srcScore"></span><span id="srcScoreLabel" style="position:absolute;top:52px;right:6px;font-size:9px;font-weight:600;letter-spacing:.3px;text-transform:uppercase">Data Confidence</span><h3>Source System Freshness</h3><div id="srcSummary" style="font-size:14px;font-weight:650"></div><div id="srcFailures" style="font-size:14px;color:var(--red);margin-top:2px;margin-bottom:8px"></div><table id="sourceSystemsTable"></table></div><div class="card" style="min-width:0;overflow:hidden;padding:10px 12px 13px"><h3>Baseline Change History</h3><table class="bl-table"><thead><tr><th>Version</th><th>MC Date</th><th>Driver</th><th>Day+</th><th>Cum.</th></tr></thead><tbody id="baselineBody"></tbody></table></div></div>
- <div class="grid cols2" style="margin-top:8px"><div class="card" style="padding-bottom:20px"><h3>Cross-System Contradictions</h3><table class="contra-table"><thead><tr><th>Conflict</th><th>Systems</th><th>Severity</th></tr></thead><tbody id="contradictionsBody"></tbody></table></div><div style="display:flex;flex-direction:column;gap:12px"><div style="display:flex;gap:12px"><div class="card" style="flex:1"><h3>Forecast Credibility</h3><div style="font-size:12px;color:var(--muted);margin:0 0 4px;font-weight:500">Decision confidence: <span style="color:var(--red);font-weight:600">LOW</span> (±5d forecast error)</div><canvas id="forecastChart" style="height:165px !important;max-height:165px !important"></canvas></div><div class="card" style="flex:1;padding-bottom:15px"><h3>Contingency Depletion</h3><canvas id="contChart" style="height:180px !important;max-height:180px !important"></canvas></div></div></div></div>
+ <div class="grid cols2" style="margin-top:8px"><div class="card scored-card" id="srcCard"><span class="card-score" id="srcScore"></span><span id="srcScoreLabel" style="position:absolute;top:52px;right:6px;font-size:9px;font-weight:600;letter-spacing:.3px;text-transform:uppercase">Data Confidence</span><h3>Source System Freshness</h3><div id="srcSummary" style="font-size:14px;font-weight:650"></div><div id="srcFailures" style="font-size:14px;color:var(--red);margin-top:2px;margin-bottom:8px"></div><table class="ss-table" id="sourceSystemsTable"></table></div><div class="card" style="min-width:0;overflow:hidden;padding:10px 12px 13px"><h3>Baseline Change History</h3><table class="bl-table"><thead><tr><th>Version</th><th>Rev Date</th><th>MC Date</th><th>Driver</th><th>Day+</th><th>Cum.</th></tr></thead><tbody id="baselineBody"></tbody></table></div></div>
+ <div class="grid cols2" style="margin-top:8px"><div class="card" style="padding-bottom:20px"><h3>Cross-System Contradictions</h3><table class="contra-table"><thead><tr><th>Conflict</th><th>Systems</th><th>Severity</th></tr></thead><tbody id="contradictionsBody"></tbody></table></div><div style="display:flex;flex-direction:column;gap:12px"><div style="display:flex;gap:12px"><div class="card" style="flex:1"><h3>Forecast Credibility</h3><div style="font-size:12px;color:var(--muted);margin:0 0 4px;font-weight:500">Decision confidence: <span style="color:var(--red);font-weight:600">LOW</span> (±5d forecast error)</div><canvas id="forecastChart" style="height:165px !important;max-height:165px !important"></canvas></div><div class="card" style="flex:1;padding:8px 8px 17px 8px"><h3>Contingency Depletion</h3><canvas id="contChart" style="height:180px !important;max-height:180px !important"></canvas></div></div></div></div>
+
 </section>
 </main></div>
 <script>
@@ -281,8 +283,8 @@ function renderAll(){
  const kpis=[
   {title:'Forecast Slip',value:`${M.forecast_slip_days} Days`,cls:'red',sub:'Behind baseline',trend:M.kpi_slip_trend,suffix:'d'},
   {title:'If No Action',value:`+${M.if_no_action_days} Days`,cls:'red',sub:'Next 4 weeks',trend:M.kpi_no_action_trend,suffix:'d'},
-  {title:'Cost Exposure',value:`$${Math.round(M.cost_exposure_per_day/1000)}K/d`,cls:'red',sub:'Delay burn rate',trend:M.kpi_cost_trend,prefix:'$',suffix:'K'},
-  {title:'Forecast Bias',value:`+${Math.round(M.forecast_bias_days)} Days`,cls:'amber',sub:'Avg optimism bias',trend:M.kpi_bias_trend,suffix:'d'}
+  {title:'Cost Exposure',value:`$${Math.round(M.cost_exposure_per_day/1000)}K/d`,cls:'',clr:'#AA9E90',sub:'Delay burn rate',trend:M.kpi_cost_trend,prefix:'$',suffix:'K'},
+  {title:'Forecast Bias',value:`+${Math.round(M.forecast_bias_days)} Days`,cls:'',clr:'#AA9E90',sub:'Avg optimism bias',trend:M.kpi_bias_trend,suffix:'d'}
  ];
 
  /* ---- P1: Data Confidence Card (5th KPI slot) ---- */
@@ -294,12 +296,12 @@ function renderAll(){
  const intPctP1=Math.round(intPass/intTotal*100);
  const confPct=Math.round((srcPctP1+intPctP1)/2);
  const confTrend='78,72,68,65,'+confPct;
- const confCls=confPct>=80?'green':confPct>=60?'amber':'red';
- const srcCls=srcPctP1>=80?'green':srcPctP1>=60?'amber':'red';
- const intCls=intPctP1>=80?'green':intPctP1>=60?'amber':'red';
+ const confCls=confPct>=85?'green':'red';
+ const srcCls=srcPctP1>=85?'green':'red';
+ const intCls=intPctP1>=85?'green':'red';
 
  const periodLabels=['Mar','Apr','May','Jun','Jul','Aug'];
- document.getElementById('kpiRow').innerHTML=kpis.map(k=>{const n=k.trend?k.trend.split(',').length:6;const labels=periodLabels.slice(periodLabels.length-n).join(',');return`<div class="card"><h3>${k.title}</h3><div class="kpi-row"><div><div class="value ${k.cls}">${k.value}</div><div class="sub">${k.sub}</div></div><svg class="sparkline" data-values="${k.trend}" data-labels="${labels}" ${k.prefix?'data-prefix="'+k.prefix+'"':''} data-suffix="${k.suffix}" ${k.invert?'data-invert="true"':''} ${k.extra||''}></svg></div></div>`}).join('')+`<div class="card" style="border-left:3px solid var(--${confCls});"><h3>Data Confidence</h3><div class="kpi-row"><div><div class="value ${confCls}">${confPct}%</div><div class="sub" style="white-space:nowrap">Fresh ${srcPctP1}% <span class="fdiv">|</span> Com. ${intPctP1}%</div></div><svg class="sparkline" data-values="${confTrend}" data-labels="${periodLabels.join(',')}" data-suffix="%" data-invert="true"></svg></div></div>`;
+ document.getElementById('kpiRow').innerHTML=kpis.map(k=>{const n=k.trend?k.trend.split(',').length:6;const labels=periodLabels.slice(periodLabels.length-n).join(',');return`<div class="card"><h3>${k.title}</h3><div class="kpi-row"><div><div class="value ${k.cls}" ${k.clr?'style="color:'+k.clr+'"':''}>${k.value}</div><div class="sub">${k.sub}</div></div><svg class="sparkline" data-values="${k.trend}" data-labels="${labels}" ${k.prefix?'data-prefix="'+k.prefix+'"':''} data-suffix="${k.suffix}" ${k.invert?'data-invert="true"':''} ${k.extra||''}></svg></div></div>`}).join('')+`<div class="card" style="border-left:3px solid var(--${confCls});"><h3>Data Confidence</h3><div class="kpi-row"><div><div class="value ${confCls}">${confPct}%</div><div class="sub" style="white-space:nowrap">Fresh ${srcPctP1}% <span class="fdiv">|</span> Com. ${intPctP1}%</div></div><svg class="sparkline" data-values="${confTrend}" data-labels="${periodLabels.join(',')}" data-suffix="%" data-invert="true"></svg></div></div>`;
 
  /* ---- P1: Top Decision ---- */
  document.getElementById('topDecisionText').innerHTML=`<strong style="color:#e8edf5">Add:</strong> ${M.top_action_text} — critical path float reaches zero in ${M.time_to_breach_days} days at current burn rate. <strong style="color:#e8edf5">Owner:</strong> ${M.top_action_owner}. <strong style="color:#e8edf5">Deadline:</strong> ${fmtDate(M.top_action_deadline)}.<br><span class="red"><strong>If not approved:</strong> +${M.top_action_no_action_impact_days}d additional slip, $${M.top_action_no_action_impact_cost}M exposure.</span>`;
@@ -314,7 +316,7 @@ function renderAll(){
  const srcFreshP4=DATA.source_systems.filter(s=>s.staleness_flag!=='Stale').length;
  const srcTotalP4=DATA.source_systems.length;
  const srcPct=Math.round(srcFreshP4/srcTotalP4*100);
- const srcClsP4=srcPct>=80?'green':srcPct>=60?'amber':'red';
+ const srcClsP4=srcPct>=85?'green':'red';
  document.getElementById('srcScore').innerHTML=srcPct+'%';
  document.getElementById('srcScore').className='card-score '+srcClsP4;
  document.getElementById('srcCard').style.borderLeftColor='var(--'+srcClsP4+')';document.getElementById('srcScoreLabel').className=srcClsP4;
@@ -322,7 +324,7 @@ function renderAll(){
  const intPassP4=DATA.completeness.filter(c=>c.status==='Pass').length;
  const intTotalP4=DATA.completeness.length;
  const intPct=Math.round(intPassP4/intTotalP4*100);
- const intClsP4=intPct>=80?'green':intPct>=60?'amber':'red';
+ const intClsP4=intPct>=85?'green':'red';
  document.getElementById('sdiScore').innerHTML=intPct+'%';
  document.getElementById('sdiScore').className='card-score '+intClsP4;
  document.getElementById('sdiCard').style.borderLeftColor='var(--'+intClsP4+')';document.getElementById('sdiScoreLabel').className=intClsP4;
@@ -376,7 +378,7 @@ function renderAll(){
  const avgScore=Math.round(checks.reduce((s,c)=>s+c.score_pct,0)/checks.length);
  const parts=[];if(failCount)parts.push(failCount+' fail');if(partialCount)parts.push(partialCount+' partial');
  document.getElementById('sdiSummary').innerHTML=`<span style="color:var(--muted);font-weight:650">${passed} of ${checks.length} checks passed, ${parts.join(', ')}</span>`;
- if(failCount>=2){document.getElementById('sdiFailures').innerHTML='<span style="color:var(--red);font-weight:700;text-transform:uppercase;letter-spacing:.5px">Forecast Confidence Blocked</span>';}else if(failCount===1||partialCount>=2){document.getElementById('sdiFailures').innerHTML='<span style="color:var(--amber);font-weight:700;text-transform:uppercase;letter-spacing:.5px">Data Quality Degraded</span>';}else{document.getElementById('sdiFailures').innerHTML='';}
+ if(failCount>=1){document.getElementById('sdiFailures').innerHTML='<span style="color:var(--red);font-weight:700;text-transform:uppercase;letter-spacing:.5px">Forecast Confidence Blocked</span>';}else{document.getElementById('sdiFailures').innerHTML='';}
  document.getElementById('completenessBody').innerHTML=failedChecks.map(c=>`<tr><td>${c.check}</td><td><span class="badge ${badge(c.status)}">${c.status}</span></td></tr>`).join('');
 
  /* ---- P4: Baseline History ---- */
@@ -384,9 +386,9 @@ function renderAll(){
  document.getElementById('baselineBody').innerHTML=bh.map(b=>{
   const da=b.days_added===''||b.days_added===null?'':''+b.days_added;
   const cu=b.cumulative===''||b.cumulative===null?'':''+b.cumulative;
-  const cls=da&&b.days_added>30?'red':da&&b.days_added>0?'amber':'green';
-  const ccls=cu&&b.cumulative>60?'red':cu&&b.cumulative>0?'amber':'green';
-  return `<tr><td>${b.version}</td><td>${b.mc_date?fmtDate(b.mc_date):''}</td><td>${b.driver||''}</td><td class="${cls}">${da?(b.days_added>0?'+':'')+da+'d':''}</td><td class="${ccls}">${cu?(b.cumulative>0?'+':'')+cu+'d':''}</td></tr>`;
+  const cls='';
+  const ccls=b.cumulative>60?'red':b.cumulative>0?'amber':'';
+  return `<tr><td>${b.version}</td><td>${b.date?fmtDate(b.date):''}</td><td>${b.mc_date?fmtDate(b.mc_date):''}</td><td>${b.driver||''}</td><td class="${cls}">${da?(b.days_added>0?'+':'')+da+'d':''}</td><td class="${ccls}">${cu?(b.cumulative>0?'+':'')+cu+'d':''}</td></tr>`;
  }).join('');
 
  /* ---- P4: Source System Freshness ---- */

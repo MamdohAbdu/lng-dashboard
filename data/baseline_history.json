@@ -1,7 +1,7 @@
 [
   {
     "version": "Original",
-    "date": "",
+    "date": "2024-02-12",
     "mc_date": "2027-01-14",
     "driver": "Contract Award",
     "days_added": 0,
@@ -9,7 +9,7 @@
   },
   {
     "version": "Rev 1",
-    "date": "",
+    "date": "2024-11-18",
     "mc_date": "2027-03-30",
     "driver": "Marine scope growth",
     "days_added": 55,
@@ -17,7 +17,7 @@
   },
   {
     "version": "Forecast",
-    "date": "",
+    "date": "2025-08-31",
     "mc_date": "2027-05-03",
     "driver": "Piping productivity shortfall",
     "days_added": 34,
