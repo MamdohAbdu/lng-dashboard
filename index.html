@@ -389,8 +389,8 @@ function renderAll(){
 
  /* ---- P4: Source System Freshness ---- */
  const ss=DATA.source_systems||[];
- const sColMap={'Primavera P6':'SCHEDULE','InEight Cost':'COST','Smartsheet IFC':"ENG'G",'Field Progress (Excel)':'FIELD','Procurement Tracker':'PROC'};
- const sSysMap={'Primavera P6':'P6','InEight Cost':'InEight','Smartsheet IFC':'SharePoint','Field Progress (Excel)':'Excel Files','Procurement Tracker':'SAP'};
+ const sColMap={'Primavera P6':'SCHEDULE','InEight Cost':'COST','SharePoint':"ENG'G",'Field Progress (Excel)':'FIELD','Procurement Tracker':'PROC'};
+ const sSysMap={'Primavera P6':'P6','InEight Cost':'InEight','SharePoint':'SharePoint','Field Progress (Excel)':'Excel Files','Procurement Tracker':'SAP'};
  const sCols=ss.map(s=>sColMap[s.system]||s.system);
  const sSys=ss.map(s=>sSysMap[s.system]||s.system);
  const sDays=ss.map(s=>{const h=s.refresh_hours||Math.round((dataDate-new Date(s.last_refresh))/3600000);return h+' hr'});

@@ -16,7 +16,7 @@
     "refresh_hours": 6
   },
   {
-    "system": "Smartsheet IFC",
+    "system": "SharePoint",
     "last_refresh": "2025-08-15",
     "refresh_frequency": "Bi-weekly",
     "staleness_flag": "Stale",
