@@ -358,8 +358,7 @@ function renderAll(){
  document.getElementById('decisionLogBody').innerHTML=DATA.decision_log.map(d=>{
   const age=d.date_raised?Math.round((dataDate-new Date(d.date_raised))/(86400000)):0;
   const acls=d.status==='Closed'?'green':age>60?'red':age>21?'amber':'green';
-  const costCls=d.cost_impact&&d.cost_impact.startsWith('+')?'amber':'green';
-  return `<tr><td>${d.decision}</td><td>${d.owner}</td><td>${d.schedule_impact||'—'}</td><td class="${costCls}">${d.cost_impact||'—'}</td><td><span class="badge ${badge(d.status)}">${d.status}</span></td><td class="${acls}">${age}d</td></tr>`;
+  return `<tr><td>${d.decision}</td><td>${d.owner}</td><td>${d.schedule_impact||'—'}</td><td>${d.cost_impact||'—'}</td><td>${d.status}</td><td class="${acls}">${age}d</td></tr>`;
  }).join('');
 
  /* ---- P4: Why Rate Is Failing ---- */

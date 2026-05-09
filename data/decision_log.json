@@ -2,7 +2,7 @@
   {
     "decision": "Add crew",
     "owner": "Construction",
-    "schedule_impact": "-5d of -8d planned",
+    "schedule_impact": "-5d",
     "cost_impact": "+$120K",
     "status": "Open",
     "date_raised": "2025-01-15"
@@ -10,7 +10,7 @@
   {
     "decision": "Release IFC",
     "owner": "Engineering",
-    "schedule_impact": "-5d as planned",
+    "schedule_impact": "-5d",
     "cost_impact": "$0",
     "status": "Closed",
     "date_raised": "2025-01-08"
@@ -18,7 +18,7 @@
   {
     "decision": "Expedite valves",
     "owner": "Procurement",
-    "schedule_impact": "0d of -3d planned",
+    "schedule_impact": "0d",
     "cost_impact": "+$85K",
     "status": "Missed",
     "date_raised": "2024-12-20"
@@ -26,7 +26,7 @@
   {
     "decision": "Re-sequence civil",
     "owner": "Planning",
-    "schedule_impact": "Pending",
+    "schedule_impact": "—",
     "cost_impact": "TBD",
     "status": "Open",
     "date_raised": "2025-02-01"
