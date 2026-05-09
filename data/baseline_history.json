@@ -1,24 +1,32 @@
 [
   {
     "version": "Original",
-    "date": "2024-06-15",
-    "mc_date": "2027-01-15",
+    "date": "",
+    "mc_date": "2027-01-14",
     "driver": "Contract Award",
     "days_added": 0,
     "cumulative": 0
   },
   {
     "version": "Rev 1",
-    "date": "2025-01-20",
-    "mc_date": "2027-03-31",
-    "driver": "Marine scope growth (+12% piping)",
-    "days_added": 75,
-    "cumulative": 75
+    "date": "",
+    "mc_date": "2027-03-30",
+    "driver": "Marine scope growth",
+    "days_added": 55,
+    "cumulative": 55
+  },
+  {
+    "version": "Rev 2",
+    "date": "",
+    "mc_date": "",
+    "driver": "",
+    "days_added": "",
+    "cumulative": ""
   },
   {
     "version": "Forecast",
-    "date": "2025-08-31",
-    "mc_date": "2027-05-04",
+    "date": "",
+    "mc_date": "2027-05-03",
     "driver": "Piping productivity shortfall",
     "days_added": 34,
     "cumulative": 109

@@ -382,9 +382,11 @@ function renderAll(){
  /* ---- P4: Baseline History ---- */
  const bh=DATA.baseline_history||[];
  document.getElementById('baselineBody').innerHTML=bh.map(b=>{
-  const cls=b.days_added>30?'red':b.days_added>0?'amber':'green';
-  const ccls=b.cumulative>60?'red':b.cumulative>0?'amber':'green';
-  return `<tr><td>${b.version}</td><td>${fmtDate(b.mc_date)}</td><td>${b.driver}</td><td class="${cls}">${b.days_added>0?'+':''}${b.days_added}d</td><td class="${ccls}">${b.cumulative>0?'+':''}${b.cumulative}d</td></tr>`;
+  const da=b.days_added===''||b.days_added===null?'':''+b.days_added;
+  const cu=b.cumulative===''||b.cumulative===null?'':''+b.cumulative;
+  const cls=da&&b.days_added>30?'red':da&&b.days_added>0?'amber':'green';
+  const ccls=cu&&b.cumulative>60?'red':cu&&b.cumulative>0?'amber':'green';
+  return `<tr><td>${b.version}</td><td>${b.mc_date?fmtDate(b.mc_date):''}</td><td>${b.driver||''}</td><td class="${cls}">${da?(b.days_added>0?'+':'')+da+'d':''}</td><td class="${ccls}">${cu?(b.cumulative>0?'+':'')+cu+'d':''}</td></tr>`;
  }).join('');
 
  /* ---- P4: Source System Freshness ---- */
