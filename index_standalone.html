@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LNG Executive Schedule Intelligence Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07111f;--panel:#101b2b;--card:#121f31;--line:rgba(255,255,255,.1);--text:#e8edf5;--muted:#9aa6b8;--red:#ef4444;--amber:#f59e0b;--green:#22c55e;--blue:#3b82f6;--purple:#a855f7}*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#050b14,#07111f 45%,#030712);color:var(--text);font-family:'DM Sans',Inter,Segoe UI,Arial,sans-serif;padding:12px 12px 6px 12px;overflow:hidden;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}.app{max-width:1480px;height:calc(100vh - 48px);min-height:760px;margin:0 auto;border:1px solid var(--line);border-radius:20px;overflow:hidden;display:grid;grid-template-columns:210px 1fr;background:var(--panel);box-shadow:0 28px 90px rgba(0,0,0,.48)}.side{background:#081525;border-right:1px solid var(--line);padding:22px 16px;position:relative}.brand{font-weight:750;font-size:21px;color:#F2E1CE;line-height:1.2;margin-bottom:56px;text-align:center}.brand small{display:block;color:#9aa6b8;font-weight:400;margin-top:8px;font-size:12px;line-height:1.45}.nav button{display:block;width:100%;background:transparent;color:var(--muted);border:0;text-align:left;padding:12px 10px;border-left:3px solid transparent;cursor:pointer;font-weight:650;font-size:13px;font-family:'DM Sans',sans-serif;letter-spacing:.8px}.nav button.active{color:#F2E1CE;background:rgba(242,225,206,.08);border-left-color:#F2E1CE}.main{padding:0 34px 10px 14px;min-width:0}.top{height:68px;display:flex;justify-content:space-between;align-items:center;margin-bottom:0;padding:0;background:rgba(255,255,255,.012)}.top h1{margin:0;font-size:22px;font-weight:750;letter-spacing:-.25px}.top p{margin:5px 0 0;color:var(--muted);font-size:14px;font-weight:400}.refresh{font-size:14px;color:var(--muted);text-align:right;margin-right:10px}.page{display:none}.page.active{display:block}.grid{display:grid;gap:12px}.kpis{grid-template-columns:repeat(5,1fr)}.cols2{grid-template-columns:1fr 1fr}.cols3{grid-template-columns:repeat(3,1fr)}.card{background:linear-gradient(180deg,rgba(255,255,255,.048),rgba(255,255,255,.024));border:1px solid var(--line);border-radius:10px;padding:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 10px 28px rgba(0,0,0,.10)}.card h3{margin:0 0 8px;font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);font-weight:650}.value{font-size:27px;font-weight:750;letter-spacing:-.6px}.sub{font-size:14px;color:var(--muted);margin-top:12px;font-weight:400}.red{color:var(--red)}.amber{color:var(--amber)}.green{color:var(--green)}.blue{color:var(--blue)}.decision{border-color:var(--line);background:linear-gradient(180deg,rgba(255,255,255,.048),rgba(255,255,255,.024))}.decision-title{font-size:16px;font-weight:400;margin:4px 0 8px;letter-spacing:-.2px}.decision-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.mini{background:rgba(0,0,0,.18);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:14px}.rlv-table td,.rlv-table th{padding-top:8px !important;padding-bottom:8px !important}
+.dl-table td,.dl-table th{padding-top:8px !important;padding-bottom:8px !important}
+.mini b{display:inline;font-size:11px;text-transform:uppercase;color:var(--muted);margin-right:8px;font-weight:650}.insight{margin-bottom:4px;padding:0;font-size:14px;font-weight:400;font-style:italic;line-height:1.35;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.insight.red{color:var(--muted)}.insight.amber{color:var(--muted)}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.07);text-align:left}th{color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.7px;font-weight:650;background:rgba(255,255,255,.08)}
+td{color:rgba(255,255,255,.65)}.badge{font-size:14px;font-weight:750}.badgebad{color:var(--red)}.badgewarn{color:var(--amber)}.badgegood{color:var(--green)}.card-alert{font-size:12px;color:var(--amber);margin-bottom:6px;line-height:1.3}.chart{}.chart-sm{}.note{font-size:14px;color:var(--muted);margin-top:8px;line-height:1.4}.span2{grid-column:span 2}@media(max-width:1000px){.app{grid-template-columns:1fr}.side{display:none}.kpis,.cols2,.cols3{grid-template-columns:1fr}.span2{grid-column:span 1}}
+
+/* ---- Page/size match original dashboard + readable typography ---- */
+html { height:100%; }
+body { height:100%; overflow:hidden; box-sizing:border-box; }
+.app { height:100%; }
+.main { height:100%; min-height:0; overflow:hidden; display:flex; flex-direction:column; }
+.top { flex:0 0 68px; }
+.page { flex:1 1 auto; min-height:0; max-height:none; overflow:hidden; padding:4px 0 8px; }
+.page-scroll.active { display:flex !important; flex-direction:column; overflow-y:auto !important; }
+.page.active { display:block; }
+.grid { align-items:start; gap:12px; }
+.cols2, .cols3, .kpis { align-items:start; }
+.card { align-self:start; min-height:0; overflow:visible; }
+.decision { margin-top:12px !important; }
+.page .grid[style] { margin-top:12px !important; }
+.kpis .card { padding:5px 14px; min-height:60px; }
+.kpis .value { font-size:26px; }
+th, td { padding:5px 8px; }
+@media (min-height:900px){ .kpis .card{min-height:106px;} }
+@media (max-height:820px){ body{padding:12px 12px 6px 12px}.app{height:calc(100vh - 24px);} .top{flex-basis:58px} .kpis .card{min-height:82px}.kpis .value{font-size:23px;} }
+@media (min-width:1001px){
+  .cols3{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .cols2{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .kpis{grid-template-columns:repeat(5,minmax(0,1fr));}
+}
+/* Fit to viewport on smaller screens */
+@media (max-height:1400px){ body{zoom:0.98;} }
+@media (max-height:900px){ body{zoom:0.87;} }
+/* ---- Chart anti-crop fix: keep all bars, labels, legends visible ---- */
+.card { overflow: visible !important; }
+.chart, .chart-sm {
+  display:block !important;
+  width:100% !important;
+  height:220px !important;
+  max-height:220px !important;
+}
+.card:has(canvas) { padding-bottom:10px; }
+@media (min-height:900px){
+  .chart,.chart-sm{height:245px !important;max-height:245px !important;}
+}
+@media (max-height:820px){
+  .chart,.chart-sm{height:190px !important;max-height:190px !important;}
+}
+
+/* ---- Messaging pass: readable visual headers + warning strips ---- */
+.card h3{font-size:14px !important;color:#ffffff !important;font-weight:650 !important;letter-spacing:.5px !important;text-transform:uppercase !important;padding-bottom:6px !important;margin-bottom:6px !important;border-bottom:none !important;}
+.top p{font-size:14px;color:var(--muted);font-weight:500;}
+.warning-strip{background:rgba(239,68,68,.12);border-left:4px solid #ef4444;color:#fecaca;font-size:14px;font-weight:600;line-height:1.35;padding:11px 14px;margin-bottom:10px;}
+.warning-strip strong{color:#ffffff;font-weight:750;}
+.breach-card .value{font-size:30px;}
+.p3-bottom{align-items:stretch !important;}
+.p3-bottom .card{display:flex;flex-direction:column;}
+.p3-bottom table{flex:1;}
+.p3-bottom table th,.p3-bottom table td{padding:13px 8px;}
+.forecast-row{display:flex;gap:12px;margin-bottom:12px;}
+.forecast-strip{font-size:14px;color:var(--muted);padding:12px 12px 12px 12px;border-radius:8px;background:rgba(255,255,255,.03);border:1px solid var(--line);display:flex;align-items:center;flex-wrap:nowrap;white-space:nowrap;gap:2px;}
+.forecast-strip.schedule{flex:0.8;}
+.forecast-strip.financial{flex:1.2;}
+.forecast-strip strong{color:#e8edf5;font-weight:600;}
+.fdiv{color:rgba(255,255,255,.15);margin:0 4px;}
+
+
+/* ---- FINAL TOP PADDING / CENTERING FIX ----
+   This override wins over the earlier duplicated body/.app rules. */
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  padding: 40px 20px 6px !important;
+}
+
+.app {
+  height: calc(100vh - 46px) !important;
+  margin: 0 auto !important;
+}
+
+.main {
+  padding: 0 14px 10px !important;
+}
+
+.top {
+  padding-top: 14px !important;
+  margin-bottom: 8px !important;
+}
+
+.page {
+  padding-top: 12px !important;
+}
+
+@media (max-height:820px){
+  body { padding: 28px 12px 6px !important; }
+  .app { height: calc(100vh - 40px) !important; }
+}
+
+.kpi-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;position:relative}
+.sparkline{width:78px;height:65px;flex-shrink:0;display:block;overflow:visible;margin-bottom:-30px}
+.spark-dot{opacity:1}
+.cm-spark{width:60px;height:28px;margin-bottom:-10px}
+.spark-tooltip{position:absolute;font-size:11px;color:rgba(255,255,255,.8);font-family:'DM Sans',sans-serif;background:rgba(0,0,0,.85);padding:2px 6px;border-radius:4px;white-space:nowrap;display:none;pointer-events:none;z-index:10}
+
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side"><div class="brand"><img src="Logo.png" alt="LNG" style="width:52px;height:52px;border-radius:50%;object-fit:cover;margin:0 auto 10px;display:block">LNG Terminal<small>Schedule Intelligence</small></div><nav class="nav"><button class="active" onclick="showPage(0)">01 &nbsp; Verdict</button><button onclick="showPage(1)">02 &nbsp; Early Warning</button><button onclick="showPage(2)">03 &nbsp; Execution Reality</button><button onclick="showPage(3)">04 &nbsp; Accountability</button></nav><div style="position:absolute;bottom:22px;left:16px;right:16px;font-size:11px;color:rgba(255,255,255,.25);font-weight:500;letter-spacing:.3px;white-space:nowrap;text-align:center">Project Controls Portfolio Demo</div></aside>
+<main class="main">
+<div class="top"><div style="display:flex;align-items:baseline;gap:10px"><h1 id="pageTitle">VERDICT</h1><p id="pageSubtitle">What decision is required this month?</p></div><div class="refresh">Monthly Report | <b id="reportPeriod" style="color:#e8edf5">—</b></div></div>
+
+<section class="page active">
+ <div class="forecast-row">
+  <div class="forecast-strip schedule" id="scheduleStrip"></div>
+  <div class="forecast-strip financial" id="financialStrip"></div>
+ </div>
+ <div class="grid kpis" style="grid-template-columns:repeat(5,1fr)" id="kpiRow"></div>
+ <div class="card" style="margin-top:12px;padding:11px 14px;font-size:16px;line-height:1.5;color:rgba(255,255,255,.65)"><h3>Top Required Decision</h3><span id="topDecisionText"></span></div>
+ <div class="grid cols2" style="margin-top:12px">
+  <div class="card"><h3>Required Actions</h3><table><thead><tr><th>Action</th><th>Owner</th><th>CP?</th><th>Impact</th><th>Exposure</th></tr></thead><tbody id="actionsBody"></tbody></table></div>
+  <div class="card"><h3>Cross-System Contradictions</h3><table><thead><tr><th>Conflict</th><th>Systems</th><th>Severity</th></tr></thead><tbody id="contradictionsBody"></tbody></table></div>
+ </div>
+ <div class="card" style="margin-top:12px"><h3>Critical Milestones</h3><table class="cm-table"><thead><tr><th>Milestone</th><th>Baseline</th><th>Forecast</th><th>Drift</th><th>Confidence</th><th>Root Cause</th><th>Recovery Action</th><th style="width:70px">Trend</th></tr></thead><tbody id="milestonesBody"></tbody></table></div>
+</section>
+
+<section class="page">
+ <div class="grid cols3"><div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px"><h3 style="margin-bottom:0">Float Burn Rate</h3><div class="float-toggles" style="display:flex;gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden"><button class="float-tog active" data-view="area" style="padding:5px 12px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:600;background:transparent;color:var(--amber);border:none;cursor:pointer;border-right:1px solid var(--line);border-bottom:2px solid var(--amber)">Area</button><button class="float-tog" data-view="discipline" style="padding:5px 12px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:600;background:transparent;color:var(--muted);border:none;cursor:pointer">Discipline</button></div></div><div class="card-alert" style="margin-bottom:4px">A3-Marine float exhausted in 11 days at current burn</div><canvas id="floatChart" class="chart"></canvas></div><div class="card"><h3>EVM Quadrant by Area</h3><div class="card-alert">Pacific Marine in double-red zone — CPI &amp; SPI below 0.90</div><canvas id="evmQuadChart" class="chart"></canvas></div><div class="card"><h3>Look-Ahead Reliability (PPC)</h3><div class="card-alert">PPC trending below 80% target — 4-week look-ahead unreliable</div><canvas id="ppcChart" class="chart"></canvas></div></div>
+ <div class="grid cols3" style="margin-top:12px"><div class="card" style="padding-bottom:17px"><h3>Progress S-Curve</h3><div class="card-alert">Earned trailing plan by 8% — gap widening since June</div><canvas id="sCurveChart" class="chart"></canvas></div><div class="card" style="padding-bottom:17px"><h3>Manpower — Plan vs Actual</h3><div class="card-alert">Piping crew 35% under-resourced vs recovery plan</div><canvas id="manpowerChart" class="chart"></canvas></div><div class="card" style="padding-bottom:17px"><h3>Productivity Factor Trend</h3><div class="card-alert">PF &gt; 1.5 in piping — 2nd crew mobilization = 18d recovery → see Recovery Validation</div><canvas id="pfTrendChart" class="chart"></canvas></div></div>
+</section>
+
+<section class="page">
+ <div class="grid cols3"><div class="card" style="padding-bottom:6px"><h3>Recovery Rate vs Proven Capacity</h3><canvas id="velocityChart" class="chart"></canvas></div><div class="card" style="padding-bottom:6px"><h3>Contractor Performance</h3><canvas id="contPerfChart" class="chart"></canvas></div><div class="card" style="padding-bottom:6px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><div><h3 style="margin-bottom:2px">Delay Breakdown</h3></div><div class="delay-toggles" style="display:flex;gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden"><button class="delay-tog active" data-view="area" style="padding:5px 12px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:600;background:transparent;color:var(--amber);border:none;cursor:pointer;border-right:1px solid var(--line);border-bottom:2px solid var(--amber)">Area</button><button class="delay-tog" data-view="discipline" style="padding:5px 12px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:600;background:transparent;color:var(--muted);border:none;cursor:pointer">Discipline</button></div></div><canvas id="delayAreaChart" class="chart"></canvas></div></div>
+ <div class="grid cols3 p3-bottom" style="margin-top:12px;margin-bottom:10px"><div class="card" id="hiddenDelayCard"></div><div class="card" id="recoveryValCard"></div><div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><div><h3 style="margin-bottom:2px">Physical Progress</h3></div><div class="epc-toggles" style="display:flex;gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden"><button class="epc-tog" data-phase="engineering" style="padding:5px 12px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:600;background:transparent;color:var(--muted);border:none;cursor:pointer;border-right:1px solid var(--line)">E</button><button class="epc-tog" data-phase="procurement" style="padding:5px 12px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:600;background:transparent;color:var(--muted);border:none;cursor:pointer;border-right:1px solid var(--line)">P</button><button class="epc-tog active" data-phase="construction" style="padding:5px 12px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:600;background:transparent;color:var(--amber);border:none;cursor:pointer;border-bottom:2px solid var(--amber)">C</button></div></div><canvas id="epcProgressChart" class="chart"></canvas></div></div>
+
+</section>
+
+<section class="page page-scroll">
+ <div class="grid cols2">
+  <div class="card" style="padding-bottom:12px"><h3>Decision Log — Closure Loop</h3><table class="dl-table"><thead><tr><th>Decision</th><th>Owner</th><th>Expected</th><th>Actual</th><th>Status</th><th>Age</th></tr></thead><tbody id="decisionLogBody"></tbody></table></div>
+  <div class="card"><h3>Why Rate Is Failing</h3><table class="rlv-table"><thead><tr><th>Discipline</th><th>Root Cause</th><th>Impact</th><th>Owner</th></tr></thead><tbody id="whyFailingBody"></tbody></table></div>
+ </div>
+ <div class="grid cols2" style="margin-top:12px"><div class="card" style="margin-top:0px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div><h3 style="margin-bottom:2px">Schedule Data Integrity</h3><div id="sdiSummary" style="font-size:14px;font-weight:650"></div><div id="sdiFailures" style="font-size:14px;color:var(--red);margin-top:2px"></div></div></div><table><thead><tr><th>Check</th><th>Status</th></tr></thead><tbody id="completenessBody"></tbody></table></div><div style="display:flex;flex-direction:column;gap:12px"><div style="display:flex;gap:12px"><div class="card" style="flex:1"><h3>Contingency Depletion</h3><canvas id="contChart" style="height:193px !important;max-height:193px !important"></canvas></div><div class="card" style="flex:1"><h3>Forecast Credibility</h3><canvas id="forecastChart" style="height:193px !important;max-height:193px !important"></canvas></div></div></div></div>
+ <div class="card" style="margin-top:12px;padding-bottom:24px"><h3>Baseline Change History</h3><table><thead><tr><th>Version</th><th>Date</th><th>MC Date</th><th>Driver</th><th>Days Added</th><th>Cumulative</th></tr></thead><tbody id="baselineBody"></tbody></table></div>
+</section>
+</main></div>
+<script>
+/* ---- Navigation ---- */
+const titles=['VERDICT','EARLY WARNING','EXECUTION REALITY','ACCOUNTABILITY'];
+const subtitles=['What decision is required this month?',"What's breaking before it shows in reports?",'Is the recovery plan actually executable?','Who owns the gap and can we trust the numbers?'];
+function showPage(i){document.querySelectorAll('.page').forEach((p,n)=>p.classList.toggle('active',n===i));document.querySelectorAll('.nav button').forEach((b,n)=>b.classList.toggle('active',n===i));document.getElementById('pageTitle').textContent=titles[i];document.getElementById('pageSubtitle').textContent=subtitles[i]}
+
+/* ---- Chart defaults ---- */
+const baseScales={
+  x:{offset:true,ticks:{color:'#9aa6b8',padding:8,autoSkip:false,maxRotation:0},grid:{color:'rgba(255,255,255,.06)'}},
+  y:{beginAtZero:true,grace:'12%',ticks:{color:'#9aa6b8',padding:8},grid:{color:'rgba(255,255,255,.06)'}}
+};
+const opt={responsive:true,maintainAspectRatio:false,layout:{padding:{top:4,right:24,bottom:16,left:10}},plugins:{legend:{position:'bottom',align:'center',labels:{color:'#9aa6b8',boxWidth:10,boxHeight:10,padding:12,font:{size:12,weight:'400'},usePointStyle:true,pointStyle:'rectRounded'}}},scales:baseScales};
+
+/* ---- Helpers ---- */
+function fmtDate(d){if(!d)return'—';const dt=new Date(d);const m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return String(dt.getDate()).padStart(2,'0')+'-'+m[dt.getMonth()]+'-'+dt.getFullYear();}
+function cc(v,thresholds){if(!thresholds)return v>=10?'red':v>=5?'amber':'green';return thresholds(v);}
+function badge(severity){const s=severity.toLowerCase();return s==='high'||s==='active'||s==='missed'||s==='fail'||s==='incomplete'?'badgebad':s==='medium'||s==='med'||s==='watch'||s==='partial'||s==='open'?'badgewarn':'badgegood';}
+const lineColors=['#ef4444','#f59e0b','#3b82f6','#22c55e','#a855f7','#06b6d4'];
+
+/* ---- Chart builders ---- */
+const floatLabelPlugin={id:'floatLabels',afterDraw(chart){const ctx=chart.ctx;ctx.save();ctx.font='600 11px DM Sans';const labels=[];chart.data.datasets.forEach((ds,i)=>{if(ds.borderDash)return;const meta=chart.getDatasetMeta(i);const last=meta.data[meta.data.length-1];if(last)labels.push({text:ds.label,x:last.x+6,y:last.y+4,color:ds.borderColor})});labels.sort((a,b)=>a.y-b.y);for(let i=1;i<labels.length;i++){if(labels[i].y-labels[i-1].y<14){labels[i].y=labels[i-1].y+14}}labels.forEach(l=>{ctx.fillStyle=l.color;ctx.fillText(l.text,l.x,l.y)});ctx.restore()}};
+const floatZonePlugin={id:'floatZone',beforeDraw(chart){const ctx=chart.ctx;const yAxis=chart.scales.y;const xAxis=chart.scales.x;const zero=yAxis.getPixelForValue(0);const bottom=yAxis.getPixelForValue(yAxis.min);if(zero<bottom){ctx.save();ctx.fillStyle='rgba(239,68,68,.12)';ctx.fillRect(xAxis.left,zero,xAxis.width,bottom-zero);ctx.fillStyle='rgba(255,255,255,.2)';ctx.font='600 11px DM Sans';ctx.fillText('— CRITICAL PATH',xAxis.left+6,zero+14);ctx.restore()}}};
+const evmLabelPlugin={id:'evmLabels',afterDraw(chart){const ctx=chart.ctx;ctx.save();ctx.font='600 11px DM Sans';const labels=[];chart.data.datasets.forEach(ds=>{const meta=chart.getDatasetMeta(chart.data.datasets.indexOf(ds));meta.data.forEach(pt=>{labels.push({text:ds.label,x:pt.x+12,y:pt.y-6})})});labels.sort((a,b)=>a.y-b.y);for(let i=1;i<labels.length;i++){if(Math.abs(labels[i].y-labels[i-1].y)<14&&Math.abs(labels[i].x-labels[i-1].x)<40){labels[i].y=labels[i-1].y+14}}labels.forEach(l=>{ctx.fillStyle='#e8edf5';ctx.fillText(l.text,l.x,l.y)});ctx.restore()}};
+
+let floatChart=null,evmChart=null,delayChart=null,epcChart=null,sCurveChart=null,ppcChart=null,manpowerChart=null,velocityChart=null,contPerfChart=null,contChart=null,forecastChart=null;
+let DATA={};
+
+/* ---- Sparkline renderer ---- */
+function renderSparklines(){
+document.querySelectorAll('.sparkline').forEach(svg=>{
+ svg.innerHTML='';
+ const vals=svg.dataset.values.split(',').map(Number);
+ const labels=svg.dataset.labels.split(',');
+ const prefix=svg.dataset.prefix||'';
+ const suffix=svg.dataset.suffix||'';
+ const drifts=[];
+ for(let i=1;i<vals.length;i++) drifts.push({delta:+(vals[i]-vals[i-1]).toFixed(2),from:vals[i-1],to:vals[i],l:labels[i]});
+ const w=140,h=36;
+ svg.setAttribute('viewBox',`0 0 ${w} ${h}`);
+ svg.setAttribute('preserveAspectRatio','none');
+ const maxAbs=Math.max(...drifts.map(d=>Math.abs(d.delta)))||1;
+ const mid=h/2;
+ const barW=w/drifts.length-2;
+ drifts.forEach((d,i)=>{
+  const x=i*(w/drifts.length)+2;
+  const barH=Math.max((Math.abs(d.delta)/maxAbs)*(mid-2),3);
+  const invert=svg.dataset.invert==='true';
+  const dir=invert?-d.delta:d.delta;
+  const y=dir>=0?mid-barH:mid;
+  const color='rgba(255,255,255,.20)';
+  const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+  g.setAttribute('class','spark-dot');
+  const rect=document.createElementNS('http://www.w3.org/2000/svg','rect');
+  rect.setAttribute('x',x);rect.setAttribute('y',y);
+  rect.setAttribute('width',barW);rect.setAttribute('height',barH);
+  rect.setAttribute('rx','2');rect.setAttribute('fill',color);
+  const hit=document.createElementNS('http://www.w3.org/2000/svg','rect');
+  hit.setAttribute('x',x);hit.setAttribute('y','0');
+  hit.setAttribute('width',barW);hit.setAttribute('height',h);
+  hit.setAttribute('fill','transparent');hit.setAttribute('style','cursor:pointer');
+  hit.addEventListener('mouseenter',()=>{
+   let tt=svg.parentElement.querySelector('.spark-tooltip');
+   if(!tt){tt=document.createElement('div');tt.className='spark-tooltip';svg.parentElement.style.position='relative';svg.parentElement.appendChild(tt);}
+   const sign=d.delta>0?'+':'';tt.textContent=d.l+': '+sign+prefix+Math.round(d.delta)+suffix+' ('+prefix+Math.round(d.to)+suffix+')';
+   const svgRect=svg.getBoundingClientRect();
+   const parentRect=svg.parentElement.getBoundingClientRect();
+   const barCenterX=svgRect.left+((x+barW/2)/w)*svgRect.width-parentRect.left;
+   const barTopY=svgRect.top+((d.delta>=0?y:mid)/h)*svgRect.height-parentRect.top;
+   tt.style.left=barCenterX+'px';
+   tt.style.top=(barTopY-18)+'px';
+   tt.style.transform='translateX(-50%)';
+   tt.style.display='block';
+  });
+  hit.addEventListener('mouseleave',()=>{const tt=svg.parentElement.querySelector('.spark-tooltip');if(tt)tt.style.display='none';});
+  g.appendChild(rect);g.appendChild(hit);svg.appendChild(g);
+ });
+ const baseline=document.createElementNS('http://www.w3.org/2000/svg','line');
+ baseline.setAttribute('x1','0');baseline.setAttribute('x2',w);
+ baseline.setAttribute('y1',mid);baseline.setAttribute('y2',mid);
+ baseline.setAttribute('stroke','rgba(255,255,255,.15)');baseline.setAttribute('stroke-width','0.5');
+ svg.appendChild(baseline);
+});
+}
+
+/* ---- DATA LOADER ---- */
+const INLINE_DATA = {"meta": {"project_name": "LNG Terminal", "project_value": "$1,050M", "data_date": "2025-08-31", "report_period": "August 2025", "contract_mc": "2027-03-31", "forecast_mc": "2027-05-04", "mc_variance_days": 34, "spi": 0.93, "cpi": 0.94, "budget": 1050, "forecast_cost": 1117, "cost_variance": -67, "contingency_remaining": 42, "forecast_slip_days": 34, "if_no_action_days": 12, "cost_exposure_per_day": 420000, "forecast_bias_days": 5, "time_to_breach_days": 22, "plan_reliability_ppc": 0.65, "top_decision_text": "Piping productivity 35% below plan", "top_action_text": "Add 2nd crew + marine logistics review", "top_action_owner": "Construction Mgr", "top_action_deadline": "2025-10-14", "top_action_no_action_impact_days": 28, "top_action_no_action_impact_cost": 37.4, "kpi_slip_trend": "12,16,20,24,28,34", "kpi_no_action_trend": "2,4,6,7,9,12", "kpi_cost_trend": "240,280,310,350,390,420", "kpi_bias_trend": "1.4,2.1,3.0,3.8,4.5,5.2", "kpi_breach_trend": "35,28,22,18,14,11"}, "contradictions": [{"conflict": "P6 says 72%  | field count shows 54%", "system_a": "P6", "system_b": "Field", "severity": "High"}, {"conflict": "P6 shows 280 crew | only 215 on site", "system_a": "P6", "system_b": "Field", "severity": "High"}, {"conflict": "ROS passed for cable trays | P6 not updated", "system_a": "P6", "system_b": "Procurement", "severity": "Med"}], "cost_performance": [{"period": "Mar", "area": "All", "discipline": "Construction", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": 4.2, "actual_pct": 3.8, "earned_pct": 3.5}, {"period": "Apr", "area": "All", "discipline": "Construction", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": 5.8, "actual_pct": 5, "earned_pct": 4.8}, {"period": "May", "area": "All", "discipline": "Construction", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": 7, "actual_pct": 6.1, "earned_pct": 5.9}, {"period": "Jun", "area": "All", "discipline": "Construction", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": 8.4, "actual_pct": 7, "earned_pct": 6.8}, {"period": "Jul", "area": "All", "discipline": "Construction", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": 9.1, "actual_pct": 7.6, "earned_pct": 7.5}, {"period": "Aug", "area": "All", "discipline": "Construction", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": 10, "actual_pct": 8.2, "earned_pct": 7.9}, {"period": "Mar", "area": "All", "discipline": "Engineering", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": 6, "actual_pct": 5.8, "earned_pct": 5.6}, {"period": "Apr", "area": "All", "discipline": "Engineering", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": 7.2, "actual_pct": 7, "earned_pct": 6.8}, {"period": "May", "area": "All", "discipline": "Engineering", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": 8.1, "actual_pct": 7.9, "earned_pct": 7.7}, {"period": "Jun", "area": "All", "discipline": "Engineering", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": 8.8, "actual_pct": 8.5, "earned_pct": 8.3}, {"period": "Jul", "area": "All", "discipline": "Engineering", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": 9.2, "actual_pct": 8.9, "earned_pct": 8.7}, {"period": "Aug", "area": "All", "discipline": "Engineering", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": 9.5, "actual_pct": 9.2, "earned_pct": 9}, {"period": "Mar", "area": "All", "discipline": "Procurement", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": 5, "actual_pct": 4.6, "earned_pct": 4.3}, {"period": "Apr", "area": "All", "discipline": "Procurement", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": 6.5, "actual_pct": 5.9, "earned_pct": 5.5}, {"period": "May", "area": "All", "discipline": "Procurement", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": 7.4, "actual_pct": 6.8, "earned_pct": 6.4}, {"period": "Jun", "area": "All", "discipline": "Procurement", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": 8, "actual_pct": 7.3, "earned_pct": 6.9}, {"period": "Jul", "area": "All", "discipline": "Procurement", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": 8.4, "actual_pct": 7.6, "earned_pct": 7.2}, {"period": "Aug", "area": "All", "discipline": "Procurement", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": 8.7, "actual_pct": 7.9, "earned_pct": 7.5}, {"period": "Apr", "area": "All", "discipline": "All", "budget": 110, "budget_plan": 108, "earned_value": null, "actual_cost": null, "plan_pct": null, "actual_pct": null, "earned_pct": null}, {"period": "May", "area": "All", "discipline": "All", "budget": 98, "budget_plan": 100, "earned_value": null, "actual_cost": null, "plan_pct": null, "actual_pct": null, "earned_pct": null}, {"period": "Jun", "area": "All", "discipline": "All", "budget": 78, "budget_plan": 92, "earned_value": null, "actual_cost": null, "plan_pct": null, "actual_pct": null, "earned_pct": null}, {"period": "Jul", "area": "All", "discipline": "All", "budget": 58, "budget_plan": 84, "earned_value": null, "actual_cost": null, "plan_pct": null, "actual_pct": null, "earned_pct": null}, {"period": "Aug", "area": "All", "discipline": "All", "budget": 42, "budget_plan": 76, "earned_value": null, "actual_cost": null, "plan_pct": null, "actual_pct": null, "earned_pct": null}, {"period": "Apr", "area": "All", "discipline": "Forecast_Error", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": null, "actual_pct": null, "earned_pct": 1}, {"period": "May", "area": "All", "discipline": "Forecast_Error", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": null, "actual_pct": null, "earned_pct": 2}, {"period": "Jun", "area": "All", "discipline": "Forecast_Error", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": null, "actual_pct": null, "earned_pct": 5}, {"period": "Jul", "area": "All", "discipline": "Forecast_Error", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": null, "actual_pct": null, "earned_pct": 4}, {"period": "Aug", "area": "All", "discipline": "Forecast_Error", "budget": null, "earned_value": null, "actual_cost": null, "plan_pct": null, "actual_pct": null, "earned_pct": 5}, {"period": "Aug", "area": "Pacific Marine", "discipline": "All", "budget": null, "earned_value": 48, "actual_cost": 59, "plan_pct": null, "actual_pct": null, "earned_pct": null}, {"period": "Aug", "area": "Modular Systems", "discipline": "All", "budget": null, "earned_value": 35, "actual_cost": 38, "plan_pct": null, "actual_pct": null, "earned_pct": null}, {"period": "Aug", "area": "Coastal Concrete", "discipline": "All", "budget": null, "earned_value": 28, "actual_cost": 30, "plan_pct": null, "actual_pct": null, "earned_pct": null}, {"period": "Aug", "area": "NorthSteel", "discipline": "All", "budget": null, "earned_value": 18, "actual_cost": 19, "plan_pct": null, "actual_pct": null, "earned_pct": null}, {"period": "Mar", "area": "All", "discipline": "Overall", "plan_pct": 5.0, "actual_pct": 4.6, "earned_pct": 4.2}, {"period": "Apr", "area": "All", "discipline": "Overall", "plan_pct": 12.0, "actual_pct": 10.5, "earned_pct": 9.4}, {"period": "May", "area": "All", "discipline": "Overall", "plan_pct": 20.0, "actual_pct": 16.8, "earned_pct": 14.9}, {"period": "Jun", "area": "All", "discipline": "Overall", "plan_pct": 29.5, "actual_pct": 23.6, "earned_pct": 21.0}, {"period": "Jul", "area": "All", "discipline": "Overall", "plan_pct": 39.0, "actual_pct": 30.5, "earned_pct": 27.2}, {"period": "Aug", "area": "All", "discipline": "Overall", "plan_pct": 48.5, "actual_pct": 37.0, "earned_pct": 33.0}], "actions_log": [{"action": "Add 2nd piping crew, float at 0d", "owner": "Construction", "impact_days": -8, "critical_path": "Yes", "cost_exposure_m": 12.4}, {"action": "Expedite valves, ROS missed by 14d", "owner": "Procurement", "impact_days": -3, "critical_path": "Yes", "cost_exposure_m": 5.6}, {"action": "Resequence hydrotest, pred, lag 6d", "owner": "Planning", "impact_days": -4, "critical_path": "Yes", "cost_exposure_m": 3.2}, {"action": "Add crew (closure)", "owner": "Construction", "impact_days": -5, "critical_path": "Yes", "cost_exposure_m": null}, {"action": "Release IFC (closure)", "owner": "Engineering", "impact_days": -5, "critical_path": "No", "cost_exposure_m": null}, {"action": "Expedite valves (closure)", "owner": "Procurement", "impact_days": 0, "critical_path": "Yes", "cost_exposure_m": null}], "float_erosion": [{"period": "BL", "view": "Area", "item": "A2-Process", "float_days": 18}, {"period": "May", "view": "Area", "item": "A2-Process", "float_days": 20}, {"period": "Jun", "view": "Area", "item": "A2-Process", "float_days": 19}, {"period": "Jul", "view": "Area", "item": "A2-Process", "float_days": 14}, {"period": "Aug", "view": "Area", "item": "A2-Process", "float_days": 10}, {"period": "BL", "view": "Area", "item": "A4-Utilities", "float_days": 25}, {"period": "May", "view": "Area", "item": "A4-Utilities", "float_days": 22}, {"period": "Jun", "view": "Area", "item": "A4-Utilities", "float_days": 20}, {"period": "Jul", "view": "Area", "item": "A4-Utilities", "float_days": 15}, {"period": "Aug", "view": "Area", "item": "A4-Utilities", "float_days": 8}, {"period": "BL", "view": "Area", "item": "A1-Tank Farm", "float_days": 21}, {"period": "May", "view": "Area", "item": "A1-Tank Farm", "float_days": 19}, {"period": "Jun", "view": "Area", "item": "A1-Tank Farm", "float_days": 16}, {"period": "Jul", "view": "Area", "item": "A1-Tank Farm", "float_days": 12}, {"period": "Aug", "view": "Area", "item": "A1-Tank Farm", "float_days": 5}, {"period": "BL", "view": "Discipline", "item": "Piping", "float_days": 20}, {"period": "May", "view": "Discipline", "item": "Piping", "float_days": 16}, {"period": "Jun", "view": "Discipline", "item": "Piping", "float_days": 11}, {"period": "Jul", "view": "Discipline", "item": "Piping", "float_days": 5}, {"period": "Aug", "view": "Discipline", "item": "Piping", "float_days": -3}, {"period": "BL", "view": "Discipline", "item": "E&I", "float_days": 22}, {"period": "May", "view": "Discipline", "item": "E&I", "float_days": 20}, {"period": "Jun", "view": "Discipline", "item": "E&I", "float_days": 18}, {"period": "Jul", "view": "Discipline", "item": "E&I", "float_days": 14}, {"period": "Aug", "view": "Discipline", "item": "E&I", "float_days": 8}, {"period": "BL", "view": "Discipline", "item": "Mechanical", "float_days": 18}, {"period": "May", "view": "Discipline", "item": "Mechanical", "float_days": 17}, {"period": "Jun", "view": "Discipline", "item": "Mechanical", "float_days": 15}, {"period": "Jul", "view": "Discipline", "item": "Mechanical", "float_days": 12}, {"period": "Aug", "view": "Discipline", "item": "Mechanical", "float_days": 6}, {"period": "BL", "view": "Discipline", "item": "Structural", "float_days": 25}, {"period": "May", "view": "Discipline", "item": "Structural", "float_days": 23}, {"period": "Jun", "view": "Discipline", "item": "Structural", "float_days": 21}, {"period": "Jul", "view": "Discipline", "item": "Structural", "float_days": 19}, {"period": "Aug", "view": "Discipline", "item": "Structural", "float_days": 15}, {"period": "Previous", "view": "Worsening", "item": "A3-Marine", "float_days": -2}, {"period": "Previous", "view": "Worsening", "item": "A1-Tank Farm", "float_days": -1}, {"period": "Current", "view": "Worsening", "item": "A3-Marine", "float_days": -6}, {"period": "Current", "view": "Worsening", "item": "A1-Tank Farm", "float_days": -5}], "production_validation": [{"discipline": "Civil", "required_rate": 100, "actual_rate": 92, "gap_pct": -8, "historical_max": 105}, {"discipline": "Structural", "required_rate": 85, "actual_rate": 78, "gap_pct": -8, "historical_max": 90}, {"discipline": "Piping", "required_rate": 120, "actual_rate": 78, "gap_pct": -35, "historical_max": 92}, {"discipline": "E&I", "required_rate": 70, "actual_rate": 64, "gap_pct": -9, "historical_max": 72}], "productivity_factor": [{"period": "Apr", "discipline": "Piping", "pf_value": 1.08}, {"period": "May", "discipline": "Piping", "pf_value": 1.14}, {"period": "Jun", "discipline": "Piping", "pf_value": 1.22}, {"period": "Jul", "discipline": "Piping", "pf_value": 1.31}, {"period": "Aug", "discipline": "Piping", "pf_value": 1.42}, {"period": "Apr", "discipline": "E&I", "pf_value": 1.02}, {"period": "May", "discipline": "E&I", "pf_value": 1.05}, {"period": "Jun", "discipline": "E&I", "pf_value": 1.07}, {"period": "Jul", "discipline": "E&I", "pf_value": 1.1}, {"period": "Aug", "discipline": "E&I", "pf_value": 1.12}, {"period": "Apr", "discipline": "Structural", "pf_value": 0.98}, {"period": "May", "discipline": "Structural", "pf_value": 1.01}, {"period": "Jun", "discipline": "Structural", "pf_value": 1.03}, {"period": "Jul", "discipline": "Structural", "pf_value": 1.05}, {"period": "Aug", "discipline": "Structural", "pf_value": 1.06}, {"period": "Apr", "discipline": "Civil", "pf_value": 0.95}, {"period": "May", "discipline": "Civil", "pf_value": 0.96}, {"period": "Jun", "discipline": "Civil", "pf_value": 0.97}, {"period": "Jul", "discipline": "Civil", "pf_value": 0.98}, {"period": "Aug", "discipline": "Civil", "pf_value": 0.99}], "recovery_plans": [{"recovery_lever": "2nd piping crew", "gain_days": 8, "feasibility": "Medium", "constraint": "Labour availability"}, {"recovery_lever": "Weekend shifts", "gain_days": 4, "feasibility": "High", "constraint": "Union agreement"}, {"recovery_lever": "Resequence hydrotest", "gain_days": 3, "feasibility": "Low", "constraint": "Predecessor logic"}, {"recovery_lever": "Expedite valve delivery", "gain_days": 3, "feasibility": "Medium", "constraint": "Vendor lead time"}, {"recovery_lever": "Fast-track prefab modules", "gain_days": 3, "feasibility": "Medium", "constraint": "Fabrication yard capacity"}], "subcontractors": [{"contractor": "Pacific Marine", "earned_value_m": 48, "actual_cost_m": 59, "delay_impact_days": 38, "cpi": 0.81, "spi": 0.78}, {"contractor": "Modular Systems", "earned_value_m": 35, "actual_cost_m": 38, "delay_impact_days": 22, "cpi": 0.92, "spi": 0.87}, {"contractor": "Coastal Concrete", "earned_value_m": 28, "actual_cost_m": 30, "delay_impact_days": 14, "cpi": 0.93, "spi": 0.9}, {"contractor": "NorthSteel", "earned_value_m": 18, "actual_cost_m": 19, "delay_impact_days": 8, "cpi": 0.95, "spi": 0.94}], "procurement": [{"item": "Valves, critical path", "expected_delivery": "2025-09-15", "required_on_site": "2025-09-01", "variance_days": 14, "status": "Late"}, {"item": "Switchgear", "expected_delivery": "2025-10-01", "required_on_site": "2025-09-20", "variance_days": 11, "status": "Late"}, {"item": "Compressors", "expected_delivery": "2025-09-25", "required_on_site": "2025-09-10", "variance_days": 15, "status": "Late"}, {"item": "Cable trays", "expected_delivery": "2025-08-20", "required_on_site": "2025-08-15", "variance_days": 5, "status": "Watch"}, {"item": "Structural steel", "expected_delivery": "2025-08-10", "required_on_site": "2025-08-12", "variance_days": -2, "status": "On Track"}, {"item": "Pipe spools", "expected_delivery": "2025-09-05", "required_on_site": "2025-08-28", "variance_days": 8, "status": "Late"}, {"item": "Insulation materials", "expected_delivery": "2025-08-25", "required_on_site": "2025-08-22", "variance_days": 3, "status": "Watch"}, {"item": "Instrument tubing", "expected_delivery": "2025-09-10", "required_on_site": "2025-09-08", "variance_days": 2, "status": "Watch"}], "source_systems": [{"system": "Primavera P6", "last_refresh": "2025-08-28", "refresh_frequency": "Weekly", "staleness_flag": "Current", "owner": "Planning"}, {"system": "InEight Cost", "last_refresh": "2025-08-25", "refresh_frequency": "Weekly", "staleness_flag": "Current", "owner": "Cost Control"}, {"system": "Smartsheet IFC", "last_refresh": "2025-08-15", "refresh_frequency": "Bi-weekly", "staleness_flag": "Stale", "owner": "Engineering"}, {"system": "Field Progress (Excel)", "last_refresh": "2025-08-20", "refresh_frequency": "Weekly", "staleness_flag": "Stale", "owner": "Construction"}, {"system": "Procurement Tracker", "last_refresh": "2025-08-27", "refresh_frequency": "Weekly", "staleness_flag": "Current", "owner": "Procurement"}], "completeness": [{"check": "Engineering Progress", "score_pct": 95, "status": "Pass"}, {"check": "Procurement Status", "score_pct": 88, "status": "Fail"}, {"check": "Physical % Progress", "score_pct": 97, "status": "Pass"}, {"check": "Cost Loading", "score_pct": 92, "status": "Pass"}, {"check": "Actual Labor Hours", "score_pct": 96, "status": "Pass"}, {"check": "Commodities And Quantities", "score_pct": 91, "status": "Pass"}, {"check": "Subcontractor Schedules", "score_pct": 75, "status": "Fail"}, {"check": "Third-Party Milestone Dates", "score_pct": 83, "status": "Fail"}, {"check": "Schedule Health Points (DCMA14) And Data Date", "score_pct": 98, "status": "Pass"}, {"check": "Critical Paths Logic Accuracy", "score_pct": 94, "status": "Pass"}, {"check": "Evaluated Remaining Durations And Forecast Dates", "score_pct": 85, "status": "Fail"}, {"check": "Reviewed With PMs And CM Prior To Finalization", "score_pct": 100, "status": "Pass"}], "dim_area": [{"area_code": "A1", "area_name": "A1-Tank Farm"}, {"area_code": "A2", "area_name": "A2-Process"}, {"area_code": "A3", "area_name": "A3-Marine"}, {"area_code": "A4", "area_name": "A4-Utilities"}, {"area_code": "A5", "area_name": "A5-Modular"}, {"area_code": "A6", "area_name": "A6-OSBL"}], "dim_discipline": [{"discipline_code": "CIV", "discipline_name": "Civil"}, {"discipline_code": "CON", "discipline_name": "Concrete"}, {"discipline_code": "STR", "discipline_name": "Structural"}, {"discipline_code": "MEC", "discipline_name": "Mechanical"}, {"discipline_code": "PIP", "discipline_name": "Piping"}, {"discipline_code": "EI", "discipline_name": "E&I"}], "evm_quadrant": [{"period": "Mar", "area": "A1", "cpi": 0.98, "spi": 0.97}, {"period": "Mar", "area": "A2", "cpi": 0.96, "spi": 0.95}, {"period": "Mar", "area": "A3", "cpi": 0.94, "spi": 0.88}, {"period": "Mar", "area": "A4", "cpi": 0.99, "spi": 0.96}, {"period": "Mar", "area": "A5", "cpi": 0.91, "spi": 0.89}, {"period": "Mar", "area": "A6", "cpi": 0.95, "spi": 0.92}, {"period": "Apr", "area": "A1", "cpi": 0.97, "spi": 0.96}, {"period": "Apr", "area": "A2", "cpi": 0.95, "spi": 0.94}, {"period": "Apr", "area": "A3", "cpi": 0.93, "spi": 0.86}, {"period": "Apr", "area": "A4", "cpi": 0.98, "spi": 0.94}, {"period": "Apr", "area": "A5", "cpi": 0.9, "spi": 0.87}, {"period": "Apr", "area": "A6", "cpi": 0.93, "spi": 0.91}, {"period": "May", "area": "A1", "cpi": 0.96, "spi": 0.94}, {"period": "May", "area": "A2", "cpi": 0.94, "spi": 0.93}, {"period": "May", "area": "A3", "cpi": 0.92, "spi": 0.84}, {"period": "May", "area": "A4", "cpi": 0.97, "spi": 0.93}, {"period": "May", "area": "A5", "cpi": 0.89, "spi": 0.85}, {"period": "May", "area": "A6", "cpi": 0.92, "spi": 0.9}, {"period": "Jun", "area": "A1", "cpi": 0.95, "spi": 0.93}, {"period": "Jun", "area": "A2", "cpi": 0.93, "spi": 0.92}, {"period": "Jun", "area": "A3", "cpi": 0.91, "spi": 0.82}, {"period": "Jun", "area": "A4", "cpi": 0.96, "spi": 0.91}, {"period": "Jun", "area": "A5", "cpi": 0.88, "spi": 0.83}, {"period": "Jun", "area": "A6", "cpi": 0.91, "spi": 0.89}, {"period": "Jul", "area": "A1", "cpi": 0.97, "spi": 0.91}, {"period": "Jul", "area": "A2", "cpi": 0.92, "spi": 0.93}, {"period": "Jul", "area": "A3", "cpi": 0.89, "spi": 0.8}, {"period": "Jul", "area": "A4", "cpi": 0.95, "spi": 0.9}, {"period": "Jul", "area": "A5", "cpi": 0.87, "spi": 0.86}, {"period": "Jul", "area": "A6", "cpi": 0.92, "spi": 0.91}, {"period": "Aug", "area": "A1", "cpi": 0.98, "spi": 0.78}, {"period": "Aug", "area": "A2", "cpi": 0.93, "spi": 0.93}, {"period": "Aug", "area": "A3", "cpi": 0.88, "spi": 0.79}, {"period": "Aug", "area": "A4", "cpi": 0.96, "spi": 0.88}, {"period": "Aug", "area": "A5", "cpi": 0.89, "spi": 0.85}, {"period": "Aug", "area": "A6", "cpi": 0.93, "spi": 0.9}], "critical_milestones": [{"milestone": "Structural Steel Complete", "baseline_date": "2026-03-14", "forecast_date": "2026-04-01", "drift_days": 18, "confidence": "High", "root_cause": "Minor sequencing", "recovery_action": "Weekend shifts", "trend_values": "6,8,10,14,16,18"}, {"milestone": "Piping Hydrotest", "baseline_date": "2026-07-09", "forecast_date": "2026-08-20", "drift_days": 42, "confidence": "Low", "root_cause": "Piping labour shortage", "recovery_action": "Add 2nd crew", "trend_values": "8,14,22,30,36,42"}, {"milestone": "Mechanical Completion", "baseline_date": "2026-09-29", "forecast_date": "2026-11-02", "drift_days": 34, "confidence": "Low", "root_cause": "Piping + vendor delays", "recovery_action": "Recovery plan under review", "trend_values": "5,10,16,22,28,34"}, {"milestone": "Pre-Commissioning", "baseline_date": "2026-12-14", "forecast_date": "2027-01-11", "drift_days": 28, "confidence": "Medium", "root_cause": "MC delay cascade", "recovery_action": "Parallel commissioning", "trend_values": "4,8,12,18,22,28"}], "delay_breakdown": [{"view": "Area", "item": "A5-Modular", "delay_days": 15, "driver": "Labour"}, {"view": "Area", "item": "A6-OSBL", "delay_days": 8, "driver": "IFC"}, {"view": "Area", "item": "A3-Marine", "delay_days": 6, "driver": "Vendor"}, {"view": "Area", "item": "A2-Process", "delay_days": 3, "driver": "IFC"}, {"view": "Area", "item": "A4-Utilities", "delay_days": 2, "driver": "Labour"}, {"view": "Area", "item": "A1-Tank Farm", "delay_days": -2, "driver": "—"}, {"view": "Discipline", "item": "Piping", "delay_days": 14, "driver": "Labour"}, {"view": "Discipline", "item": "E&I", "delay_days": 11, "driver": "Vendor"}, {"view": "Discipline", "item": "Mechanical", "delay_days": 5, "driver": "Labour"}, {"view": "Discipline", "item": "Structural", "delay_days": 3, "driver": "—"}, {"view": "Discipline", "item": "Concrete", "delay_days": 1, "driver": "—"}, {"view": "Discipline", "item": "Civil", "delay_days": -2, "driver": "—"}], "decision_log": [{"decision": "Add 2nd piping crew", "owner": "Construction Mgr", "date_raised": "2025-07-14", "expected_impact": "-8d", "actual_impact": "-5d", "status": "Open"}, {"decision": "Release IFC batch 3", "owner": "Engineering Lead", "date_raised": "2025-06-02", "expected_impact": "-5d", "actual_impact": "-5d", "status": "Closed"}, {"decision": "Expedite long-lead valves", "owner": "Procurement Mgr", "date_raised": "2025-05-18", "expected_impact": "-3d", "actual_impact": "0d", "status": "Missed"}, {"decision": "Marine logistics review", "owner": "Project Director", "date_raised": "2025-08-04", "expected_impact": "-6d", "actual_impact": null, "status": "Open"}], "why_rate_failing": [{"discipline": "Piping", "root_cause": "Labour shortage — 2nd crew not mobilized", "impact_pct": -35, "owner": "Construction"}, {"discipline": "E&I", "root_cause": "Cable tray rework from design change", "impact_pct": -9, "owner": "Engineering"}, {"discipline": "Mechanical", "root_cause": "Vendor late delivery — compressors", "impact_pct": -8, "owner": "Procurement"}, {"discipline": "Structural", "root_cause": "Weld reject rate 18% — NDE backlog", "impact_pct": -12, "owner": "QA/QC"}], "manpower": [{"period": "Mar", "planned": 820, "actual": 790, "forecast": null}, {"period": "Apr", "planned": 940, "actual": 880, "forecast": null}, {"period": "May", "planned": 1100, "actual": 1020, "forecast": null}, {"period": "Jun", "planned": 1280, "actual": 1140, "forecast": null}, {"period": "Jul", "planned": 1400, "actual": 1180, "forecast": null}, {"period": "Aug", "planned": 1500, "actual": 1210, "forecast": null}, {"period": "Sep", "planned": 1580, "actual": null, "forecast": 1300}, {"period": "Oct", "planned": 1620, "actual": null, "forecast": 1380}], "hidden_delay": {"area": "A2-Process", "discipline": "Concrete", "commodity": "Foundations", "schedule_status": "Green", "cost_status": "Green", "remaining_qty": 18000, "remaining_unit": "m³", "actual_rate": 600, "rate_unit": "m³/day", "days_needed": 30, "days_left": 18, "hidden_delay_days": 12, "exposure_m": 5.0}, "recovery_validation": {"contractor": "Pacific Marine", "claimed_rate": 150, "rate_unit": "units/day", "peak_actual_rate": 93, "peak_window": "8-week", "shortfall_pct": 38, "duration_days": 20, "premium_k": 600, "executable": false}, "ppc_trend": [{"period": "Mar", "ppc": 82, "target": 80}, {"period": "Apr", "ppc": 78, "target": 80}, {"period": "May", "ppc": 74, "target": 80}, {"period": "Jun", "ppc": 71, "target": 80}, {"period": "Jul", "ppc": 68, "target": 80}, {"period": "Aug", "ppc": 65, "target": 80}], "baseline_history": [{"version": "Original", "date": "2024-06-15", "mc_date": "2027-01-15", "driver": "Contract Award", "days_added": 0, "cumulative": 0}, {"version": "Rev 1", "date": "2025-01-20", "mc_date": "2027-03-31", "driver": "Marine scope growth (+12% piping)", "days_added": 75, "cumulative": 75}, {"version": "Current Forecast", "date": "2025-08-31", "mc_date": "2027-05-04", "driver": "Piping productivity shortfall", "days_added": 34, "cumulative": 109}]};
+
+async function loadData(){
+ Object.assign(DATA, INLINE_DATA);
+ renderAll();
+}
+
+function renderAll(){
+ const M=DATA.meta;
+
+ /* ---- P1: Header strip ---- */
+ document.getElementById('reportPeriod').textContent=M.report_period||'—';
+ document.getElementById('scheduleStrip').innerHTML=`Contract MC: <strong>${fmtDate(M.contract_mc)}</strong> <span class="fdiv">|</span> Forecast MC: <strong class="red">${fmtDate(M.forecast_mc)}</strong> <span class="fdiv">|</span> Variance: <strong style="color:var(--red)">+${M.mc_variance_days}d</strong> <span class="fdiv">|</span> SPI: <strong class="amber">${M.spi}</strong>`;
+ document.getElementById('financialStrip').innerHTML=`Budget: <strong>$${M.budget}.0M</strong> <span class="fdiv">|</span> Forecast: <strong>$${M.forecast_cost}.0M</strong> <span class="fdiv">|</span> Variance: <strong style="color:var(--red)">$${M.cost_variance}.0M</strong> <span class="fdiv">|</span> Contingency: <strong class="amber">$${M.contingency_remaining}.0M</strong> <span class="fdiv">|</span> CPI: <strong class="amber">${M.cpi}</strong>`;
+
+ /* ---- P1: KPI cards ---- */
+ const kpis=[
+  {title:'Forecast Slip',value:`${M.forecast_slip_days} Days`,cls:'red',sub:'Behind baseline',trend:M.kpi_slip_trend,suffix:'d'},
+  {title:'If No Action',value:`+${M.if_no_action_days} Days`,cls:'red',sub:'Next 4 weeks',trend:M.kpi_no_action_trend,suffix:'d'},
+  {title:'Cost Exposure',value:`$${Math.round(M.cost_exposure_per_day/1000)}K/d`,cls:'red',sub:'Delay burn rate',trend:M.kpi_cost_trend,prefix:'$',suffix:'K'},
+  {title:'Forecast Bias',value:`+${Math.round(M.forecast_bias_days)} Days`,cls:'amber',sub:'Avg optimism bias',trend:M.kpi_bias_trend,suffix:'d'},
+  {title:'Time to Breach',value:`${M.time_to_breach_days} Days`,cls:'red',sub:'Until CP float = 0',trend:M.kpi_breach_trend,suffix:'d',invert:true}
+ ];
+ document.getElementById('kpiRow').innerHTML=kpis.map(k=>`<div class="card"><h3>${k.title}</h3><div class="kpi-row"><div><div class="value ${k.cls}">${k.value}</div><div class="sub">${k.sub}</div></div><svg class="sparkline" data-values="${k.trend}" data-labels="Mar,Apr,May,Jun,Jul,Aug" ${k.prefix?'data-prefix="'+k.prefix+'"':''} data-suffix="${k.suffix}" ${k.invert?'data-invert="true"':''} ${k.extra||''}></svg></div></div>`).join('');
+
+ /* ---- P1: Top Decision ---- */
+ document.getElementById('topDecisionText').innerHTML=`Project is +${M.mc_variance_days}d late. Top decision: ${M.top_decision_text}. Required action: ${M.top_action_text}. Owner: ${M.top_action_owner}, deadline: ${fmtDate(M.top_action_deadline)}. No action impact: +${M.top_action_no_action_impact_days}d / $${M.top_action_no_action_impact_cost}M.`;
+
+ /* ---- P1: Actions table ---- */
+ const actions=DATA.actions_log.filter(a=>!a.action.includes('(closure)'));
+ document.getElementById('actionsBody').innerHTML=actions.map(a=>`<tr><td>${a.action}</td><td>${a.owner}</td><td>${a.critical_path}</td><td class="green">${a.impact_days}d</td><td class="green">$${a.cost_exposure_m}M</td></tr>`).join('');
+
+ /* ---- P1: Contradictions ---- */
+ document.getElementById('contradictionsBody').innerHTML=DATA.contradictions.map(c=>`<tr><td>${c.conflict}</td><td>${c.system_a} / ${c.system_b}</td><td><span class="badge ${badge(c.severity)}">${c.severity}</span></td></tr>`).join('');
+
+ /* ---- P1: Critical Milestones ---- */
+ document.getElementById('milestonesBody').innerHTML=DATA.critical_milestones.map(m=>{
+  const dcls=m.drift_days>=15?'red':m.drift_days>=5?'amber':'green';
+  return `<tr><td>${m.milestone}</td><td>${fmtDate(m.baseline_date)}</td><td>${fmtDate(m.forecast_date)}</td><td class="${dcls}">+${m.drift_days}d</td><td>${m.confidence}</td><td>${m.root_cause}</td><td>${m.recovery_action}</td><td><svg class="sparkline cm-spark" data-values="${m.trend_values}" data-labels="Mar,Apr,May,Jun,Jul,Aug" data-suffix="d"></svg></td></tr>`;
+ }).join('');
+
+ /* ---- P2: PPC Trend ---- */
+ buildPpcTrend();
+
+ /* ---- P3: Hidden Delay Card ---- */
+ const hd=document.getElementById('hiddenDelayCard');
+ const hdD=DATA.hidden_delay;
+ const hdRemaining=hdD.remaining_qty.toLocaleString()+' '+hdD.remaining_unit;
+ const hdRate=hdD.actual_rate+' '+hdD.rate_unit;
+ hd.innerHTML=`<h3>Hidden Delay Inside "Green" Data</h3><div style="display:flex;gap:8px;margin:10px 0"><span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.65);border:1px solid var(--line);padding:4px 10px;border-radius:6px">SCHEDULE: ${hdD.schedule_status}</span><span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.65);border:1px solid var(--line);padding:4px 10px;border-radius:6px">COST: ${hdD.cost_status}</span><span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.65);border:1px solid var(--line);padding:4px 10px;border-radius:6px">PRODUCTION MATH: +${hdD.hidden_delay_days}D HIDDEN</span></div><p style="font-size:14px;line-height:1.5;color:var(--text);margin:8px 0">${hdD.discipline} ${hdD.commodity.toLowerCase()} — ${hdRemaining} remaining ÷ ${hdRate} = <strong class="amber">${hdD.days_needed}d needed</strong> vs <strong style="color:#e8edf5">${hdD.days_left}d left</strong></p><div style="background:rgba(239,68,68,.08);border-left:3px solid var(--red);padding:10px 12px;border-radius:0 6px 6px 0;font-size:13px;color:#fca5a5;line-height:1.4">${hdD.hidden_delay_days}-day delay invisible to schedule & cost reports. $${hdD.exposure_m}M exposure caught while recovery was still possible.</div>`;
+
+ /* ---- P3: Recovery Plan Validation Card ---- */
+ const rpv=document.getElementById('recoveryValCard');
+ const rpD=DATA.recovery_validation;
+ rpv.innerHTML=`<h3>Recovery Plan Validation</h3><div style="display:flex;gap:8px;margin:10px 0"><span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.65);border:1px solid var(--line);padding:4px 10px;border-radius:6px">CLAIMED: ${rpD.claimed_rate} ${rpD.rate_unit.toUpperCase()}</span><span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.65);border:1px solid var(--line);padding:4px 10px;border-radius:6px">PEAK ACTUAL: ${rpD.peak_actual_rate} ${rpD.rate_unit.toUpperCase()}</span><span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.65);border:1px solid var(--line);padding:4px 10px;border-radius:6px">PREMIUM: $${rpD.premium_k}K</span></div><p style="font-size:14px;line-height:1.5;color:var(--text);margin:8px 0">Contractor promises <strong class="amber">${rpD.claimed_rate} ${rpD.rate_unit}</strong> for ${rpD.duration_days} days — but ${rpD.peak_window} peak was only <strong class="red">${rpD.peak_actual_rate} ${rpD.rate_unit}</strong> (${rpD.shortfall_pct}% short)</p><div style="background:rgba(239,68,68,.08);border-left:3px solid var(--red);padding:10px 12px;border-radius:0 6px 6px 0;font-size:13px;color:#fca5a5;line-height:1.4">Plan not executable. $${rpD.premium_k}K premium rejected before approval — negotiated from data.</div>`;
+
+ /* ---- P4: Decision Log ---- */
+ const dataDate=new Date(M.data_date);
+ document.getElementById('decisionLogBody').innerHTML=DATA.decision_log.map(d=>{
+  const age=d.date_raised?Math.round((dataDate-new Date(d.date_raised))/(86400000)):0;
+  const acls=d.status==='Closed'?'green':age>45?'red':age>21?'amber':'green';
+  return `<tr><td>${d.decision}</td><td>${d.owner}</td><td>${d.expected_impact}</td><td>${d.actual_impact||'—'}</td><td><span class="badge ${badge(d.status)}">${d.status}</span></td><td class="${acls}">${age}d</td></tr>`;
+ }).join('');
+
+ /* ---- P4: Why Rate Is Failing ---- */
+ const whyFailing=DATA.why_rate_failing||[];
+ if(whyFailing.length){
+  document.getElementById('whyFailingBody').innerHTML=whyFailing.map(w=>`<tr><td>${w.discipline}</td><td>${w.root_cause}</td><td class="${Math.abs(w.impact_pct)>=20?'red':'amber'}">${w.impact_pct}%</td><td>${w.owner}</td></tr>`).join('');
+ }
+
+ /* ---- P4: Schedule Data Integrity ---- */
+ const checks=DATA.completeness;
+ const passed=checks.filter(c=>c.status==='Pass').length;
+ const failed=checks.length-passed;
+ const failedChecks=checks.filter(c=>c.status!=='Pass');
+ const avgScore=Math.round(checks.reduce((s,c)=>s+c.score_pct,0)/checks.length);
+ document.getElementById('sdiSummary').textContent=`${passed} of ${checks.length} checks passed`;
+ document.getElementById('sdiFailures').textContent=`${failed} failures blocking forecast confidence`;
+ document.getElementById('completenessBody').innerHTML=failedChecks.map(c=>`<tr><td>${c.check}</td><td><span class="badge ${badge(c.status)}">${c.status}</span></td></tr>`).join('');
+
+ /* ---- P4: Baseline History ---- */
+ const bh=DATA.baseline_history||[];
+ document.getElementById('baselineBody').innerHTML=bh.map(b=>{
+  const cls=b.days_added>30?'red':b.days_added>0?'amber':'green';
+  const ccls=b.cumulative>60?'red':b.cumulative>0?'amber':'green';
+  return `<tr><td>${b.version}</td><td>${fmtDate(b.date)}</td><td>${fmtDate(b.mc_date)}</td><td>${b.driver}</td><td class="${cls}">${b.days_added>0?'+':''}${b.days_added}d</td><td class="${ccls}">${b.cumulative>0?'+':''}${b.cumulative}d</td></tr>`;
+ }).join('');
+
+ /* ---- CHARTS ---- */
+ buildFloatFromData();
+ buildEvmFromData();
+ buildSCurve();
+ buildManpower();
+ buildPfTrend();
+ buildVelocity();
+ buildContPerf();
+ buildDelayFromData();
+ buildEpcFromData();
+ buildContingency();
+ buildForecast();
+
+ /* ---- Sparklines (after DOM is populated) ---- */
+ renderSparklines();
+
+ /* ---- Toggle wiring ---- */
+ document.querySelectorAll('.float-tog').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.float-tog').forEach(t=>{t.style.color='var(--muted)';t.style.borderBottom='none'});b.style.color='var(--amber)';b.style.borderBottom='2px solid var(--amber)';buildFloatFromData(b.dataset.view)}));
+ document.querySelectorAll('.delay-tog').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.delay-tog').forEach(b=>{b.classList.remove('active');b.style.color='var(--muted)';b.style.borderBottom='none'});btn.classList.add('active');btn.style.color='var(--amber)';btn.style.borderBottom='2px solid var(--amber)';buildDelayFromData(btn.dataset.view)})});
+ document.querySelectorAll('.epc-tog').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.epc-tog').forEach(b=>{b.classList.remove('active');b.style.color='var(--muted)';b.style.borderBottom='none'});btn.classList.add('active');btn.style.color='var(--amber)';btn.style.borderBottom='2px solid var(--amber)';buildEpcFromData(btn.dataset.phase)})});
+}
+
+/* ---- Float Burn Rate ---- */
+function buildFloatFromData(view='area'){
+ const raw=DATA.float_erosion.filter(r=>r.view==='Area'||r.view==='Discipline');
+ const viewData={area:{},discipline:{}};
+ raw.forEach(r=>{const v=r.view.toLowerCase();if(!viewData[v][r.item])viewData[v][r.item]=[];viewData[v][r.item].push({period:r.period,float:r.float_days})});
+ const d=viewData[view];
+ const items=Object.keys(d);
+ const periods=[...new Set(raw.filter(r=>r.view.toLowerCase()===view).map(r=>r.period))];
+ const sets=items.map((item,i)=>({label:item,data:periods.map(p=>{const f=d[item].find(r=>r.period===p);return f?f.float:null}),borderColor:lineColors[i%lineColors.length],backgroundColor:lineColors[i%lineColors.length],pointRadius:2.5,pointHoverRadius:4,borderWidth:2,tension:.3}));
+ if(floatChart)floatChart.destroy();
+ floatChart=new Chart(document.getElementById('floatChart'),{type:'line',data:{labels:periods,datasets:sets},plugins:[floatLabelPlugin,floatZonePlugin],options:{...opt,layout:{padding:{top:4,right:80,bottom:16,left:10}},plugins:{legend:{display:false}},scales:{x:baseScales.x,y:{min:-10,max:30,ticks:{color:'#9aa6b8',padding:8,stepSize:10,callback:v=>v+'d'},grid:{color:'rgba(255,255,255,.06)'}}}}});
+}
+
+/* ---- EVM Quadrant with Arrows ---- */
+const evmArrowPlugin={id:'evmArrows',afterDraw(chart){
+ const ctx=chart.ctx;ctx.save();
+ const arrows=chart._evmArrows||[];
+ arrows.forEach(a=>{
+  const xS=chart.scales.x,yS=chart.scales.y;
+  const x1=xS.getPixelForValue(a.prevCpi),y1=yS.getPixelForValue(a.prevSpi);
+  const x2=xS.getPixelForValue(a.cpi),y2=yS.getPixelForValue(a.spi);
+  // Draw line
+  ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);
+  ctx.strokeStyle='rgba(255,255,255,.3)';ctx.lineWidth=1.5;ctx.stroke();
+  // Draw arrowhead
+  const angle=Math.atan2(y2-y1,x2-x1);const hl=8;
+  ctx.beginPath();ctx.moveTo(x2,y2);
+  ctx.lineTo(x2-hl*Math.cos(angle-Math.PI/6),y2-hl*Math.sin(angle-Math.PI/6));
+  ctx.moveTo(x2,y2);
+  ctx.lineTo(x2-hl*Math.cos(angle+Math.PI/6),y2-hl*Math.sin(angle+Math.PI/6));
+  ctx.strokeStyle='rgba(255,255,255,.5)';ctx.lineWidth=1.5;ctx.stroke();
+  // Draw ghost dot for previous position
+  ctx.beginPath();ctx.arc(x1,y1,4,0,Math.PI*2);
+  ctx.fillStyle='rgba(255,255,255,.15)';ctx.fill();
+  ctx.strokeStyle='rgba(255,255,255,.25)';ctx.lineWidth=1;ctx.stroke();
+ });
+ ctx.restore();
+}};
+function buildEvmFromData(){
+ const raw=DATA.evm_quadrant;
+ const periods=[...new Set(raw.map(r=>r.period))];
+ const latest=periods[periods.length-1];
+ const prev=periods.length>=2?periods[periods.length-2]:null;
+ const curr=raw.filter(r=>r.period===latest);
+ const prevData=prev?raw.filter(r=>r.period===prev):[];
+ const arrows=[];
+ const ds=curr.map(v=>{
+  const pd=prevData.find(p=>p.area===v.area);
+  if(pd)arrows.push({area:v.area,prevCpi:pd.cpi,prevSpi:pd.spi,cpi:v.cpi,spi:v.spi});
+  return{label:v.area,data:[{x:v.cpi,y:v.spi}],backgroundColor:v.spi>=.9&&v.cpi>=.9?'#22c55e':v.spi<.9&&v.cpi<.9?'#ef4444':'#f59e0b',pointRadius:6,pointHoverRadius:8};
+ });
+ if(evmChart)evmChart.destroy();
+ evmChart=new Chart(document.getElementById('evmQuadChart'),{type:'scatter',data:{datasets:ds},plugins:[evmLabelPlugin],options:{...opt,layout:{padding:{top:8,right:12,bottom:6,left:8}},plugins:{legend:{display:false},annotation:{annotations:{hLine:{type:'line',yMin:.9,yMax:.9,borderColor:'rgba(255,255,255,.2)',borderWidth:1,borderDash:[4,4]},vLine:{type:'line',xMin:.9,xMax:.9,borderColor:'rgba(255,255,255,.2)',borderWidth:1,borderDash:[4,4]},qTL:{type:'label',xValue:.84,yValue:.97,content:'BEHIND SCHEDULE',color:'rgba(255,255,255,.25)',font:{size:9,weight:'600'}},qTR:{type:'label',xValue:1.02,yValue:.97,content:'HEALTHY',color:'rgba(255,255,255,.25)',font:{size:9,weight:'600'}},qBL:{type:'label',xValue:.84,yValue:.78,content:'COST & SCHEDULE',color:'rgba(255,255,255,.25)',font:{size:9,weight:'600'}},qBR:{type:'label',xValue:1.02,yValue:.76,content:'OVER BUDGET',color:'rgba(255,255,255,.25)',font:{size:9,weight:'600'}}}}},scales:{x:{title:{display:true,text:'CPI',color:'#ffffff',font:{size:13,weight:'bold'}},min:.8,max:1.05,ticks:{color:'#9aa6b8',padding:6,stepSize:.1,callback:v=>v.toFixed(1)},grid:{color:'rgba(255,255,255,.06)'}},y:{title:{display:true,text:'SPI',color:'#ffffff',font:{size:13,weight:'bold'}},min:.75,max:1.0,ticks:{color:'#9aa6b8',padding:6,stepSize:.1,callback:v=>v.toFixed(1)},grid:{color:'rgba(255,255,255,.06)'}}}}});
+ evmChart._evmArrows=arrows;
+}
+
+/* ---- Progress S-Curve ---- */
+function buildSCurve(){
+ const raw=DATA.cost_performance.filter(r=>r.area==='All'&&r.discipline==='Overall'&&r.plan_pct!==null);
+ if(!raw.length)return;
+ const periods=raw.map(r=>r.period);
+ const plan=raw.map(r=>r.plan_pct);
+ const actual=raw.map(r=>r.actual_pct);
+ const earned=raw.map(r=>r.earned_pct);
+ if(sCurveChart)sCurveChart.destroy();
+ const sCurveLabelPlugin={id:'sCurveLabel',afterDraw(chart){const{ctx}=chart;chart.data.datasets.forEach((ds,i)=>{const meta=chart.getDatasetMeta(i);const last=meta.data[meta.data.length-1];if(!last)return;const x=last.x+6;const y=last.y;ctx.save();ctx.font='bold 11px DM Sans,sans-serif';ctx.fillStyle=ds.borderColor;ctx.textBaseline='middle';ctx.fillText(ds.label,x,y);ctx.restore();})}};
+ sCurveChart=new Chart(document.getElementById('sCurveChart'),{type:'line',data:{labels:periods,datasets:[{label:'Plan',data:plan,borderColor:'#3b82f6',borderWidth:2,pointRadius:0,tension:.4},{label:'Actual',data:actual,borderColor:'#ef4444',borderWidth:2,pointRadius:0,tension:.4},{label:'Earned',data:earned,borderColor:'#22c55e',borderWidth:2,pointRadius:0,tension:.4}]},plugins:[sCurveLabelPlugin],options:{...opt,layout:{padding:{right:50}},plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#9aa6b8',font:{size:10}},grid:{color:'rgba(255,255,255,.06)'}},y:{beginAtZero:true,max:60,ticks:{color:'#9aa6b8',font:{size:10},stepSize:10,callback:v=>v+'%'},grid:{color:'rgba(255,255,255,.06)'}}}}});
+}
+
+/* ---- PPC Trend ---- */
+function buildPpcTrend(){
+ const raw=DATA.ppc_trend||[];
+ if(!raw.length)return;
+ const periods=raw.map(r=>r.period);
+ const ppc=raw.map(r=>r.ppc);
+ const target=raw.map(r=>r.target);
+ if(ppcChart)ppcChart.destroy();
+ const ppcLabelPlugin={id:'ppcLabel',afterDraw(chart){const{ctx}=chart;chart.data.datasets.forEach((ds,i)=>{const meta=chart.getDatasetMeta(i);const last=meta.data[meta.data.length-1];if(!last)return;ctx.save();ctx.font='bold 11px DM Sans,sans-serif';ctx.fillStyle=ds.borderColor;ctx.textBaseline='middle';ctx.fillText(ds.label,last.x+6,last.y);ctx.restore();})}};
+ ppcChart=new Chart(document.getElementById('ppcChart'),{type:'line',data:{labels:periods,datasets:[{label:'PPC',data:ppc,borderColor:'#ef4444',backgroundColor:'rgba(239,68,68,.08)',borderWidth:2,pointRadius:3,pointBackgroundColor:ppc.map(v=>v>=80?'#22c55e':'#ef4444'),tension:.3,fill:true},{label:'Target',data:target,borderColor:'rgba(255,255,255,.3)',borderWidth:1,borderDash:[4,4],pointRadius:0}]},plugins:[ppcLabelPlugin],options:{...opt,layout:{padding:{right:50}},plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#9aa6b8',font:{size:10}},grid:{color:'rgba(255,255,255,.06)'}},y:{min:50,max:100,ticks:{color:'#9aa6b8',font:{size:10},stepSize:10,callback:v=>v+'%'},grid:{color:'rgba(255,255,255,.06)'}}}}});
+}
+
+/* ---- Manpower Histogram ---- */
+function buildManpower(){
+ const mp=DATA.manpower||[];
+ if(!mp.length)return;
+ const labels=mp.map(r=>r.period);
+ const planned=mp.map(r=>r.planned);
+ const actual=mp.map(r=>r.actual);
+ const forecast=mp.map(r=>r.forecast);
+ if(manpowerChart)manpowerChart.destroy();
+ manpowerChart=new Chart(document.getElementById('manpowerChart'),{type:'bar',data:{labels,datasets:[
+  {label:'Planned',data:planned,backgroundColor:'rgba(59,130,246,.55)',barPercentage:.72,categoryPercentage:.7,maxBarThickness:36,order:2},
+  {label:'Actual',data:actual,backgroundColor:'rgba(239,68,68,.65)',barPercentage:.72,categoryPercentage:.7,maxBarThickness:36,order:3},
+  {label:'Forecast',data:forecast,backgroundColor:'rgba(170,158,144,.45)',borderColor:'rgba(170,158,144,.8)',borderWidth:1,borderDash:[4,4],barPercentage:.72,categoryPercentage:.7,maxBarThickness:36,order:4}
+ ]},options:{...opt,layout:{padding:{top:12,right:18,bottom:-14,left:8}},scales:{x:baseScales.x,y:{beginAtZero:true,grace:'8%',ticks:{color:'#9aa6b8',padding:8},grid:{color:'rgba(255,255,255,.06)'}}}}});
+}
+
+/* ---- PF Trend ---- */
+const pfLabelPlugin={id:'pfLabels',afterDraw(chart){const ctx=chart.ctx;ctx.save();ctx.font='11px DM Sans';chart.data.datasets.forEach((ds,i)=>{const meta=chart.getDatasetMeta(i);const last=meta.data[meta.data.length-1];if(!last)return;const x=last.x+6;const y=last.y;ctx.fillStyle=ds.borderColor||'#9aa6b8';ctx.textBaseline='middle';ctx.fillText(ds.label,x,y)});ctx.restore()}};
+function buildPfTrend(){
+ const pf=DATA.productivity_factor.filter(r=>r.pf_value!==undefined&&r.pf_value!==null&&r.period);
+ const discs=[...new Set(pf.map(r=>r.discipline))];
+ const periods=[...new Set(pf.map(r=>r.period))];
+ const sets=discs.map((d,i)=>({label:d,data:periods.map(p=>{const f=pf.find(r=>r.discipline===d&&r.period===p);return f?f.pf_value:null}),borderColor:lineColors[i%lineColors.length],backgroundColor:lineColors[i%lineColors.length],pointRadius:2.5,pointHoverRadius:4,borderWidth:2,tension:.3}));
+ sets.push({label:'Threshold',data:periods.map(()=>1),borderColor:'rgba(255,255,255,.25)',borderDash:[5,5],pointRadius:0,borderWidth:1.5});
+ new Chart(document.getElementById('pfTrendChart'),{type:'line',data:{labels:periods,datasets:sets},plugins:[pfLabelPlugin],options:{...opt,layout:{padding:{top:6,right:70,bottom:6,left:8}},plugins:{legend:{display:false}},scales:{x:baseScales.x,y:{min:0.8,max:1.6,ticks:{color:'#9aa6b8',padding:8,stepSize:0.2,callback:v=>v.toFixed(1)},grid:{color:'rgba(255,255,255,.06)'}}}}});
+}
+
+/* ---- Velocity (Recovery Rate) ---- */
+function buildVelocity(){
+ const pv=DATA.production_validation.filter(r=>r.historical_max);
+ if(velocityChart)velocityChart.destroy();
+ if(!pv.length){const pv2=DATA.production_validation.filter(r=>r.required_rate);velocityChart=new Chart(document.getElementById('velocityChart'),{type:'bar',data:{labels:pv2.map(r=>r.discipline),datasets:[{label:'Required',data:pv2.map(r=>r.required_rate),backgroundColor:'rgba(59,130,246,.65)',barPercentage:.68,categoryPercentage:.62,maxBarThickness:44},{label:'Actual',data:pv2.map(r=>r.actual_rate),backgroundColor:'rgba(34,197,94,.65)',barPercentage:.68,categoryPercentage:.62,maxBarThickness:44}]},options:{...opt,layout:{padding:{top:12,right:28,bottom:2,left:12}}}});return;}
+ velocityChart=new Chart(document.getElementById('velocityChart'),{type:'bar',data:{labels:pv.map(r=>r.discipline),datasets:[{label:'Required',data:pv.map(r=>r.required_rate),backgroundColor:'rgba(59,130,246,.65)',barPercentage:.68,categoryPercentage:.62,maxBarThickness:44},{label:'Actual',data:pv.map(r=>r.actual_rate),backgroundColor:'rgba(34,197,94,.65)',barPercentage:.68,categoryPercentage:.62,maxBarThickness:44},{label:'Historical Max',data:pv.map(r=>r.historical_max),backgroundColor:'rgba(255,255,255,.18)',borderColor:'rgba(255,255,255,.35)',borderWidth:1,borderDash:[4,4],barPercentage:.68,categoryPercentage:.62,maxBarThickness:44}]},options:{...opt,layout:{padding:{top:12,right:28,bottom:2,left:12}}}});
+}
+
+/* ---- Contractor Performance (CPI/SPI) ---- */
+function buildContPerf(){
+ const sc=DATA.subcontractors;
+ const threshold=sc.map(()=>0.9);
+ if(contPerfChart)contPerfChart.destroy();
+ contPerfChart=new Chart(document.getElementById('contPerfChart'),{type:'bar',data:{labels:sc.map(r=>r.contractor),datasets:[
+  {label:'CPI',data:sc.map(r=>r.cpi),backgroundColor:sc.map(r=>r.cpi>=.9?'rgba(34,197,94,.55)':'rgba(239,68,68,.55)'),barPercentage:.7,categoryPercentage:.7,maxBarThickness:28},
+  {label:'SPI',data:sc.map(r=>r.spi),backgroundColor:'transparent',borderColor:sc.map(r=>r.spi>=.9?'rgba(34,197,94,.7)':'rgba(239,68,68,.7)'),borderWidth:1,barPercentage:.7,categoryPercentage:.7,maxBarThickness:28},
+  {label:'Target (0.90)',data:threshold,type:'line',borderColor:'rgba(255,255,255,.25)',borderDash:[5,5],pointRadius:0,borderWidth:1.5}
+ ]},options:{...opt,indexAxis:'y',layout:{padding:{top:8,right:18,bottom:2,left:8}},scales:{x:{min:.7,max:1.0,ticks:{color:'#9aa6b8',padding:8,stepSize:.1,callback:v=>v.toFixed(1)},grid:{color:'rgba(255,255,255,.06)'}},y:{ticks:{color:'#9aa6b8'},grid:{display:false}}}}});
+}
+
+/* ---- Delay Breakdown ---- */
+function buildDelayFromData(view='area'){
+ const raw=DATA.delay_breakdown.filter(r=>r.view.toLowerCase()===view);
+ const labels=raw.map(r=>r.driver&&r.driver!=='—'?r.item+' ['+r.driver+']':r.item);
+ const colors=raw.map(r=>r.delay_days>=8?'rgba(239,68,68,.65)':r.delay_days<0?'rgba(34,197,94,.65)':'rgba(245,158,11,.65)');
+ if(delayChart)delayChart.destroy();
+ delayChart=new Chart(document.getElementById('delayAreaChart'),{type:'bar',data:{labels,datasets:[{label:'Delay (days)',data:raw.map(r=>r.delay_days),backgroundColor:colors,barPercentage:.7,categoryPercentage:.7,maxBarThickness:28}]},options:{...opt,indexAxis:'y',layout:{padding:{top:12,bottom:12}},plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#9aa6b8',callback:v=>v+'d'},grid:{color:'rgba(255,255,255,.06)'}},y:{ticks:{color:'#9aa6b8',font:{size:12},padding:8},grid:{display:false}}}}});
+}
+
+/* ---- Physical Progress (EPC) ---- */
+function buildEpcFromData(phase='construction'){
+ const raw=DATA.cost_performance.filter(r=>r.discipline&&r.discipline.toLowerCase()===phase&&r.plan_pct!==null);
+ if(!raw.length)return;
+ const periods=raw.map(r=>r.period);
+ const plan=raw.map(r=>r.plan_pct);
+ const actual=raw.map(r=>r.actual_pct);
+ const earned=raw.map(r=>r.earned_pct);
+ const cum=a=>{let s=0;return a.map(v=>(s+=v,+s.toFixed(1)))};
+ if(epcChart)epcChart.destroy();
+ epcChart=new Chart(document.getElementById('epcProgressChart'),{type:'bar',data:{labels:periods,datasets:[{label:'Plan',data:plan,backgroundColor:'rgba(59,130,246,.65)',order:3},{label:'Actual',data:actual,backgroundColor:'rgba(239,68,68,.65)',order:4},{label:'Earned',data:earned,backgroundColor:'rgba(34,197,94,.65)',order:5},{label:'Plan (cum)',data:cum(plan),type:'line',borderColor:'#3b82f6',borderDash:[5,5],pointRadius:0,borderWidth:2,tension:.35,yAxisID:'y1',order:1,pointStyle:'rectRounded'},{label:'Actual (cum)',data:cum(actual),type:'line',borderColor:'#ef4444',pointRadius:0,borderWidth:2,tension:.35,yAxisID:'y1',order:2,pointStyle:'rectRounded'}]},options:{...opt,plugins:{legend:{position:'bottom',align:'center',labels:{color:'#9aa6b8',boxWidth:10,boxHeight:10,padding:12,font:{size:12,weight:'400'},usePointStyle:true,pointStyle:'rectRounded'}}},scales:{x:baseScales.x,y:{beginAtZero:true,grace:'12%',ticks:{color:'#9aa6b8',padding:8},grid:{color:'rgba(255,255,255,.06)'}},y1:{position:'right',beginAtZero:true,ticks:{color:'#9aa6b8',padding:8,callback:v=>v+'%'},grid:{display:false}}}}});
+}
+
+/* ---- Contingency Depletion ---- */
+function buildContingency(){
+ const raw=DATA.cost_performance.filter(r=>r.area==='All'&&r.discipline==='All'&&r.budget!==null);
+ const periods=raw.map(r=>r.period);
+ const actual=raw.map(r=>r.budget);
+ const planned=raw.map(r=>r.budget_plan||r.budget);
+ const contLabelPlugin={id:'contLabels',afterDraw(chart){const ctx=chart.ctx;ctx.save();ctx.font='600 11px DM Sans';chart.data.datasets.forEach((ds,i)=>{const meta=chart.getDatasetMeta(i);const last=meta.data[meta.data.length-1];if(last){ctx.fillStyle=ds.borderColor;ctx.fillText(ds.label,last.x+8,last.y+4)}});ctx.restore()}};
+ if(contChart)contChart.destroy();
+ contChart=new Chart(document.getElementById('contChart'),{type:'line',data:{labels:periods,datasets:[
+  {label:'Planned',data:planned,borderColor:'#3b82f6',backgroundColor:'#3b82f6',pointRadius:2.5,pointHoverRadius:4,borderWidth:2,tension:.35},
+  {label:'Actual',data:actual,borderColor:'#22c55e',backgroundColor:'#22c55e',pointRadius:2.5,pointHoverRadius:4,borderWidth:2,tension:.35}
+ ]},plugins:[contLabelPlugin],options:{...opt,plugins:{legend:{display:false}},layout:{padding:{top:6,right:60,bottom:6,left:8}},scales:{x:baseScales.x,y:{beginAtZero:true,max:120,ticks:{color:'#9aa6b8',padding:8},grid:{color:'rgba(255,255,255,.06)'}}}}});
+}
+
+/* ---- Forecast Credibility ---- */
+function buildForecast(){
+ const raw=DATA.cost_performance.filter(r=>r.discipline==='Forecast_Error'&&r.earned_pct!==null);
+ const periods=raw.map(r=>r.period);
+ const values=raw.map(r=>r.earned_pct);
+ const fcSegColors=values.map(v=>v>2?'#ef4444':'#22c55e');
+ if(forecastChart)forecastChart.destroy();
+ forecastChart=new Chart(document.getElementById('forecastChart'),{type:'line',data:{labels:periods,datasets:[
+  {label:'Forecast Error',data:values,borderColor:'#AA9E90',backgroundColor:'#AA9E90',pointRadius:4,pointHoverRadius:6,pointBackgroundColor:fcSegColors,borderWidth:2,tension:.35,segment:{borderColor:ctx=>{const v=values[ctx.p1DataIndex];return v>2?'#ef4444':'#22c55e'}}},
+  {label:'Threshold',data:periods.map(()=>2),borderColor:'rgba(255,255,255,.25)',borderDash:[5,5],pointRadius:0,borderWidth:1.5}
+ ]},options:{...opt,plugins:{legend:{display:false}},layout:{padding:{top:6,right:18,bottom:6,left:8}},scales:{x:baseScales.x,y:{beginAtZero:true,max:6,ticks:{color:'#9aa6b8',padding:8,stepSize:2,callback:v=>v+'d'},grid:{color:'rgba(255,255,255,.06)'}}}}});
+}
+
+/* ---- Boot ---- */
+loadData();
+</script>
+</body>
+</html>
