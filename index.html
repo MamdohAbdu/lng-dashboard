@@ -148,14 +148,14 @@ body {
  <div class="card" style="margin-top:12px;padding:11px 14px;font-size:16px;line-height:1.5;color:rgba(255,255,255,.65)"><h3>Top Required Decision</h3><span id="topDecisionText"></span></div>
  <div class="grid cols2" style="margin-top:12px">
   <div class="card"><h3>Required Actions</h3><table><thead><tr><th>Action</th><th>CP?</th><th>Impact</th><th>Exposure</th></tr></thead><tbody id="actionsBody"></tbody></table></div>
-  <div class="card"><h3>Why Rate Is Failing</h3><table class="rlv-table"><thead><tr><th>Discipline</th><th>Root Cause</th><th>Impact</th><th>Owner</th></tr></thead><tbody id="whyFailingBody"></tbody></table></div>
+  <div class="card"><h3>Why Rate Is Failing</h3><table class="rlv-table"><thead><tr><th>Discipline</th><th>Root Cause</th><th>Gap</th><th>Owner</th></tr></thead><tbody id="whyFailingBody"></tbody></table></div>
  </div>
  <div class="card" style="margin-top:12px"><h3>Critical Milestones</h3><table class="cm-table"><thead><tr><th>Milestone</th><th>Forecast</th><th>Drift</th><th>Confidence</th><th>$ Impact</th><th>Root Cause</th><th>Recovery Action</th><th style="width:70px">Trend</th></tr></thead><tbody id="milestonesBody"></tbody></table></div>
 </section>
 
 <section class="page">
- <div class="grid cols3 p2-row p2-top"><div class="card" style="min-height:316px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1px"><h3 style="margin-bottom:0">Float Burn Rate</h3><div class="float-toggles" style="display:flex;gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden"><button class="float-tog active" data-view="area" style="padding:5px 12px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:600;background:transparent;color:#ffffff;border:none;cursor:pointer;border-right:1px solid var(--line);border-bottom:2px solid #ffffff">Area</button><button class="float-tog" data-view="discipline" style="padding:5px 12px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:600;background:transparent;color:var(--muted);border:none;cursor:pointer">Discipline</button></div></div><div class="card-alert" id="floatAlert" style="margin-bottom:4px">A1 float breached, 2 days negative</div><canvas id="floatChart" class="chart" style="height:250px !important;max-height:250px !important"></canvas></div><div class="card"><h3>EVM Quadrant by Area</h3><div class="card-alert" id="evmAlert">A3-Marine in double-red zone — CPI &amp; SPI below 0.90</div><canvas id="evmQuadChart" class="chart"></canvas></div><div class="card"><h3>Look-Ahead Reliability (PPC)</h3><div class="card-alert" id="ppcAlert">PPC trending below 80% target — 4-week look-ahead unreliable</div><canvas id="ppcChart" class="chart"></canvas></div></div>
- <div class="grid cols3 p2-row p2-bottom" style="margin-top:12px"><div class="card" style="padding-bottom:7px"><h3>Progress S-Curve</h3><div class="card-alert" id="sCurveAlert">Earned trailing plan by 12% — gap widening since June</div><canvas id="sCurveChart" class="chart"></canvas></div><div class="card" style="padding-bottom:7px"><h3>Manpower — Plan vs Actual</h3><div class="card-alert" id="manpowerAlert">Piping crew 35% under-resourced vs recovery plan</div><canvas id="manpowerChart" class="chart"></canvas></div><div class="card" style="padding-bottom:7px"><h3>Productivity Factor Trend</h3><div class="card-alert" id="pfAlert">PF = 1.36 in piping — 2nd crew mobilization = 18d recovery</div><canvas id="pfTrendChart" class="chart"></canvas></div></div>
+ <div class="grid cols3 p2-row p2-top"><div class="card" style="min-height:316px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1px"><h3 style="margin-bottom:0">Float Burn Rate</h3><div class="float-toggles" style="display:flex;gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden"><button class="float-tog active" data-view="area" style="padding:5px 12px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:600;background:transparent;color:#ffffff;border:none;cursor:pointer;border-right:1px solid var(--line);border-bottom:2px solid #ffffff">Area</button><button class="float-tog" data-view="discipline" style="padding:5px 12px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:600;background:transparent;color:var(--muted);border:none;cursor:pointer">Discipline</button></div></div><div class="card-alert" id="floatAlert" style="margin-bottom:4px">A1 float breached, 2 days negative</div><canvas id="floatChart" class="chart" style="height:250px !important;max-height:250px !important"></canvas></div><div class="card"><h3>EVM Quadrant by Area</h3><div class="card-alert" id="evmAlert">A3-Marine in double-red zone — CPI &amp; SPI below 0.90</div><canvas id="evmQuadChart" class="chart"></canvas></div><div class="card"><h3>Look-Ahead Reliability (PPC)</h3><div class="card-alert" id="ppcAlert">Plan Percent Complete is below 80%, indicating unreliable forecast</div><canvas id="ppcChart" class="chart"></canvas></div></div>
+ <div class="grid cols3 p2-row p2-bottom" style="margin-top:12px"><div class="card" style="padding-bottom:7px"><h3>Progress S-Curve</h3><div class="card-alert" id="sCurveAlert">Earned lags plan by 12%, with the gap widening since June</div><canvas id="sCurveChart" class="chart"></canvas></div><div class="card" style="padding-bottom:7px"><h3>Manpower Histogram</h3><div class="card-alert" id="manpowerAlert">Avg crew gap is below plan with a widening trend</div><canvas id="manpowerChart" class="chart"></canvas></div><div class="card" style="padding-bottom:7px"><h3>Productivity Factor Trend</h3><div class="card-alert" id="pfAlert">PF in piping, requiring more labor per unit than planned</div><canvas id="pfTrendChart" class="chart"></canvas></div></div>
 </section>
 
 <section class="page">
@@ -177,7 +177,7 @@ body {
 <script>
 /* ---- Navigation ---- */
 const titles=['VERDICT','EARLY WARNING','RECOVERY REALITY','CONTROL INTEGRITY'];
-const subtitles=['What decision is required this month?',"What's breaking before it shows in reports?",'Is the recovery plan actually executable?','Who owns the gap and can we trust the numbers?'];
+const subtitles=['What decision is required this month?',"What's breaking before it shows in reports?",'Is the recovery plan actually executable?','Can we trust the numbers?'];
 function showPage(i){document.querySelectorAll('.page').forEach((p,n)=>p.classList.toggle('active',n===i));document.querySelectorAll('.nav button').forEach((b,n)=>b.classList.toggle('active',n===i));document.getElementById('pageTitle').textContent=titles[i];document.getElementById('pageSubtitle').textContent=subtitles[i]}
 
 /* ---- Chart defaults ---- */
@@ -188,7 +188,7 @@ const baseScales={
   x:{offset:true,ticks:{color:'#9aa6b8',padding:8,autoSkip:false,maxRotation:0},grid:{color:'rgba(255,255,255,.06)'}},
   y:{beginAtZero:true,grace:'5%',ticks:{color:'#9aa6b8',padding:4},grid:{color:'rgba(255,255,255,.06)'}}
 };
-const opt={responsive:true,maintainAspectRatio:false,layout:{padding:{top:4,right:24,bottom:51,left:10}},plugins:{legend:{position:'bottom',align:'center',labels:{color:'#9aa6b8',boxWidth:10,boxHeight:10,padding:12,font:{size:12,weight:'400'},usePointStyle:true,pointStyle:'rectRounded'}}},scales:baseScales};
+const opt={responsive:true,maintainAspectRatio:false,layout:{padding:{top:4,right:24,bottom:51,left:10}},plugins:{tooltip:{enabled:false},legend:{position:'bottom',align:'center',labels:{color:'#9aa6b8',boxWidth:10,boxHeight:10,padding:12,font:{size:12,weight:'400'},usePointStyle:true,pointStyle:'rectRounded'}}},scales:baseScales};
 
 /* ---- Helpers ---- */
 function fmtDate(d){if(!d)return'—';const dt=new Date(d);const m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return String(dt.getDate()).padStart(2,'0')+'-'+m[dt.getMonth()]+'-'+String(dt.getFullYear()).slice(2);}
@@ -237,21 +237,6 @@ document.querySelectorAll('.sparkline').forEach(svg=>{
   hit.setAttribute('width',barW);hit.setAttribute('height',h);
   hit.setAttribute('fill','transparent');
   if(svg.classList.contains('cm-spark')){g.appendChild(rect);g.appendChild(hit);svg.appendChild(g);return;}
-  hit.setAttribute('style','cursor:pointer');
-  hit.addEventListener('mouseenter',()=>{
-   let tt=svg.parentElement.querySelector('.spark-tooltip');
-   if(!tt){tt=document.createElement('div');tt.className='spark-tooltip';svg.parentElement.style.position='relative';svg.parentElement.appendChild(tt);}
-   tt.textContent=(labels[i]||'')+': '+prefix+Math.round(v)+suffix;
-   const svgRect=svg.getBoundingClientRect();
-   const parentRect=svg.parentElement.getBoundingClientRect();
-   const barCenterX=svgRect.left+((x+barW/2)/w)*svgRect.width-parentRect.left;
-   const barTopY=svgRect.top+(y/h)*svgRect.height-parentRect.top;
-   tt.style.left=barCenterX+'px';
-   tt.style.top=(barTopY-18)+'px';
-   tt.style.transform='translateX(-50%)';
-   tt.style.display='block';
-  });
-  hit.addEventListener('mouseleave',()=>{const tt=svg.parentElement.querySelector('.spark-tooltip');if(tt)tt.style.display='none';});
   g.appendChild(rect);g.appendChild(hit);svg.appendChild(g);
  });
 });
@@ -335,9 +320,19 @@ function renderAll(){
  /* ---- P1: Critical Milestones ---- */
  document.getElementById('milestonesBody').innerHTML=DATA.critical_milestones.map(m=>{
   const dcls=m.drift_days>=30?'red':m.drift_days>=20?'amber':'green';
-  const ccls=m.confidence==='Low'?'red':m.confidence==='Medium'?'amber':'green';
-  const tn=m.trend_values?m.trend_values.split(',').length:6;const tl=periodLabels.slice(periodLabels.length-tn).join(',');
-  return `<tr><td>${m.milestone}</td><td>${fmtDate(m.forecast_date)}</td><td>+${m.drift_days}d</td><td class="${ccls}">${m.confidence}</td><td>$${m.cost_impact_m}M</td><td>${m.root_cause}</td><td>${m.recovery_action}</td><td><svg class="sparkline cm-spark" data-values="${m.trend_values}" data-labels="${tl}" data-suffix="d"></svg></td></tr>`;
+  /* Compute confidence from drift, trend acceleration, cost impact */
+  const tv=m.trend_values?m.trend_values.split(',').map(Number):[];
+  let score=0;
+  /* Drift severity: 0-19d=0, 20-29d=1, 30+=2 */
+  if(m.drift_days>=30)score+=2;else if(m.drift_days>=20)score+=1;
+  /* Trend acceleration: is latest delta > average delta? */
+  if(tv.length>=3){const deltas=[];for(let i=1;i<tv.length;i++)deltas.push(tv[i]-tv[i-1]);const avg=deltas.reduce((a,b)=>a+b,0)/deltas.length;if(deltas[deltas.length-1]>avg*1.2)score+=1;}
+  /* Cost exposure */
+  if(m.cost_impact_m>=8)score+=1;else if(m.cost_impact_m>=5)score+=0.5;
+  const conf=score>=3?'Low':score>=1.5?'Medium':'High';
+  const ccls=conf==='Low'?'red':conf==='Medium'?'amber':'green';
+  const tn=tv.length||6;const tl=periodLabels.slice(periodLabels.length-tn).join(',');
+  return `<tr><td>${m.milestone}</td><td>${fmtDate(m.forecast_date)}</td><td>+${m.drift_days}d</td><td class="${ccls}">${conf}</td><td>$${m.cost_impact_m}M</td><td>${m.root_cause}</td><td>${m.recovery_action}</td><td><svg class="sparkline cm-spark" data-values="${m.trend_values}" data-labels="${tl}" data-suffix="d"></svg></td></tr>`;
  }).join('');
 
  /* ---- P2: PPC Trend ---- */
@@ -442,13 +437,16 @@ function renderAll(){
   if(doubleRed){document.getElementById('evmAlert').textContent=doubleRed.area+' in double-red zone — CPI & SPI below 0.90';}
   // PPC
   const ppcData=DATA.ppc_trend;const lastPpc=ppcData[ppcData.length-1];
-  if(lastPpc&&lastPpc.ppc<lastPpc.target){document.getElementById('ppcAlert').textContent='PPC trending below '+lastPpc.target+'% target — 4-week look-ahead unreliable';}
+  if(lastPpc&&lastPpc.ppc<lastPpc.target){document.getElementById('ppcAlert').textContent='Plan Percent Complete is below '+lastPpc.target+'%, indicating unreliable forecast';}
   // S-Curve gap
   const overall=DATA.cost_performance.filter(r=>r.area==='All'&&r.discipline==='All');const lastOv=overall[overall.length-1];
-  if(lastOv){const gap=Math.round(lastOv.plan_pct-lastOv.earned_pct);document.getElementById('sCurveAlert').textContent='Earned trailing plan by '+gap+'% — gap widening since June';}
+  if(lastOv){const gap=Math.round(lastOv.plan_pct-lastOv.earned_pct);document.getElementById('sCurveAlert').textContent='Earned lags plan by '+gap+'%, with the gap widening since June';}
   // PF — find worst discipline
   const pfAug=DATA.productivity_factor.filter(r=>r.period==='Aug').sort((a,b)=>b.pf_value-a.pf_value)[0];
-  if(pfAug){document.getElementById('pfAlert').textContent='PF = '+pfAug.pf_value.toFixed(2)+' in '+pfAug.discipline.toLowerCase()+' — 2nd crew mobilization = 18d recovery';}
+  if(pfAug){const extraPct=Math.round((pfAug.pf_value-1)*100);document.getElementById('pfAlert').textContent='PF = '+pfAug.pf_value.toFixed(2)+' in '+pfAug.discipline.toLowerCase()+', requiring '+extraPct+'% more labor per unit than planned';}
+  // Manpower
+  const mpActual=DATA.manpower.filter(r=>r.actual!==null&&r.planned);
+  if(mpActual.length){const gaps=mpActual.map(r=>Math.round((1-r.actual/r.planned)*100));const avgGap=Math.round(gaps.reduce((a,b)=>a+b,0)/gaps.length);document.getElementById('manpowerAlert').textContent='Avg crew gap is '+avgGap+'% below plan with a widening trend';}
  })();
 
  /* ---- Sparklines (after DOM is populated) ---- */
@@ -518,13 +516,13 @@ function buildEvmFromData(){
   return{label:v.area,data:[{x:v.cpi,y:v.spi}],backgroundColor:baseColor,pointRadius:r,pointHoverRadius:r,pointHitRadius:r,_r:r,_budget_m:v.budget_m||100};
  });
  if(evmChart)evmChart.destroy();
- evmChart=new Chart(document.getElementById('evmQuadChart'),{type:'scatter',data:{datasets:ds},plugins:[evmLabelPlugin],options:{...opt,layout:{padding:{top:8,right:12,bottom:6,left:8}},plugins:{tooltip:{enabled:true,displayColors:false,position:'nearest',yAlign:'bottom',xAlign:'center',mode:'nearest',intersect:true,callbacks:{title:()=>'',label:function(ctx){return'$'+ctx.dataset._budget_m+'M'}}},legend:{display:false},annotation:{annotations:{hLine:{type:'line',yMin:.9,yMax:.9,borderColor:'rgba(255,255,255,.2)',borderWidth:1,borderDash:[4,4]},vLine:{type:'line',xMin:.9,xMax:.9,borderColor:'rgba(255,255,255,.2)',borderWidth:1,borderDash:[4,4]},qTL:{type:'label',xValue:.80,yValue:.98,content:'BEHIND SCHEDULE',color:'rgba(255,255,255,.25)',font:{size:9,weight:'600'},position:{x:'start'}},qTR:{type:'label',xValue:1.0,yValue:.98,content:'HEALTHY',color:'rgba(255,255,255,.25)',font:{size:9,weight:'600'},position:{x:'end'}},qBL:{type:'label',xValue:.80,yValue:.82,content:'COST & SCHEDULE',color:'rgba(255,255,255,.25)',font:{size:9,weight:'600'},position:{x:'start'}},qBR:{type:'label',xValue:1.0,yValue:.82,content:'OVER BUDGET',color:'rgba(255,255,255,.25)',font:{size:9,weight:'600'},position:{x:'end'}}}}},scales:{x:{title:{display:true,text:'CPI',color:'#ffffff',font:{size:13,weight:'bold'}},min:.8,max:1.0,ticks:{color:'#9aa6b8',padding:6,stepSize:.1,callback:v=>v.toFixed(1)},grid:{color:'rgba(255,255,255,.06)'}},y:{title:{display:true,text:'SPI',color:'#ffffff',font:{size:13,weight:'bold'}},min:.8,max:1.0,ticks:{color:'#9aa6b8',padding:6,stepSize:.1,callback:v=>v.toFixed(1)},grid:{color:'rgba(255,255,255,.06)'}}}}});
+ evmChart=new Chart(document.getElementById('evmQuadChart'),{type:'scatter',data:{datasets:ds},plugins:[evmLabelPlugin],options:{...opt,layout:{padding:{top:8,right:12,bottom:6,left:8}},plugins:{tooltip:{enabled:false},legend:{display:false},annotation:{annotations:{hLine:{type:'line',yMin:.9,yMax:.9,borderColor:'rgba(255,255,255,.2)',borderWidth:1,borderDash:[4,4]},vLine:{type:'line',xMin:.9,xMax:.9,borderColor:'rgba(255,255,255,.2)',borderWidth:1,borderDash:[4,4]},qTL:{type:'label',xValue:.80,yValue:.98,content:'OVER BUDGET',color:'rgba(255,255,255,.25)',font:{size:9,weight:'600'},position:{x:'start'}},qTR:{type:'label',xValue:1.0,yValue:.98,content:'HEALTHY',color:'rgba(255,255,255,.25)',font:{size:9,weight:'600'},position:{x:'end'}},qBL:{type:'label',xValue:.80,yValue:.82,content:'COST & SCHEDULE',color:'rgba(255,255,255,.25)',font:{size:9,weight:'600'},position:{x:'start'}},qBR:{type:'label',xValue:1.0,yValue:.82,content:'BEHIND SCHEDULE',color:'rgba(255,255,255,.25)',font:{size:9,weight:'600'},position:{x:'end'}}}}},scales:{x:{title:{display:true,text:'CPI',color:'#ffffff',font:{size:13,weight:'bold'}},min:.8,max:1.0,ticks:{color:'#9aa6b8',padding:6,stepSize:.1,callback:v=>v.toFixed(1)},grid:{color:'rgba(255,255,255,.06)'}},y:{title:{display:true,text:'SPI',color:'#ffffff',font:{size:13,weight:'bold'}},min:.8,max:1.0,ticks:{color:'#9aa6b8',padding:6,stepSize:.1,callback:v=>v.toFixed(1)},grid:{color:'rgba(255,255,255,.06)'}}}}});
  evmChart._evmArrows=arrows;
 }
 
 /* ---- Progress S-Curve ---- */
 function buildSCurve(){
- const raw=DATA.cost_performance.filter(r=>r.area==='All'&&r.discipline==='All'&&r.plan_pct!==null&&r.period!=='Mar');
+ const raw=DATA.cost_performance.filter(r=>r.area==='All'&&r.discipline==='All'&&r.plan_pct!==null&&r.period!=='Mar'&&r.period!=='Sep');
  if(!raw.length)return;
  const periods=raw.map(r=>r.period);
  const plan=raw.map(r=>r.plan_pct);
@@ -544,7 +542,7 @@ function buildPpcTrend(){
  const target=raw.map(r=>r.target);
  if(ppcChart)ppcChart.destroy();
  const ppcLabelPlugin={id:'ppcLabel',afterDraw(chart){const{ctx}=chart;chart.data.datasets.forEach((ds,i)=>{const meta=chart.getDatasetMeta(i);const last=meta.data[meta.data.length-1];if(!last)return;ctx.save();ctx.font='600 11px DM Sans';ctx.fillStyle=ds.borderColor;ctx.textBaseline='middle';ctx.fillText(ds.label,last.x+6,last.y);ctx.restore();})}};
- ppcChart=new Chart(document.getElementById('ppcChart'),{type:'line',data:{labels:periods,datasets:[{label:'PPC',data:ppc,borderColor:'#ef4444',segment:{borderColor:function(ctx){return ctx.p0.parsed.y>=80&&ctx.p1.parsed.y>=80?'#22c55e':'#ef4444'}},backgroundColor:function(ctx){const chart=ctx.chart;const{ctx:c,chartArea}=chart;if(!chartArea)return'rgba(239,68,68,.08)';const g=c.createLinearGradient(chartArea.left,0,chartArea.right,0);const len=ppc.length;ppc.forEach((v,i)=>{const stop=i/(len-1);g.addColorStop(stop,v>=80?'rgba(34,197,94,.08)':'rgba(239,68,68,.08)')});return g},borderWidth:2,pointRadius:3,pointBackgroundColor:ppc.map(v=>v>=80?'#22c55e':'#ef4444'),tension:.3,fill:true},{label:'Target',data:target,borderColor:'rgba(255,255,255,.3)',borderWidth:1,borderDash:[4,4],pointRadius:0}]},plugins:[ppcLabelPlugin],options:{...opt,layout:{padding:{right:50}},plugins:{legend:{display:false}},scales:{x:baseScales.x,y:{min:60,max:90,ticks:{color:'#9aa6b8',padding:8,stepSize:10,callback:v=>v+'%'},grid:{color:'rgba(255,255,255,.06)'}}}}});
+ ppcChart=new Chart(document.getElementById('ppcChart'),{type:'line',data:{labels:periods,datasets:[{label:'PPC',data:ppc,borderColor:'#ef4444',segment:{borderColor:function(ctx){return ctx.p0.parsed.y>=80&&ctx.p1.parsed.y>=80?'#22c55e':'#ef4444'}},backgroundColor:function(ctx){const chart=ctx.chart;const{ctx:c,chartArea}=chart;if(!chartArea)return'rgba(239,68,68,.08)';const g=c.createLinearGradient(chartArea.left,0,chartArea.right,0);const len=ppc.length;ppc.forEach((v,i)=>{const stop=i/(len-1);g.addColorStop(stop,v>=80?'rgba(34,197,94,.04)':'rgba(239,68,68,.04)')});return g},borderWidth:2,pointRadius:4,pointBorderWidth:2,pointBorderColor:ppc.map(v=>v>=80?'#22c55e':'#ef4444'),pointBackgroundColor:ppc.map(v=>v>=80?'#22c55e':'#ef4444'),tension:.3,fill:true},{label:'Target',data:target,borderColor:'rgba(255,255,255,.3)',borderWidth:1,borderDash:[4,4],pointRadius:0}]},plugins:[ppcLabelPlugin],options:{...opt,layout:{padding:{right:50}},plugins:{legend:{display:false}},scales:{x:baseScales.x,y:{min:60,max:90,ticks:{color:'#9aa6b8',padding:8,stepSize:10,callback:v=>v+'%'},grid:{color:'rgba(255,255,255,.06)'}}}}});
 }
 
 /* ---- Manpower Histogram ---- */

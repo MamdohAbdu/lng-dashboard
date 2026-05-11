@@ -6,22 +6,22 @@
   },
   {
     "period": "May",
-    "ppc": 82,
+    "ppc": 84,
     "target": 80
   },
   {
     "period": "Jun",
-    "ppc": 75,
+    "ppc": 80,
     "target": 80
   },
   {
     "period": "Jul",
-    "ppc": 68,
+    "ppc": 72,
     "target": 80
   },
   {
     "period": "Aug",
-    "ppc": 62,
+    "ppc": 65,
     "target": 80
   }
 ]
